@@ -1,4 +1,5 @@
 c++-huffman/CMakeFiles/**.*
+c++-huffman/CMakeFiles/*
 c++-huffman/test/huffman
 c++-huffman/Makefile
 c++-huffman/CMakeCache.txt
