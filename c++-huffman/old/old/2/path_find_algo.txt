@@ -1,0 +1,56 @@
+void HTree::print_codes(  )
+{
+	bool path[65535];		// max size of wide character
+	
+	p_print_codes( _root, 0, path, 0 );
+}
+
+void HTree::p_print_codes( HNode *node, bool preDirection, bool path[], ulint pathLen )
+{
+	if( node == NULL )
+		return;
+		
+	static ulint totalNormalBytes = 0;
+	static ulint totalCompressedBytes = 0;
+		
+	if( node == _root )
+	{
+		// do nothing, didnt come from left or right
+	}
+	else
+	{
+		// if came from left
+		if( preDirection == 0 )
+			path[pathLen] = 0;
+		else
+			path[pathLen] = 1;
+		
+		pathLen++;
+	}
+	
+	if( node->_left == NULL && node->_right == NULL )
+	{
+		ulint f = node->_frequency;
+		
+		std::cout << node->_data << "[" << f << "]:\t";
+		for( int i = 0; i < pathLen; i++ )
+		{
+			std::cout << path[i];
+			if( i == ( pathLen - 1 ) )
+			{
+				std::cout << "\t\t[" << i+1 << " bits]\t[" << (i+1) * f << " vs " << f * 8 << "]";
+				totalNormalBytes += f * 8;
+				totalCompressedBytes += (i+1)*f;
+				std::cout << "\t[" << totalCompressedBytes << " vs " << totalNormalBytes << "]\t[" << totalCompressedBytes / totalNormalBytes << "]";
+			}
+		}
+			
+		std::cout << "\n";
+	}
+	else
+	{
+		// LEFT is 0, RIGHT is 1  (SECOND argument)
+		p_print_codes( node->_left, 0, path, pathLen );
+		p_print_codes( node->_right, 1, path, pathLen );
+	}
+}
