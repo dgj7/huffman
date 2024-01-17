@@ -22,5 +22,5 @@ int main(int argc, char **argv)
 	std::string decoded = decoder.decode(encoded,tree);
 	std::cout << std::endl << std::endl << "decoded string: " << std::endl << decoded;
 	
-	std::cout << "end of main.";
+	std::cout << "end of main.\n\n";
 }
