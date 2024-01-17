@@ -1,8 +1,0 @@
-CMakeCache.txt
-CMakeFiles/
-clean
-bin/
-cmake_install.cmake
-test/Huffman.hpp
-test/libhuffman.a
-
