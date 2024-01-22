@@ -5,15 +5,13 @@ rm -r CMakeFiles
 rm CMakeCache.txt
 rm cmake_install.cmake
 rm Makefile
+rm bin/huffman
+rm bin/libhuffman.a
 
 # build the huffman library
 cmake .
 make clean
 make config=release
 
-# copy things needed to build the test
-cp bin/libhuffman.a test/libhuffman.a
-cp src/Huffman.hpp test/Huffman.hpp
-
 # build the test as well
-(cd test ; ./build.sh)
+(cd src ; g++ -o ../bin/huffman main.cpp -L../bin -lhuffman)

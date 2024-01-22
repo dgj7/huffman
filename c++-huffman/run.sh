@@ -1,3 +1,3 @@
 #!/bin/bash
-./test/huffman
+./bin/huffman
 

@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 
-#include "Huffman.hpp"
+#include "lib/Huffman.hpp"
 
 std::string b_vec_to_str(std::vector<bool>);
 
