@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# do some cmake-related cleaning things
+# clean
 rm -r CMakeFiles
 rm CMakeCache.txt
 rm cmake_install.cmake
@@ -8,10 +8,12 @@ rm Makefile
 rm bin/huffman
 rm bin/libhuffman.a
 
-# build the huffman library
+# generate makefile
 cmake .
+
+# build the huffman library, `libhuffman.a`
 make clean
 make config=release
 
-# build the test as well
+# build a `test` program, linking to `libhuffman.a`
 (cd src ; g++ -o ../bin/huffman main.cpp -L../bin -lhuffman)
