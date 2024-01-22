@@ -11,12 +11,12 @@ generally treated as a programming challenge, to be redone for any new language 
 
 ## Proposed output for each impl
 ```
-input: <the input string>
+input: [<the input string>]
     a  001
     b  01
     c  1
-encoded: 001011
-decoded: <the input string>
+encoded: [001011]
+decoded: [<the input string>]
 ``````
 
 ## Implementations

@@ -8,3 +8,4 @@ c++-huffman/cmake_install.cmake
 c++-huffman/bin/**.*
 c++-huffman/clean
 c++-huffman/test/Huffman.hpp
+c++-huffman/.vscode/*
