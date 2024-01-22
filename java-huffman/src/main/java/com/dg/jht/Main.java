@@ -29,10 +29,10 @@ public class Main
 	public static void main(String []args) throws HuffmanEncodingException, HuffmanDecodingException
 	{
 		String value = "this is a test string that will be used to test encoding and decoding of huffman trees!";
-		logger.info(String.format("testing huffman with input [%s]...", value));
+		logger.info(String.format("input:   [%s]", value));
 		
 		HuffmanTree tree = builder.build(value);
-		logger.info(String.format("built huffman tree."));
+		//logger.info(String.format("built huffman tree."));
 		
 		List<Boolean> encoded = tree.encode(value);
 		logger.info(String.format("encoded: [%s]",messageRepository.getBitsAsString(encoded)));
