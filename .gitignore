@@ -1,12 +1,8 @@
 c++-huffman/CMakeFiles/**.*
 c++-huffman/CMakeFiles/*
-c++-huffman/test/huffman
 c++-huffman/Makefile
 c++-huffman/CMakeCache.txt
-c++-huffman/test/libhuffman.a
 c++-huffman/cmake_install.cmake
-c++-huffman/bin/**.*
 c++-huffman/bin/huffman
-c++-huffman/clean
-c++-huffman/test/Huffman.hpp
+c++-huffman/bin/libhuffman.a
 c++-huffman/.vscode/*
