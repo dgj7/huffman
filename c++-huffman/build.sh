@@ -15,5 +15,5 @@ cmake .
 make clean
 make config=release
 
-# build a `test` program, linking to `libhuffman.a`
+# build a test program `huffman`, linking to `libhuffman.a`
 (cd src ; g++ -o ../bin/huffman main.cpp -L../bin -lhuffman)
