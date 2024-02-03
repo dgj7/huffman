@@ -25,28 +25,57 @@ This is a trivial example, using the input String `this is a sample input string
 
 This string results in the following (sorted) frequencies:
 ```text
-[b]=>[1]
-[c]=>[1]
-[l]=>[1]
-[x]=>[1]
-[.]=>[2]
-[d]=>[2]
-[f]=>[2]
-[m]=>[2]
-[o]=>[2]
-[p]=>[2]
-[r]=>[2]
-[a]=>[3]
-[g]=>[3]
-[h]=>[3]
-[u]=>[3]
-[n]=>[5]
-[e]=>[8]
-[i]=>[8]
-[s]=>[8]
-[t]=>[11]
-[ ]=>[16]
+frequencies list has [21] elements
+[1] <= [b]
+[1] <= [c]
+[1] <= [l]
+[1] <= [x]
+[2] <= [.]
+[2] <= [d]
+[2] <= [f]
+[2] <= [m]
+[2] <= [o]
+[2] <= [p]
+[2] <= [r]
+[3] <= [a]
+[3] <= [g]
+[3] <= [h]
+[3] <= [u]
+[5] <= [n]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[11] <= [t]
+[16] <= [ ]
 ```
+
+The following expandos represent each step in the tree building process.  Each step merges two nodes and reduces the list size by 1.
+<details>
+<summary>iteration 1</summary>
+```
+frequencies list has [20] elements
+[1] <= [l]
+[1] <= [x]
+[2] <= [.]
+[2] <= [d]
+[2] <= [f]
+[2] <= [m]
+[2] <= [o]
+[2] <= [p]
+[2] <= [r]
+[2] <= INTERNAL[1|b], [1|c]]
+[3] <= [a]
+[3] <= [g]
+[3] <= [h]
+[3] <= [u]
+[5] <= [n]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[11] <= [t]
+[16] <= [ ]
+```
+</details>
 
 ---
 [Go Back](..)
