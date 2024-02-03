@@ -17,9 +17,7 @@ impl HuffmanTree {
     pub fn new(input: &dyn Input) -> Box<HuffmanTree> {
         /* get a vector with all the frequencies, represented as leaf nodes */
         let mut frequencies = input.to_vector();
-        //println!("frequencies list has [{}] elements", frequencies.len());
-        //sort(&mut frequencies);
-        //frequencies.iter().for_each(|x| println!("[{}]=>[{}]", x.symbol.unwrap(), x.frequency));
+        //debug_print(&mut frequencies);
 
         /* presently failing for an empty frequency list */
         if frequencies.len() == 0 {
@@ -36,13 +34,13 @@ impl HuffmanTree {
             let sum = left.frequency + right.frequency;
             let internal = TreeNode::new_internal(sum, left, right);
             frequencies.push(internal);
+            //debug_print(&mut frequencies);
         }
         let the_root = frequencies[0].clone();
 
         /* descend the tree to gather all codes */
         let mut the_encoder: HashMap<char, BitVec> = HashMap::new();
         descend_tree(&the_root, &mut the_encoder);
-        //println!("encoder has [{}] elements", the_encoder.len());
 
         /* return the new tree */
         Box::new(HuffmanTree { root: the_root, encoder: the_encoder })
@@ -88,4 +86,42 @@ fn sort(vec: &mut Vec<TreeNode>) {
             freq_result
         }
     });
+}
+
+fn debug_print(vec: &mut Vec<TreeNode>) {
+    println!("----------------------------------------");
+    sort(vec);
+    println!("frequencies list has [{}] elements", vec.len());
+    vec.iter().for_each(|x| {
+        if x.symbol.is_some() {
+            /* if it's a leaf, we print simply */
+            println!("[{}] <= [{}]", x.frequency, x.symbol.unwrap());
+        } else {
+            /* if it's an internal node, get all of the values and print those */
+            let mut all_pairs = String::new();
+            find_all_frequency_pairs(x, &mut all_pairs);
+            println!("[{}] <= INTERNAL[{}]", x.frequency, all_pairs);
+        }
+    });
+    println!("----------------------------------------");
+}
+
+fn find_all_frequency_pairs(node: &TreeNode, string: &mut String) {
+    if node.symbol.is_some() {
+        let symbol = node.symbol.unwrap().to_string();
+        if !string.is_empty() {
+            string.push_str(", [");
+        }
+        string.push_str(&*node.frequency.to_string());
+        string.push_str("|");
+        string.push_str(&*symbol);
+        string.push_str("]");
+    } else {
+        if node.left.is_some() {
+            find_all_frequency_pairs(node.left.clone().unwrap().as_ref(), string);
+        }
+        if node.right.is_some() {
+            find_all_frequency_pairs(node.right.clone().unwrap().as_ref(), string);
+        }
+    }
 }
