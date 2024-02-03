@@ -1,4 +1,4 @@
-use crate::frequency::Input;
+use crate::input::Input;
 use crate::node::TreeNode;
 
 pub struct HuffmanTree {

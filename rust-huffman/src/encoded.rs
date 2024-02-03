@@ -1,5 +1,5 @@
 use std::fmt;
-use crate::frequency::Input;
+use crate::input::Input;
 use crate::tree::HuffmanTree;
 
 pub struct Encoded {
