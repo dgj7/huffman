@@ -1,9 +1,11 @@
 use std::collections::HashMap;
 use std::fmt;
+use std::str::Chars;
 use crate::node::TreeNode;
 
 pub trait Input {
     fn to_vector(&self) -> Vec<TreeNode>;
+    fn to_char_array(&self) -> Chars;
 }
 
 pub struct StringInput {
@@ -41,6 +43,10 @@ impl Input for StringInput {
         map.iter().for_each(|elem| vec.push(TreeNode::new_leaf(*elem.0, *elem.1)));
 
         return vec;
+    }
+
+    fn to_char_array(&self) -> Chars {
+        self.message.chars().into_iter()
     }
 }
 
