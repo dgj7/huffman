@@ -50,9 +50,11 @@ frequencies list has [21] elements
 ```
 
 The following expandos represent each step in the tree building process.  Each step merges two nodes and reduces the list size by 1.
+
 <details>
 <summary>iteration 1</summary>
-```
+<pre>
+<code>
 frequencies list has [20] elements
 [1] <= [l]
 [1] <= [x]
@@ -63,7 +65,7 @@ frequencies list has [20] elements
 [2] <= [o]
 [2] <= [p]
 [2] <= [r]
-[2] <= INTERNAL[1|b], [1|c]]
+[2] <= INTERNAL[1|b, 1|c]
 [3] <= [a]
 [3] <= [g]
 [3] <= [h]
@@ -74,7 +76,160 @@ frequencies list has [20] elements
 [8] <= [s]
 [11] <= [t]
 [16] <= [ ]
-```
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 2</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 3</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 4</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 5</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 6</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 7</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 8</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 9</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 10</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 11</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 12</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 13</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 14</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 15</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 16</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 17</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 18</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 19</summary>
+<pre>
+<code>
+</code>
+</pre>
+</details>
+
+<details>
+<summary>iteration 20</summary>
+<pre>
+<code>
+</code>
+</pre>
 </details>
 
 ---
