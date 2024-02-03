@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use std::fmt;
-use crate::tree::{SymbolNode, TreeNode};
+use crate::node::TreeNode;
 
 pub trait Input {
     fn to_vector(&self) -> Vec<TreeNode>;
@@ -38,17 +38,7 @@ impl Input for StringInput {
             map.insert(symbol, value);
         });
 
-        //map.iter().for_each(|elem| println!("[{}]=>[{}]", elem.0, elem.1));
-
-        map.iter()
-            .for_each(|elem| vec.push(TreeNode::SymbolNode(SymbolNode { symbol: *elem.0, frequency: *elem.1 })));
-
-        //vec.iter().for_each(|sn| {
-        //    match sn {
-        //        TreeNode::SymbolNode(the_node) => println!("[{}]=>[{}]", the_node.symbol, the_node.frequency),
-        //        TreeNode::FrequencyNode(the_frequency, ..) => println!("{}", the_frequency)
-        //    };
-        //});
+        map.iter().for_each(|elem| vec.push(TreeNode::new_leaf(*elem.0, *elem.1)));
 
         return vec;
     }

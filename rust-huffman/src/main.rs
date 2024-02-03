@@ -2,6 +2,7 @@ mod tree;
 mod frequency;
 mod encoded;
 mod decoded;
+mod node;
 
 fn main() {
     let input = frequency::StringInput::new(std::env::args());
