@@ -24,16 +24,16 @@ int main(int argc, char **argv)
 	HuffmanTree tree = builder.build(theString);
 
 	/* print the input */
-	std::cout << "input:  " << theString << std::endl;
+	std::cout << "input:   [" << theString << "]" << std::endl;
 
 	// todo: this might need to be moved to a -verbose mode, or something similar
 	//printer.printCodes(tree);
 	
 	std::vector<bool> encoded = encoder.encode(theString,tree);
-	std::cout << "encoded: " << b_vec_to_str(encoded) << std::endl;
+	std::cout << "encoded: [" << b_vec_to_str(encoded) << "]" << std::endl;
 	
 	std::string decoded = decoder.decode(encoded,tree);
-	std::cout << "decoded: " << decoded << std::endl;
+	std::cout << "decoded: [" << decoded << "]" << std::endl;
 }
 
 std::string b_vec_to_str(std::vector<bool> input)
