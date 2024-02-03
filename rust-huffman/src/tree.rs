@@ -17,7 +17,7 @@ impl HuffmanTree {
     pub fn new(input: &dyn Input) -> Box<HuffmanTree> {
         /* get a vector with all the frequencies, represented as leaf nodes */
         let mut frequencies = input.to_vector();
-        //debug_print(&mut frequencies);
+        debug_print(&mut frequencies);
 
         /* presently failing for an empty frequency list */
         if frequencies.len() == 0 {
@@ -34,7 +34,7 @@ impl HuffmanTree {
             let sum = left.frequency + right.frequency;
             let internal = TreeNode::new_internal(sum, left, right);
             frequencies.push(internal);
-            //debug_print(&mut frequencies);
+            debug_print(&mut frequencies);
         }
         let the_root = frequencies[0].clone();
 
@@ -99,29 +99,29 @@ fn debug_print(vec: &mut Vec<TreeNode>) {
         } else {
             /* if it's an internal node, get all of the values and print those */
             let mut all_pairs = String::new();
-            find_all_frequency_pairs(x, &mut all_pairs);
+            debug_find_all_frequency_pairs(x, &mut all_pairs);
             println!("[{}] <= INTERNAL[{}]", x.frequency, all_pairs);
         }
     });
     println!("----------------------------------------");
 }
 
-fn find_all_frequency_pairs(node: &TreeNode, string: &mut String) {
+fn debug_find_all_frequency_pairs(node: &TreeNode, string: &mut String) {
     if node.symbol.is_some() {
         let symbol = node.symbol.unwrap().to_string();
         if !string.is_empty() {
-            string.push_str(", [");
+            string.push_str(", ");
         }
         string.push_str(&*node.frequency.to_string());
         string.push_str("|");
         string.push_str(&*symbol);
-        string.push_str("]");
+        string.push_str("");
     } else {
         if node.left.is_some() {
-            find_all_frequency_pairs(node.left.clone().unwrap().as_ref(), string);
+            debug_find_all_frequency_pairs(node.left.clone().unwrap().as_ref(), string);
         }
         if node.right.is_some() {
-            find_all_frequency_pairs(node.right.clone().unwrap().as_ref(), string);
+            debug_find_all_frequency_pairs(node.right.clone().unwrap().as_ref(), string);
         }
     }
 }
