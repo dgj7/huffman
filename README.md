@@ -13,15 +13,18 @@ Each directory has its own `build.sh` and `run.sh` scripts to build and run the 
 Each huffman implementation should accept input from the terminal with the `-i` flag, and generate the following output:
 
 ```bash
-user@machine:~$ huffman -i "this is an input string"
-input:   [this is an input string]
+user@machine:~$ huffman -i "this is a sample input string. its text is being used to test the huffman coding tree."
+input:   [this is a sample input string. its text is being used to test the huffman coding tree.]
 encoded: [001011]
-decoded: [this is an input string]
+decoded: [this is a sample input string. its text is being used to test the huffman coding tree.]
 ```
 
 ## Implementations
 * [c++](c++-huffman/)
 * [java](java-huffman/)
 * [rust](rust-huffman/)
+
+# Other Resources
+* [algorithm](algorithm.md)
 
 ---
