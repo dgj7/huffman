@@ -7,7 +7,7 @@ pub struct Encoded {
 }
 
 impl Encoded {
-    pub fn new(input: &Input, tree: &HuffmanTree) -> Encoded {
+    pub fn new(input: &dyn Input, tree: &HuffmanTree) -> Encoded {
         Encoded{}
     }
 }

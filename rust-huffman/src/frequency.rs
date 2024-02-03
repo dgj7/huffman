@@ -1,23 +1,49 @@
 use std::collections::HashMap;
 use std::fmt;
 
-pub(crate) struct Input {
-    //
+pub trait Input {
+    fn to_hash_map(&self) -> HashMap<char, usize>;
 }
 
-impl Input {
-    pub fn new(args: std::env::Args) -> Input {
-        Input{}
-    }
+pub struct StringInput {
+    pub message: String,
+}
 
-    pub fn to_hash_map(&self) -> HashMap<char, usize> {
-        panic!("not yet implemented")
+impl StringInput {
+    pub fn new(args: std::env::Args) -> StringInput {
+        let args_vec: Vec<String> = args.collect();
+        if args_vec.len() == 3 && args_vec[1] == "-i" {
+            StringInput { message: args_vec[2].to_string() }
+        } else {
+            panic!("bad args; expected -i only")
+        }
     }
 }
 
-impl fmt::Display for Input {
+impl Input for StringInput {
+    fn to_hash_map(&self) -> HashMap<char, usize> {
+        let mut map = HashMap::new();
+
+        self.message
+            .chars()
+            .for_each(|symbol| {
+            let mut value = 0;
+            if map.contains_key(&symbol) {
+                value = *map.get(&symbol).unwrap() + 1;
+            } else {
+                value = 1;
+            }
+            map.insert(symbol, value);
+        });
+
+        //map.iter().for_each(|elem| println!("[{}]=>[{}]", elem.0, elem.1));
+
+        return map;
+    }
+}
+
+impl fmt::Display for StringInput {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // todo
-        write!(f, "")
+        write!(f, "{}", self.message)
     }
 }
