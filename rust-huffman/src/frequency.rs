@@ -1,8 +1,9 @@
 use std::collections::HashMap;
 use std::fmt;
+use crate::tree::{SymbolNode, TreeNode};
 
 pub trait Input {
-    fn to_hash_map(&self) -> HashMap<char, usize>;
+    fn to_vector(&self) -> Vec<TreeNode>;
 }
 
 pub struct StringInput {
@@ -21,8 +22,9 @@ impl StringInput {
 }
 
 impl Input for StringInput {
-    fn to_hash_map(&self) -> HashMap<char, usize> {
+    fn to_vector(&self) -> Vec<TreeNode> {
         let mut map = HashMap::new();
+        let mut vec = vec!();
 
         self.message
             .chars()
@@ -38,7 +40,17 @@ impl Input for StringInput {
 
         //map.iter().for_each(|elem| println!("[{}]=>[{}]", elem.0, elem.1));
 
-        return map;
+        map.iter()
+            .for_each(|elem| vec.push(TreeNode::SymbolNode(SymbolNode { symbol: *elem.0, frequency: *elem.1 })));
+
+        //vec.iter().for_each(|sn| {
+        //    match sn {
+        //        TreeNode::SymbolNode(the_node) => println!("[{}]=>[{}]", the_node.symbol, the_node.frequency),
+        //        TreeNode::FrequencyNode(the_frequency, ..) => println!("{}", the_frequency)
+        //    };
+        //});
+
+        return vec;
     }
 }
 
