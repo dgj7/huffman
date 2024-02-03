@@ -22,5 +22,6 @@ decoded: [this is an input string]
 ## Implementations
 * [c++](c++-huffman/)
 * [java](java-huffman/)
+* [rust](rust-huffman/)
 
 ---
