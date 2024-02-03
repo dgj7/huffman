@@ -28,7 +28,13 @@ public class Main
 	 */
 	public static void main(String []args) throws HuffmanEncodingException, HuffmanDecodingException
 	{
-		String value = "this is a test string that will be used to test encoding and decoding of huffman trees!";
+		final String value;
+		if (args.length == 2 && args[0].equals("-i")) {
+			value = args[1];
+		} else {
+			throw new IllegalArgumentException("bad input args");
+		}
+
 		logger.info(String.format("input:   [%s]", value));
 		
 		HuffmanTree tree = builder.build(value);
