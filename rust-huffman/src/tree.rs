@@ -1,3 +1,4 @@
+use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::ops::Deref;
 use bit_vec::BitVec;
@@ -17,6 +18,8 @@ impl HuffmanTree {
         /* get a vector with all the frequencies, represented as leaf nodes */
         let mut frequencies = input.to_vector();
         //println!("frequencies list has [{}] elements", frequencies.len());
+        //sort(&mut frequencies);
+        //frequencies.iter().for_each(|x| println!("[{}]=>[{}]", x.symbol.unwrap(), x.frequency));
 
         /* presently failing for an empty frequency list */
         if frequencies.len() == 0 {
@@ -26,7 +29,7 @@ impl HuffmanTree {
 
         /* merge elements in the frequency list until there is only a single element; that element is the tree's root */
         while frequencies.len() > 1 {
-            frequencies.sort_by(|left, right| left.frequency.partial_cmp(&right.frequency).unwrap());
+            sort(&mut frequencies);
             let two: Vec<TreeNode> = frequencies.drain(0..2).collect();
             let left: TreeNode = two[0].clone();
             let right: TreeNode = two[1].clone();
@@ -69,4 +72,20 @@ fn descend(node: &TreeNode, map: &mut HashMap<char, BitVec>, mut bits: BitVec, b
         /* if the symbol is here, then we're done and can add to the map */
         map.insert(node.symbol.unwrap(), bits);
     }
+}
+
+fn sort(vec: &mut Vec<TreeNode>) {
+    vec.sort_by(|left, right| {
+        let freq_result = left.frequency.partial_cmp(&right.frequency).unwrap();
+
+        return if freq_result == Ordering::Equal {
+            if left.symbol.is_some() && right.symbol.is_some() {
+                left.symbol.unwrap().partial_cmp(&right.symbol.unwrap()).unwrap()
+            } else {
+                left.size().partial_cmp(&right.size()).unwrap()
+            }
+        } else {
+            freq_result
+        }
+    });
 }

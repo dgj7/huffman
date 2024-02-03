@@ -14,4 +14,16 @@ impl TreeNode {
     pub fn new_leaf(the_symbol: char, the_frequency: usize) -> TreeNode {
         TreeNode { symbol: Some(the_symbol), frequency: the_frequency, left: None, right: None }
     }
+
+    pub fn size(&self) -> usize {
+        let left_size = match &self.left {
+            None => 0,
+            Some(x) => x.size()
+        };
+        let right_size = match &self.right {
+            None => 0,
+            Some(x) => x.size()
+        };
+        return 1 + left_size + right_size;
+    }
 }
