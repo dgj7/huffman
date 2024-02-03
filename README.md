@@ -25,6 +25,7 @@ decoded: [this is a sample input string. its text is being used to test the huff
 * [rust](rust-huffman/)
 
 # Other Resources
-* [algorithm](algorithm.md)
+* [algorithm](.docs/algorithm.md)
+* [todo](.docs/todo.md)
 
 ---
