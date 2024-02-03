@@ -1,9 +1,10 @@
 use std::fmt;
+use bit_vec::BitVec;
 use crate::input::Input;
 use crate::tree::HuffmanTree;
 
 pub struct Encoded {
-    //
+    //pub bits: BitVec
 }
 
 impl Encoded {
