@@ -6,3 +6,4 @@ c++-huffman/cmake_install.cmake
 c++-huffman/bin/huffman
 c++-huffman/bin/libhuffman.a
 c++-huffman/.vscode/*
+.vscode/*

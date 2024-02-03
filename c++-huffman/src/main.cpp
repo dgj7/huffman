@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <cstring> // strcmp()
 
 #include "lib/Huffman.hpp"
 
@@ -8,8 +9,12 @@ std::string b_vec_to_str(std::vector<bool>);
 
 int main(int argc, char **argv)
 {
-	// todo: get the input from argv
-    std::string theString = "this is a sample input string. it's text is being used to test the huffman coding tree.";
+	/* parse command line args, and set input if correct */
+	//std::copy(argv, argv + argc, std::ostream_iterator<char *>(std::cout, "\n")); // requires <algorithm> and <iterator>
+	std::string theString;
+	if (argc == 3 && strcmp(argv[1], "-i") == 0) {
+		theString = argv[2];
+	}
 
 	/* create variables */
 	HuffmanTreeBuilder builder;
