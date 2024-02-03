@@ -1,8 +1,8 @@
-mod tree;
 mod input;
+mod node;
+mod tree;
 mod encoded;
 mod decoded;
-mod node;
 
 fn main() {
     let input = input::StringInput::new(std::env::args());

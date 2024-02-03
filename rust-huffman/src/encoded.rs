@@ -4,7 +4,7 @@ use crate::input::Input;
 use crate::tree::HuffmanTree;
 
 pub struct Encoded {
-    pub bits: BitVec
+    pub bits: BitVec,
 }
 
 impl Encoded {
@@ -13,14 +13,14 @@ impl Encoded {
 
         input.to_char_array()
             .for_each(|c| {
-            let mut maybe_symbol_bits = tree.encoder.get(&c).clone();
-            if maybe_symbol_bits.is_some() {
-                let mut symbol_bits = maybe_symbol_bits.unwrap().clone();
-                the_bits.append(&mut symbol_bits);
-            }
-        });
+                let mut maybe_symbol_bits = tree.encoder.get(&c).clone();
+                if maybe_symbol_bits.is_some() {
+                    let mut symbol_bits = maybe_symbol_bits.unwrap().clone();
+                    the_bits.append(&mut symbol_bits);
+                }
+            });
 
-        Encoded{ bits: the_bits }
+        Encoded { bits: the_bits }
     }
 }
 

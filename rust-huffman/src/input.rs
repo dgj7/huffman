@@ -31,14 +31,14 @@ impl Input for StringInput {
         self.message
             .chars()
             .for_each(|symbol| {
-            let mut value = 0;
-            if map.contains_key(&symbol) {
-                value = *map.get(&symbol).unwrap() + 1;
-            } else {
-                value = 1;
-            }
-            map.insert(symbol, value);
-        });
+                let mut value = 0;
+                if map.contains_key(&symbol) {
+                    value = *map.get(&symbol).unwrap() + 1;
+                } else {
+                    value = 1;
+                }
+                map.insert(symbol, value);
+            });
 
         map.iter().for_each(|elem| vec.push(TreeNode::new_leaf(*elem.0, *elem.1)));
 

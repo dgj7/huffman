@@ -9,7 +9,7 @@ const RIGHT: bool = true;
 
 pub struct HuffmanTree {
     pub root: TreeNode,
-    pub encoder: HashMap<char, BitVec>
+    pub encoder: HashMap<char, BitVec>,
 }
 
 impl HuffmanTree {
@@ -42,7 +42,7 @@ impl HuffmanTree {
         //println!("encoder has [{}] elements", the_encoder.len());
 
         /* return the new tree */
-        Box::new(HuffmanTree{ root: the_root, encoder: the_encoder })
+        Box::new(HuffmanTree { root: the_root, encoder: the_encoder })
     }
 }
 

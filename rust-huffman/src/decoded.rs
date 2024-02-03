@@ -8,7 +8,7 @@ pub struct Decoded {
 
 impl Decoded {
     pub fn new(encoded: &Encoded, tree: &HuffmanTree) -> Decoded {
-        Decoded{}
+        Decoded {}
     }
 }
 
