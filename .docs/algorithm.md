@@ -23,8 +23,13 @@
 # Example
 This is a trivial example, using the input String `this is a sample input string. its text is being used to test the huffman coding tree.`.  We're using a text string here instead of binary data to make the steps easier to follow.
 
-This string results in the following (sorted) frequencies:
-```text
+## Tree Building
+The expandos below show the elements in the list as the tree is being assembled.
+
+<details>
+<summary>initial list</summary>
+<pre>
+<code>
 frequencies list has [21] elements
 [1] <= [b]
 [1] <= [c]
@@ -47,9 +52,9 @@ frequencies list has [21] elements
 [8] <= [s]
 [11] <= [t]
 [16] <= [ ]
-```
-
-The following expandos represent each step in the tree building process.  Each step merges two nodes and reduces the list size by 1.
+</code>
+</pre>
+</details>
 
 <details>
 <summary>iteration 1</summary>
@@ -84,6 +89,26 @@ frequencies list has [20] elements
 <summary>iteration 2</summary>
 <pre>
 <code>
+frequencies list has [19] elements
+[2] <= [.]
+[2] <= [d]
+[2] <= [f]
+[2] <= [m]
+[2] <= [o]
+[2] <= [p]
+[2] <= [r]
+[2] <= INTERNAL[1|b, 1|c]
+[2] <= INTERNAL[1|l, 1|x]
+[3] <= [a]
+[3] <= [g]
+[3] <= [h]
+[3] <= [u]
+[5] <= [n]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[11] <= [t]
+[16] <= [ ]
 </code>
 </pre>
 </details>
@@ -92,6 +117,25 @@ frequencies list has [20] elements
 <summary>iteration 3</summary>
 <pre>
 <code>
+frequencies list has [18] elements
+[2] <= [f]
+[2] <= [m]
+[2] <= [o]
+[2] <= [p]
+[2] <= [r]
+[2] <= INTERNAL[1|b, 1|c]
+[2] <= INTERNAL[1|l, 1|x]
+[3] <= [a]
+[3] <= [g]
+[3] <= [h]
+[3] <= [u]
+[4] <= INTERNAL[2|., 2|d]
+[5] <= [n]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[11] <= [t]
+[16] <= [ ]
 </code>
 </pre>
 </details>
@@ -100,6 +144,24 @@ frequencies list has [20] elements
 <summary>iteration 4</summary>
 <pre>
 <code>
+frequencies list has [17] elements
+[2] <= [o]
+[2] <= [p]
+[2] <= [r]
+[2] <= INTERNAL[1|b, 1|c]
+[2] <= INTERNAL[1|l, 1|x]
+[3] <= [a]
+[3] <= [g]
+[3] <= [h]
+[3] <= [u]
+[4] <= INTERNAL[2|., 2|d]
+[4] <= INTERNAL[2|f, 2|m]
+[5] <= [n]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[11] <= [t]
+[16] <= [ ]
 </code>
 </pre>
 </details>
@@ -108,6 +170,23 @@ frequencies list has [20] elements
 <summary>iteration 5</summary>
 <pre>
 <code>
+frequencies list has [16] elements
+[2] <= [r]
+[2] <= INTERNAL[1|b, 1|c]
+[2] <= INTERNAL[1|l, 1|x]
+[3] <= [a]
+[3] <= [g]
+[3] <= [h]
+[3] <= [u]
+[4] <= INTERNAL[2|., 2|d]
+[4] <= INTERNAL[2|f, 2|m]
+[4] <= INTERNAL[2|o, 2|p]
+[5] <= [n]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[11] <= [t]
+[16] <= [ ]
 </code>
 </pre>
 </details>
@@ -116,6 +195,22 @@ frequencies list has [20] elements
 <summary>iteration 6</summary>
 <pre>
 <code>
+frequencies list has [15] elements
+[2] <= INTERNAL[1|l, 1|x]
+[3] <= [a]
+[3] <= [g]
+[3] <= [h]
+[3] <= [u]
+[4] <= INTERNAL[2|., 2|d]
+[4] <= INTERNAL[2|f, 2|m]
+[4] <= INTERNAL[2|o, 2|p]
+[4] <= INTERNAL[2|r, 1|b, 1|c]
+[5] <= [n]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[11] <= [t]
+[16] <= [ ]
 </code>
 </pre>
 </details>
@@ -124,6 +219,21 @@ frequencies list has [20] elements
 <summary>iteration 7</summary>
 <pre>
 <code>
+frequencies list has [14] elements
+[3] <= [g]
+[3] <= [h]
+[3] <= [u]
+[4] <= INTERNAL[2|., 2|d]
+[4] <= INTERNAL[2|f, 2|m]
+[4] <= INTERNAL[2|o, 2|p]
+[4] <= INTERNAL[2|r, 1|b, 1|c]
+[5] <= [n]
+[5] <= INTERNAL[1|l, 1|x, 3|a]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[11] <= [t]
+[16] <= [ ]
 </code>
 </pre>
 </details>
@@ -132,6 +242,20 @@ frequencies list has [20] elements
 <summary>iteration 8</summary>
 <pre>
 <code>
+frequencies list has [13] elements
+[3] <= [u]
+[4] <= INTERNAL[2|., 2|d]
+[4] <= INTERNAL[2|f, 2|m]
+[4] <= INTERNAL[2|o, 2|p]
+[4] <= INTERNAL[2|r, 1|b, 1|c]
+[5] <= [n]
+[5] <= INTERNAL[1|l, 1|x, 3|a]
+[6] <= INTERNAL[3|g, 3|h]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[11] <= [t]
+[16] <= [ ]
 </code>
 </pre>
 </details>
@@ -140,6 +264,19 @@ frequencies list has [20] elements
 <summary>iteration 9</summary>
 <pre>
 <code>
+frequencies list has [12] elements
+[4] <= INTERNAL[2|f, 2|m]
+[4] <= INTERNAL[2|o, 2|p]
+[4] <= INTERNAL[2|r, 1|b, 1|c]
+[5] <= [n]
+[5] <= INTERNAL[1|l, 1|x, 3|a]
+[6] <= INTERNAL[3|g, 3|h]
+[7] <= INTERNAL[3|u, 2|., 2|d]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[11] <= [t]
+[16] <= [ ]
 </code>
 </pre>
 </details>
@@ -148,6 +285,18 @@ frequencies list has [20] elements
 <summary>iteration 10</summary>
 <pre>
 <code>
+frequencies list has [11] elements
+[4] <= INTERNAL[2|r, 1|b, 1|c]
+[5] <= [n]
+[5] <= INTERNAL[1|l, 1|x, 3|a]
+[6] <= INTERNAL[3|g, 3|h]
+[7] <= INTERNAL[3|u, 2|., 2|d]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[8] <= INTERNAL[2|f, 2|m, 2|o, 2|p]
+[11] <= [t]
+[16] <= [ ]
 </code>
 </pre>
 </details>
@@ -156,6 +305,17 @@ frequencies list has [20] elements
 <summary>iteration 11</summary>
 <pre>
 <code>
+frequencies list has [10] elements
+[5] <= INTERNAL[1|l, 1|x, 3|a]
+[6] <= INTERNAL[3|g, 3|h]
+[7] <= INTERNAL[3|u, 2|., 2|d]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[8] <= INTERNAL[2|f, 2|m, 2|o, 2|p]
+[9] <= INTERNAL[2|r, 1|b, 1|c, 5|n]
+[11] <= [t]
+[16] <= [ ]
 </code>
 </pre>
 </details>
@@ -164,6 +324,16 @@ frequencies list has [20] elements
 <summary>iteration 12</summary>
 <pre>
 <code>
+frequencies list has [9] elements
+[7] <= INTERNAL[3|u, 2|., 2|d]
+[8] <= [e]
+[8] <= [i]
+[8] <= [s]
+[8] <= INTERNAL[2|f, 2|m, 2|o, 2|p]
+[9] <= INTERNAL[2|r, 1|b, 1|c, 5|n]
+[11] <= [t]
+[11] <= INTERNAL[1|l, 1|x, 3|a, 3|g, 3|h]
+[16] <= [ ]
 </code>
 </pre>
 </details>
@@ -172,6 +342,15 @@ frequencies list has [20] elements
 <summary>iteration 13</summary>
 <pre>
 <code>
+frequencies list has [8] elements
+[8] <= [i]
+[8] <= [s]
+[8] <= INTERNAL[2|f, 2|m, 2|o, 2|p]
+[9] <= INTERNAL[2|r, 1|b, 1|c, 5|n]
+[11] <= [t]
+[11] <= INTERNAL[1|l, 1|x, 3|a, 3|g, 3|h]
+[15] <= INTERNAL[3|u, 2|., 2|d, 8|e]
+[16] <= [ ]
 </code>
 </pre>
 </details>
@@ -180,6 +359,14 @@ frequencies list has [20] elements
 <summary>iteration 14</summary>
 <pre>
 <code>
+frequencies list has [7] elements
+[8] <= INTERNAL[2|f, 2|m, 2|o, 2|p]
+[9] <= INTERNAL[2|r, 1|b, 1|c, 5|n]
+[11] <= [t]
+[11] <= INTERNAL[1|l, 1|x, 3|a, 3|g, 3|h]
+[15] <= INTERNAL[3|u, 2|., 2|d, 8|e]
+[16] <= [ ]
+[16] <= INTERNAL[8|i, 8|s]
 </code>
 </pre>
 </details>
@@ -188,6 +375,13 @@ frequencies list has [20] elements
 <summary>iteration 15</summary>
 <pre>
 <code>
+frequencies list has [6] elements
+[11] <= [t]
+[11] <= INTERNAL[1|l, 1|x, 3|a, 3|g, 3|h]
+[15] <= INTERNAL[3|u, 2|., 2|d, 8|e]
+[16] <= [ ]
+[16] <= INTERNAL[8|i, 8|s]
+[17] <= INTERNAL[2|f, 2|m, 2|o, 2|p, 2|r, 1|b, 1|c, 5|n]
 </code>
 </pre>
 </details>
@@ -196,6 +390,12 @@ frequencies list has [20] elements
 <summary>iteration 16</summary>
 <pre>
 <code>
+frequencies list has [5] elements
+[15] <= INTERNAL[3|u, 2|., 2|d, 8|e]
+[16] <= [ ]
+[16] <= INTERNAL[8|i, 8|s]
+[17] <= INTERNAL[2|f, 2|m, 2|o, 2|p, 2|r, 1|b, 1|c, 5|n]
+[22] <= INTERNAL[11|t, 1|l, 1|x, 3|a, 3|g, 3|h]
 </code>
 </pre>
 </details>
@@ -204,6 +404,11 @@ frequencies list has [20] elements
 <summary>iteration 17</summary>
 <pre>
 <code>
+frequencies list has [4] elements
+[16] <= INTERNAL[8|i, 8|s]
+[17] <= INTERNAL[2|f, 2|m, 2|o, 2|p, 2|r, 1|b, 1|c, 5|n]
+[22] <= INTERNAL[11|t, 1|l, 1|x, 3|a, 3|g, 3|h]
+[31] <= INTERNAL[3|u, 2|., 2|d, 8|e, 16| ]
 </code>
 </pre>
 </details>
@@ -212,6 +417,10 @@ frequencies list has [20] elements
 <summary>iteration 18</summary>
 <pre>
 <code>
+frequencies list has [3] elements
+[22] <= INTERNAL[11|t, 1|l, 1|x, 3|a, 3|g, 3|h]
+[31] <= INTERNAL[3|u, 2|., 2|d, 8|e, 16| ]
+[33] <= INTERNAL[8|i, 8|s, 2|f, 2|m, 2|o, 2|p, 2|r, 1|b, 1|c, 5|n]
 </code>
 </pre>
 </details>
@@ -220,6 +429,9 @@ frequencies list has [20] elements
 <summary>iteration 19</summary>
 <pre>
 <code>
+frequencies list has [2] elements
+[33] <= INTERNAL[8|i, 8|s, 2|f, 2|m, 2|o, 2|p, 2|r, 1|b, 1|c, 5|n]
+[53] <= INTERNAL[11|t, 1|l, 1|x, 3|a, 3|g, 3|h, 3|u, 2|., 2|d, 8|e, 16| ]
 </code>
 </pre>
 </details>
@@ -228,9 +440,43 @@ frequencies list has [20] elements
 <summary>iteration 20</summary>
 <pre>
 <code>
+frequencies list has [1] elements
+[86] <= INTERNAL[8|i, 8|s, 2|f, 2|m, 2|o, 2|p, 2|r, 1|b, 1|c, 5|n, 11|t, 1|l, 1|x, 3|a, 3|g, 3|h, 3|u, 2|., 2|d, 8|e, 16| ]
 </code>
 </pre>
 </details>
+
+## Encoding Map
+From the tree we can generate the following codes for each input character:
+```
+[p]:    [01011]
+[b]:    [011010]
+[d]:    [110011]
+[n]:    [0111]
+[f]:    [01000]
+[t]:    [100]
+[g]:    [10110]
+[.]:    [110010]
+[i]:    [000]
+[l]:    [101000]
+[s]:    [001]
+[u]:    [11000]
+[ ]:    [111]
+[c]:    [011011]
+[m]:    [01001]
+[e]:    [1101]
+[r]:    [01100]
+[h]:    [10111]
+[a]:    [10101]
+[o]:    [01010]
+[x]:    [101001]
+```
+
+## Encoded Message
+And finally, the encoded message is:
+```
+100101110000011110000011111010111100110101010010101110100011011110000111010111100010011100110001100000011110110110010111000100001111100110110100110011100000111101101011010000111101101111100000111011100111111000101011110011010011001111001011111011111011111000010000100001001101010111111011011010101100110000111101101111000110011011101110010
+```
 
 ---
 [Go Back](..)
