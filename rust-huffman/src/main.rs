@@ -10,7 +10,7 @@ fn main() {
     let encoded = encoded::Encoded::new(&input, &tree);
     let decoded = decoded::Decoded::new(&encoded, &tree);
 
-    println!("input:   {}", input);
-    println!("encoded: {}", encoded);
-    println!("decoded: {}", decoded);
+    println!("input:   [{}]", input);
+    println!("encoded: [{}]", encoded);
+    println!("decoded: [{}]", decoded);
 }
