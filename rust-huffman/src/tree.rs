@@ -2,6 +2,7 @@ use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::ops::Deref;
 use bit_vec::BitVec;
+use crate::debug::{debug_print, debug_print_encodings};
 use crate::input::Input;
 use crate::node::TreeNode;
 
@@ -10,14 +11,14 @@ const RIGHT: bool = true;
 
 pub struct HuffmanTree {
     pub root: TreeNode,
-    pub encoder: HashMap<char, BitVec>,
+    pub encodings: HashMap<char, BitVec>,
 }
 
 impl HuffmanTree {
     pub fn new(input: &dyn Input) -> Box<HuffmanTree> {
         /* get a vector with all the frequencies, represented as leaf nodes */
         let mut frequencies = input.to_vector();
-        debug_print(&mut frequencies);
+        //debug_print(&mut frequencies);
 
         /* presently failing for an empty frequency list */
         if frequencies.len() == 0 {
@@ -34,16 +35,17 @@ impl HuffmanTree {
             let sum = left.frequency + right.frequency;
             let internal = TreeNode::new_internal(sum, left, right);
             frequencies.push(internal);
-            debug_print(&mut frequencies);
+            //debug_print(&mut frequencies);
         }
         let the_root = frequencies[0].clone();
 
         /* descend the tree to gather all codes */
-        let mut the_encoder: HashMap<char, BitVec> = HashMap::new();
-        descend_tree(&the_root, &mut the_encoder);
+        let mut the_encodings: HashMap<char, BitVec> = HashMap::new();
+        descend_tree(&the_root, &mut the_encodings);
+        debug_print_encodings(&the_encodings);
 
         /* return the new tree */
-        Box::new(HuffmanTree { root: the_root, encoder: the_encoder })
+        Box::new(HuffmanTree { root: the_root, encodings: the_encodings })
     }
 }
 
@@ -72,7 +74,7 @@ fn descend(node: &TreeNode, map: &mut HashMap<char, BitVec>, mut bits: BitVec, b
     }
 }
 
-fn sort(vec: &mut Vec<TreeNode>) {
+pub fn sort(vec: &mut Vec<TreeNode>) {
     vec.sort_by(|left, right| {
         let freq_result = left.frequency.partial_cmp(&right.frequency).unwrap();
 
@@ -86,42 +88,4 @@ fn sort(vec: &mut Vec<TreeNode>) {
             freq_result
         }
     });
-}
-
-fn debug_print(vec: &mut Vec<TreeNode>) {
-    println!("----------------------------------------");
-    sort(vec);
-    println!("frequencies list has [{}] elements", vec.len());
-    vec.iter().for_each(|x| {
-        if x.symbol.is_some() {
-            /* if it's a leaf, we print simply */
-            println!("[{}] <= [{}]", x.frequency, x.symbol.unwrap());
-        } else {
-            /* if it's an internal node, get all of the values and print those */
-            let mut all_pairs = String::new();
-            debug_find_all_frequency_pairs(x, &mut all_pairs);
-            println!("[{}] <= INTERNAL[{}]", x.frequency, all_pairs);
-        }
-    });
-    println!("----------------------------------------");
-}
-
-fn debug_find_all_frequency_pairs(node: &TreeNode, string: &mut String) {
-    if node.symbol.is_some() {
-        let symbol = node.symbol.unwrap().to_string();
-        if !string.is_empty() {
-            string.push_str(", ");
-        }
-        string.push_str(&*node.frequency.to_string());
-        string.push_str("|");
-        string.push_str(&*symbol);
-        string.push_str("");
-    } else {
-        if node.left.is_some() {
-            debug_find_all_frequency_pairs(node.left.clone().unwrap().as_ref(), string);
-        }
-        if node.right.is_some() {
-            debug_find_all_frequency_pairs(node.right.clone().unwrap().as_ref(), string);
-        }
-    }
 }

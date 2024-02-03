@@ -13,7 +13,7 @@ impl Encoded {
 
         input.to_char_array()
             .for_each(|c| {
-                let mut maybe_symbol_bits = tree.encoder.get(&c).clone();
+                let mut maybe_symbol_bits = tree.encodings.get(&c).clone();
                 if maybe_symbol_bits.is_some() {
                     let mut symbol_bits = maybe_symbol_bits.unwrap().clone();
                     the_bits.append(&mut symbol_bits);
