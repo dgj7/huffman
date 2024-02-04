@@ -470,6 +470,9 @@ frequencies list has [1] elements
 Below is an (horrifying) artist's rendition of the resulting Huffman tree:
 ![tree](why-i-didnt-go-to-art-school.png)
 
+For an example how we get the codes for `p` (`01011`) and `d` (`110011`):
+![tree-with-paths](with-paths.png)
+
 ### Encoding Map
 From the tree we can generate the following codes for each input character:
 ```
