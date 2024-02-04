@@ -23,8 +23,7 @@ impl HuffmanTree {
 
         /* presently failing for an empty frequency list */
         if frequencies.len() == 0 {
-            // todo: implement an empty tree
-            panic!("empty input")
+            return None;
         }
 
         /* merge elements in the frequency list until there is only a single element; that element is the tree's root */
