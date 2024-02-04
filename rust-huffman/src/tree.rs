@@ -2,6 +2,7 @@ use std::cmp::Ordering;
 use std::collections::HashMap;
 use bitvec::macros::internal::funty::Fundamental;
 use bitvec::vec::BitVec;
+use crate::bitvec::PrintableBitVec;
 use crate::decoded_byte::DecodedByte;
 use crate::input::Input;
 use crate::node::{descend_tree, TreeNode};
@@ -59,7 +60,8 @@ impl HuffmanTree {
                 Some(x) => DecodedByte::new(x, the_bits)
             };
         } else {
-            panic!("it seems the present code is invalid.");
+            // todo: unit test this
+            panic!("[{}] is not a valid code", PrintableBitVec::new(&the_bits));
         }
     }
 }
