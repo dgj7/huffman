@@ -8,6 +8,7 @@ mod decoded_byte;
 mod bitvec;
 
 fn main() {
+    let start = std::time::Instant::now();
     let input = input::StringInput::new(std::env::args());
     let tree = tree::HuffmanTree::new(&input);
     let mut encoded = encoded::Encoded::new(&input, &tree);
@@ -16,6 +17,7 @@ fn main() {
     println!("input:   [{}]", input);
     println!("encoded: [{}]", encoded);
     println!("decoded: [{}]", decoded);
+    println!("done. ({}ms)", start.elapsed().as_millis());
 }
 
 #[cfg(test)]
