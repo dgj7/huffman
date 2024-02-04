@@ -466,6 +466,10 @@ frequencies list has [1] elements
 </pre>
 </details>
 
+### Huffman Tree
+Below is an (horrifying) artist's rendition of the resulting Huffman tree:
+![tree](why-i-didnt-go-to-art-school.png)
+
 ### Encoding Map
 From the tree we can generate the following codes for each input character:
 ```
