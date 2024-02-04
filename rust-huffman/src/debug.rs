@@ -2,11 +2,12 @@ use std::collections::HashMap;
 use bitvec::vec::BitVec;
 use crate::bitvec::PrintableBitVec;
 use crate::node::TreeNode;
+use crate::vec::sort;
 
 #[allow(dead_code)]
 pub fn debug_print(vec: &mut Vec<TreeNode>) {
     println!("----------------------------------------");
-    crate::tree::sort(vec);
+    sort(vec);
     println!("frequencies list has [{}] elements", vec.len());
     vec.iter().for_each(|x| {
         if x.symbol.is_some() {

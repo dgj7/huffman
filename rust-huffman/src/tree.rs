@@ -1,4 +1,3 @@
-use std::cmp::Ordering;
 use std::collections::HashMap;
 use bitvec::macros::internal::funty::Fundamental;
 use bitvec::vec::BitVec;
@@ -6,6 +5,7 @@ use crate::bitvec::PrintableBitVec;
 use crate::decoded_byte::DecodedByte;
 use crate::input::Input;
 use crate::node::{descend_tree, TreeNode};
+use crate::vec::sort;
 
 pub const LEFT: bool = false;
 pub const RIGHT: bool = true;
@@ -64,20 +64,4 @@ impl HuffmanTree {
             panic!("[{}] is not a valid code", PrintableBitVec::new(&the_bits));
         }
     }
-}
-
-pub fn sort(vec: &mut Vec<TreeNode>) {
-    vec.sort_by(|left, right| {
-        let freq_result = left.frequency.partial_cmp(&right.frequency).unwrap();
-
-        return if freq_result == Ordering::Equal {
-            if left.symbol.is_some() && right.symbol.is_some() {
-                left.symbol.unwrap().partial_cmp(&right.symbol.unwrap()).unwrap()
-            } else {
-                left.size().partial_cmp(&right.size()).unwrap()
-            }
-        } else {
-            freq_result
-        }
-    });
 }

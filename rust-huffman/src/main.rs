@@ -6,6 +6,7 @@ mod decoded_string;
 mod debug;
 mod decoded_byte;
 mod bitvec;
+mod vec;
 
 fn main() {
     let start = std::time::Instant::now();
