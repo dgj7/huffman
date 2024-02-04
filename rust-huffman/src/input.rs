@@ -22,6 +22,7 @@ impl StringInput {
         }
     }
 
+    #[allow(dead_code)]// this is used for unit testing purposes
     pub fn from_message(the_message: String) -> StringInput {
         StringInput { message: the_message }
     }
@@ -29,18 +30,19 @@ impl StringInput {
 
 impl Input for StringInput {
     fn to_vector(&self) -> Vec<TreeNode> {
-        let mut map = HashMap::new();
+        let mut map: HashMap<char, usize> = HashMap::new();
         let mut vec = vec!();
 
         self.message
             .chars()
             .for_each(|symbol| {
-                let mut value = 0;
-                if map.contains_key(&symbol) {
-                    value = *map.get(&symbol).unwrap() + 1;
+                let value = if map.contains_key(&symbol) {
+                    let temp: &usize = &map.get(&symbol).unwrap().to_owned();
+                    temp + 1
                 } else {
-                    value = 1;
-                }
+                    1
+                };
+
                 map.insert(symbol, value);
             });
 

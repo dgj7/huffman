@@ -3,9 +3,7 @@ use std::collections::HashMap;
 use std::ops::Deref;
 use bitvec::macros::internal::funty::Fundamental;
 use bitvec::vec::BitVec;
-use crate::debug::{debug_print, debug_print_encodings};
 use crate::decoded_byte::DecodedByte;
-use crate::encoded::Encoded;
 use crate::input::Input;
 use crate::node::TreeNode;
 
@@ -38,14 +36,14 @@ impl HuffmanTree {
             let sum = left.frequency + right.frequency;
             let internal = TreeNode::new_internal(sum, left, right);
             frequencies.push(internal);
-            //debug_print(&mut frequencies);
+            //crate::debug::debug_print(&mut frequencies);
         }
         let the_root = frequencies[0].clone();
 
         /* descend the tree to gather all codes */
         let mut the_encodings: HashMap<char, BitVec> = HashMap::new();
         descend_tree(&the_root, &mut the_encodings);
-        //debug_print_encodings(&the_encodings);
+        //crate::debug::debug_print_encodings(&the_encodings);
 
         /* return the new tree */
         Box::new(HuffmanTree { root: the_root, encodings: the_encodings })
@@ -60,7 +58,7 @@ impl HuffmanTree {
 
             return match sub_node.symbol {
                 None => self.next_decoded(encoded_bits, sub_node.as_ref(), index + 1, the_bits),
-                Some(x) => DecodedByte { symbol: x, bits: the_bits }
+                Some(x) => DecodedByte::new(x, the_bits)
             };
         } else {
             panic!("it seems the present code is invalid.");

@@ -3,6 +3,7 @@ use bitvec::vec::BitVec;
 use crate::bitvec::PrintableBitVec;
 use crate::node::TreeNode;
 
+#[allow(dead_code)]
 pub fn debug_print(vec: &mut Vec<TreeNode>) {
     println!("----------------------------------------");
     crate::tree::sort(vec);
@@ -21,6 +22,7 @@ pub fn debug_print(vec: &mut Vec<TreeNode>) {
     println!("----------------------------------------");
 }
 
+#[allow(dead_code)]
 pub fn debug_find_all_frequency_pairs(node: &TreeNode, string: &mut String) {
     if node.symbol.is_some() {
         let symbol = node.symbol.unwrap().to_string();
@@ -41,6 +43,7 @@ pub fn debug_find_all_frequency_pairs(node: &TreeNode, string: &mut String) {
     }
 }
 
+#[allow(dead_code)]
 pub fn debug_print_encodings(map: &HashMap<char, BitVec>) {
     map.iter().for_each(|entry| println!("[{}]:    [{}]", entry.0, PrintableBitVec::new(entry.1)));
 }

@@ -1,6 +1,5 @@
 use std::fmt;
 use bitvec::vec::BitVec;
-use crate::bitvec::PrintableBitVec;
 use crate::encoded::Encoded;
 use crate::tree::HuffmanTree;
 
