@@ -16,8 +16,7 @@ impl Display for PrintableBitVec {
     fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
         let mut value = String::new();
         self.bits.iter().for_each(|bit| {
-            // todo: hate this; feels backward
-            value.push(if bit.as_bool() {'0'} else {'1'})
+            value.push_str(bit.as_u8().to_string().as_str());
         });
         write!(f, "{}", value)
     }

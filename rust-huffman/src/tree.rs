@@ -48,6 +48,8 @@ impl HuffmanTree {
     }
 
     pub fn next_decoded(&self, encoded_bits: &BitVec, node: &TreeNode, index: usize, mut the_bits: BitVec) -> DecodedByte {
+        // todo: stop using as_bool(); instead use similar solution to bitvec.rs
+        // todo: remove all other usages of as_bool()
         let bit: bool = !encoded_bits.get(index).unwrap().as_bool();// funty flips this; you can verify by calling as_string() on the same and observing
         the_bits.push(bit);
         let maybe_sub_node = node.find_node(bit);
