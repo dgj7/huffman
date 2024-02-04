@@ -1,13 +1,16 @@
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::ops::Deref;
-use bit_vec::BitVec;
+use bitvec::macros::internal::funty::Fundamental;
+use bitvec::vec::BitVec;
 use crate::debug::{debug_print, debug_print_encodings};
+use crate::decoded_byte::DecodedByte;
+use crate::encoded::Encoded;
 use crate::input::Input;
 use crate::node::TreeNode;
 
-const LEFT: bool = false;
-const RIGHT: bool = true;
+pub const LEFT: bool = false;
+pub const RIGHT: bool = true;
 
 pub struct HuffmanTree {
     pub root: TreeNode,
@@ -42,13 +45,30 @@ impl HuffmanTree {
         /* descend the tree to gather all codes */
         let mut the_encodings: HashMap<char, BitVec> = HashMap::new();
         descend_tree(&the_root, &mut the_encodings);
-        debug_print_encodings(&the_encodings);
+        //debug_print_encodings(&the_encodings);
 
         /* return the new tree */
         Box::new(HuffmanTree { root: the_root, encodings: the_encodings })
     }
+
+    pub fn next_decoded(&self, encoded_bits: &BitVec, node: &TreeNode, index: usize, mut the_bits: BitVec) -> DecodedByte {
+        let bit: bool = !encoded_bits.get(index).unwrap().as_bool();// funty flips this; you can verify by calling as_string() on the same and observing
+        the_bits.push(bit);
+        let maybe_sub_node = node.find_node(bit);
+        if maybe_sub_node.is_some() {
+            let sub_node = maybe_sub_node.clone().unwrap();
+
+            return match sub_node.symbol {
+                None => self.next_decoded(encoded_bits, sub_node.as_ref(), index + 1, the_bits),
+                Some(x) => DecodedByte { symbol: x, bits: the_bits }
+            };
+        } else {
+            panic!("it seems the present code is invalid.");
+        }
+    }
 }
 
+// todo: can these descend functions be &self?
 fn descend_tree(node: &TreeNode, map: &mut HashMap<char, BitVec>) {
     if node.left.is_some() {
         descend(node.left.as_ref().unwrap().deref(), map, BitVec::new(), LEFT);

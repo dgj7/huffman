@@ -21,6 +21,10 @@ impl StringInput {
             panic!("bad args; expected -i only")
         }
     }
+
+    pub fn from_message(the_message: String) -> StringInput {
+        StringInput { message: the_message }
+    }
 }
 
 impl Input for StringInput {

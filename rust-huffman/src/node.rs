@@ -1,3 +1,6 @@
+use crate::tree::LEFT;
+use crate::tree::RIGHT;
+
 #[derive(Clone)]
 pub struct TreeNode {
     pub symbol: Option<char>,
@@ -25,5 +28,15 @@ impl TreeNode {
             Some(x) => x.size()
         };
         return 1 + left_size + right_size;
+    }
+
+    pub fn find_node(&self, direction: bool) -> &Option<Box<TreeNode>> {
+        return if direction == LEFT && self.left.is_some() {
+            &self.left
+        } else if direction == RIGHT && self.right.is_some() {
+            &self.right
+        } else {
+            &None
+        }
     }
 }

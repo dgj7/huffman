@@ -1,5 +1,6 @@
 use std::fmt;
-use bit_vec::BitVec;
+use bitvec::vec::BitVec;
+use crate::bitvec::PrintableBitVec;
 use crate::input::Input;
 use crate::tree::HuffmanTree;
 
@@ -26,6 +27,6 @@ impl Encoded {
 
 impl fmt::Display for Encoded {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}", self.bits)
+        write!(f, "{}", PrintableBitVec::new(&self.bits))
     }
 }
