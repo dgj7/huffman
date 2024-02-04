@@ -16,7 +16,7 @@ pub struct HuffmanTree {
 }
 
 impl HuffmanTree {
-    pub fn new(input: &dyn Input) -> Box<HuffmanTree> {
+    pub fn new(input: &dyn Input) -> Option<HuffmanTree> {
         /* get a vector with all the frequencies, represented as leaf nodes */
         let mut frequencies = input.to_vector();
         //debug_print(&mut frequencies);
@@ -46,7 +46,7 @@ impl HuffmanTree {
         //crate::debug::debug_print_encodings(&the_encodings);
 
         /* return the new tree */
-        Box::new(HuffmanTree { root: the_root, encodings: the_encodings })
+        Some(HuffmanTree { root: the_root, encodings: the_encodings })
     }
 
     pub fn next_decoded(&self, encoded_bits: &BitVec, node: &TreeNode, index: usize, mut the_bits: BitVec) -> DecodedByte {

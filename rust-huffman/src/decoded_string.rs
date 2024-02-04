@@ -8,7 +8,12 @@ pub struct DecodedString {
 }
 
 impl DecodedString {
-    pub fn new(encoded: &mut Encoded, tree: &HuffmanTree) -> DecodedString {
+    pub fn new(encoded: &mut Encoded, maybe_tree: &Option<HuffmanTree>) -> DecodedString {
+        if maybe_tree.is_none() {
+            return DecodedString { message: String::new() };
+        }
+        let tree = maybe_tree.as_ref().unwrap();
+
         let mut builder = String::new();
         let mut bits = encoded.bits.clone();
 

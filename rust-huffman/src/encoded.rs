@@ -9,7 +9,12 @@ pub struct Encoded {
 }
 
 impl Encoded {
-    pub fn new(input: &dyn Input, tree: &HuffmanTree) -> Encoded {
+    pub fn new(input: &dyn Input, maybe_tree: &Option<HuffmanTree>) -> Encoded {
+        if maybe_tree.is_none() {
+            return Encoded { bits: BitVec::new() }
+        }
+
+        let tree = maybe_tree.as_ref().unwrap();
         let mut the_bits = BitVec::new();
 
         input.to_char_array()
