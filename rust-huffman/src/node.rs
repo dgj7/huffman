@@ -1,3 +1,6 @@
+use std::collections::HashMap;
+use std::ops::Deref;
+use bitvec::prelude::BitVec;
 use crate::tree::LEFT;
 use crate::tree::RIGHT;
 
@@ -38,5 +41,30 @@ impl TreeNode {
         } else {
             &None
         }
+    }
+}
+
+pub fn descend_tree(node: &TreeNode, map: &mut HashMap<char, BitVec>) {
+    if node.left.is_some() {
+        descend(node.left.as_ref().unwrap().deref(), map, BitVec::new(), LEFT);
+    }
+
+    if node.right.is_some() {
+        descend(node.right.as_ref().unwrap().deref(), map, BitVec::new(), RIGHT);
+    }
+}
+
+fn descend(node: &TreeNode, map: &mut HashMap<char, BitVec>, mut bits: BitVec, bit: bool) {
+    /* add to the current codes */
+    bits.push(bit);
+
+    /* next step depends on whether we have left/right, or a symbol */
+    if node.left.is_some() && node.right.is_some() {
+        /* if left/right exist, we need to descend with new bit vectors */
+        descend(node.left.as_ref().unwrap().deref(), map, bits.clone(), LEFT);
+        descend(node.right.as_ref().unwrap().deref(), map, bits.clone(), RIGHT);
+    } else if node.symbol.is_some() {
+        /* if the symbol is here, then we're done and can add to the map */
+        map.insert(node.symbol.unwrap(), bits);
     }
 }
