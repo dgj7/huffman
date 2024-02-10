@@ -18,7 +18,6 @@ int main(int argc, char **argv)
 
 	/* create variables */
 	HuffmanTreeBuilder builder;
-	HuffmanConsolePrinter printer;
 	HuffmanEncoder encoder;
 	HuffmanDecoder decoder;
 	HuffmanTree tree = builder.build(theString);

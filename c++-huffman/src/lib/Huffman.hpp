@@ -86,14 +86,4 @@ public:
 	std::string bitsToString(std::vector<bool>);
 };
 
-class HuffmanConsolePrinter
-{
-public:
-	void printContentsInorder(HuffmanNode *) const;
-	void printCodes(HuffmanTree);
-	std::string getUniqueSymbols(std::string);
-private:
-	HuffmanEncoder encoder;
-};
-
 #endif
