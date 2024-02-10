@@ -6,11 +6,6 @@ std::vector<bool> HuffmanEncoder::encode(std::string input, HuffmanTree tree)
 {
 	std::vector<bool> bits;
 
-    // add 3 bits on front, to store the amount of padding needed (most is 7, or 1+2+4
-    bits.push_back(0);
-    bits.push_back(0);
-    bits.push_back(0);
-
     for(size_t c = 0; c < input.size(); c++)
     {
         char current = input[c];
@@ -23,15 +18,6 @@ std::vector<bool> HuffmanEncoder::encode(std::string input, HuffmanTree tree)
             }
         }
     }
-
-    // how many bits do we need to add to the end?
-    short padding = 8 - (bits.size() % 8);
-    for(short d = 0; d < padding; d++)
-        bits.push_back(0);
-    std::bitset<3> pad = padding;
-    bits[0] = pad[0];
-    bits[1] = pad[1];
-    bits[2] = pad[2];
 
     return bits;
 }
