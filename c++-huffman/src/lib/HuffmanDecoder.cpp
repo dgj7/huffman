@@ -95,19 +95,3 @@ bool HuffmanDecoder::getSymbol(std::vector<bool> bitStream, uint8_t &symbol, Huf
         return false;
     }
 }
-
-std::string HuffmanDecoder::bitsToString(std::vector<bool> bits)
-{
-	std::string text = "";
-
-    while(bits.size() > 0)
-    {
-        std::bitset<8> byte;
-        for(size_t c = 0; c < 8; c++)
-            byte[c] = bits[c];
-        text += char( byte.to_ulong());
-        bits.erase(bits.begin(), bits.begin() + 8);
-    }
-
-    return text;
-}

@@ -63,7 +63,6 @@ public:
 	HuffmanTree build(std::string);									// build from frequencies in a string
 	HuffmanTree build(std::map<uint8_t,uint64_t>);					// build from given frequency set
 	HuffmanTree build(std::list<HuffmanTree>);						// build from a list of smaller trees
-	HuffmanTree buildStandardFrequencyTree();
 };
 
 class HuffmanEncoder
@@ -71,9 +70,6 @@ class HuffmanEncoder
 public:
 	std::vector<bool> getCode(uint8_t, HuffmanTree);
 	std::vector<bool> encode(std::string, HuffmanTree);
-	std::vector<bool> stringToBits(std::string);
-	std::map<uint8_t,uint64_t> generateFrequencyMap(std::string);
-	uint64_t getFrequency(std::string, char);
 private:
 	void getCodeHelper(uint8_t, HuffmanNode *, HuffmanNode *, bool, bool path[], uint64_t, std::vector<bool> &);
 };
@@ -83,7 +79,6 @@ class HuffmanDecoder
 public:
 	bool getSymbol(std::vector<bool>, uint8_t &, HuffmanTree);
 	std::string decode(std::vector<bool>, HuffmanTree);
-	std::string bitsToString(std::vector<bool>);
 };
 
 #endif

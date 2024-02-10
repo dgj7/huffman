@@ -69,35 +69,3 @@ void HuffmanEncoder::getCodeHelper(uint8_t code, HuffmanNode *node, HuffmanNode 
 		getCodeHelper(code, node->_right, root, 1, path, pathLen, ret);
 	}
 }
-
-std::vector<bool> HuffmanEncoder::stringToBits(std::string text)
-{
-    std::vector<bool> bits;
-
-    for(size_t c = 0; c < text.size(); c++)
-    {
-        char ch = text[c];
-        std::bitset<8> byte( (short)ch );
-
-        for(size_t bit = 0; bit < byte.size(); bit++)
-        {
-            bits.push_back(byte[bit]);
-        }
-    }
-
-    return bits;
-}
-
-uint64_t HuffmanEncoder::getFrequency(std::string str, char ch)
-{
-	uint64_t freq = 0;
-
-    while( str.find( ch ) != std::string::npos )
-    {
-        size_t loc = str.find( ch );
-        str.erase( loc, 1 );
-        freq++;
-    }
-
-    return freq;
-}
