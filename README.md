@@ -15,7 +15,7 @@ Each huffman implementation should accept input from the terminal with the `-i` 
 ```bash
 user@machine:~$ huffman -i "this is a sample input string. its text is being used to test the huffman coding tree."
 input:   [this is a sample input string. its text is being used to test the huffman coding tree.]
-encoded: [001011]
+encoded: [100101110000011110000011111010111100110101010010101110100011011110000111010111100010011100110001100000011110110110010111000100001111100110110100110011100000111101101011010000111101101111100000111011100111111000101011110011010011001111001011111011111011111000010000100001001101010111111011011010101100110000111101101111000110011011101110010]
 decoded: [this is a sample input string. its text is being used to test the huffman coding tree.]
 ```
 
