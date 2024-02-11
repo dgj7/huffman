@@ -88,16 +88,11 @@ void HuffmanTreeBuilder::debug_print(std::list<HuffmanTree> &trees) {
     for (std::list<HuffmanTree>::iterator it=trees.begin(); it != trees.end(); ++it) {
         HuffmanTree element = *it;
         if (element._root->_left == NULL && element._root->_right == NULL) {
-            /* internal node */
-            std::cout << "[" << element.getFrequency() << "] <= INTERNAL[" << debug_find_all_frequency_pairs(element._root) << "]" << std::endl;
+            std::cout << "[" << element.getFrequency() << "] <= [" << char(element._root->_data) << "]" << std::endl;
         } else if (element._root->_left == NULL || element._root->_right == NULL) {
-            /* invalid scenario */
             std::cout << "INVALID!!" << std::endl;
         } else {
-            /* leaf node */
-            uint8_t code = element._root->_data;
-            char letter = char(code);
-            std::cout << "[" << element.getFrequency() << "] <= [" << letter << "]" << std::endl;
+            std::cout << "[" << element.getFrequency() << "] <= INTERNAL[" << debug_find_all_frequency_pairs(element._root) << "]" << std::endl;
         }
     }
     std::cout << "----------" << std::endl;
