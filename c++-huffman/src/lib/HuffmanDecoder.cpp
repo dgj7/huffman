@@ -6,11 +6,8 @@ std::string HuffmanDecoder::decode(std::vector<bool> bitStream, HuffmanTree tree
 {
 	std::string ret = "";
 
-    // compensate for the padding that is now in front
-    short padding = bitStream[0] * 1 + bitStream[1] * 2 + bitStream[2] * 4;
-
     std::vector<bool> bitStreamWithoutPadding;
-    for(size_t x = 3; x < bitStream.size() - padding; x++)
+    for(size_t x = 3; x < bitStream.size(); x++)
         bitStreamWithoutPadding.push_back(bitStream[x]);
 
     // algorithm:

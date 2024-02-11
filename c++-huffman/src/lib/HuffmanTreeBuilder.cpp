@@ -1,5 +1,7 @@
 #include "Huffman.hpp"
 
+#include <iostream>
+
 HuffmanTreeBuilder::HuffmanTreeBuilder()
 {
 	//
@@ -48,7 +50,7 @@ HuffmanTree HuffmanTreeBuilder::build(std::map<uint8_t,uint64_t> frequencies)
 
 HuffmanTree HuffmanTreeBuilder::build(std::list<HuffmanTree> trees)
 {
-	trees.sort();
+	sort_list(trees);
     HuffmanTree tr;
 
     while(trees.size() > 1)
@@ -63,7 +65,7 @@ HuffmanTree HuffmanTreeBuilder::build(std::list<HuffmanTree> trees)
         trees.erase(secondIter);
 
         trees.push_back(newTree);
-        trees.sort();
+        sort_list(trees);
 
         if(trees.size() == 1)
         {
@@ -73,4 +75,34 @@ HuffmanTree HuffmanTreeBuilder::build(std::list<HuffmanTree> trees)
     }
 
     return tr;
+}
+
+void HuffmanTreeBuilder::sort_list(std::list<HuffmanTree> &trees) {
+    trees.sort();
+    //debug_print(trees);
+}
+
+void HuffmanTreeBuilder::debug_print(std::list<HuffmanTree> &trees) {
+    std::cout << "----------" << std::endl;
+    std::list<HuffmanTree>::iterator iter = trees.begin();
+    for (std::list<HuffmanTree>::iterator it=trees.begin(); it != trees.end(); ++it) {
+        HuffmanTree element = *it;
+        if (element._root->_left == NULL && element._root->_right == NULL) {
+            /* internal node */
+            std::cout << "[" << element.getFrequency() << "] <= INTERNAL[" << debug_find_all_frequency_pairs(element._root) << "]" << std::endl;
+        } else if (element._root->_left == NULL || element._root->_right == NULL) {
+            /* invalid scenario */
+            std::cout << "INVALID!!" << std::endl;
+        } else {
+            /* leaf node */
+            uint8_t code = element._root->_data;
+            char letter = char(code);
+            std::cout << "[" << element.getFrequency() << "] <= [" << letter << "]" << std::endl;
+        }
+    }
+    std::cout << "----------" << std::endl;
+}
+
+std::string HuffmanTreeBuilder::debug_find_all_frequency_pairs(HuffmanNode *node) {
+    return "";
 }

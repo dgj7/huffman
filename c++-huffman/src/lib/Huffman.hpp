@@ -63,6 +63,12 @@ public:
 	HuffmanTree build(std::string);									// build from frequencies in a string
 	HuffmanTree build(std::map<uint8_t,uint64_t>);					// build from given frequency set
 	HuffmanTree build(std::list<HuffmanTree>);						// build from a list of smaller trees
+
+private:
+	void sort_list(std::list<HuffmanTree> &);
+
+	void debug_print(std::list<HuffmanTree> &);
+	std::string debug_find_all_frequency_pairs(HuffmanNode *);
 };
 
 class HuffmanEncoder
