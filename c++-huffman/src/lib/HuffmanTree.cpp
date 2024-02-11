@@ -81,43 +81,22 @@ bool operator<(HuffmanTree left, HuffmanTree right)
 	uint64_t l = left.getFrequency();
 	uint64_t r = right.getFrequency();
 
-	if(l < r)
+	if(l != r)
 	{
-		return true;
+		return l < r;
 	}
-	// if the frequencies are equal
-	else if(l == r)
+	else// if the frequencies are equal
 	{
-		// if both left and right are internals, leave them alone
-		if(left._root->_nodeType != leaf && right._root->_nodeType != leaf)
-		{
-			return true;
-			// effectively leave it alone if it's an internal and the frequencies are equal
-		}
-		// if only one of the two is a leaf, the leaf is less than the internal
-		else if(left._root->_nodeType == leaf && right._root->_nodeType != leaf)
-		{
-			return true;
-		}
-		else if(right._root->_nodeType == leaf && left._root->_nodeType != leaf)
-		{
-			return false;
-		}
-		// if left and right are both leaves, compare the data
-		else if(left._root->_data < right._root->_data)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
+		if (left._root->_nodeType == leaf && right._root->_nodeType == leaf) {
+			return left._root->_data < right._root->_data;
+		} else {
+			return left.size() < right.size();
 		}
 	}
-	// frequencies arent less than or equal to... so greater than
-	else
-	{
-		return false;
-	}
+}
+
+uint64_t HuffmanTree::size() const {
+	return this->_root->size();
 }
 
 void HuffmanTree::copyTree(HuffmanNode *&copyTo, HuffmanNode *copyFrom)

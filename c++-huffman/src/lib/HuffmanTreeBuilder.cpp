@@ -78,7 +78,6 @@ HuffmanTree HuffmanTreeBuilder::build(std::list<HuffmanTree> trees)
     return tr;
 }
 
-// todo: we need to adjust the sorting algorithm here, as it seems to be causing a slightly different set of codes than the other 2 apps
 void HuffmanTreeBuilder::sort_list(std::list<HuffmanTree> &trees) {
     trees.sort();
     //debug_print(trees);
