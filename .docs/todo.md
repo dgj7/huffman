@@ -1,6 +1,6 @@
 # To Do Items
 ## C++
-* incorrect output; probably needs sorting adjustment
+* ~~incorrect output; probably needs sorting adjustment~~
 * add unit tests
 
 ## Java
