@@ -1,6 +1,7 @@
 #include "Huffman.hpp"
 
 #include <iostream>
+#include <sstream>
 
 HuffmanTreeBuilder::HuffmanTreeBuilder()
 {
@@ -77,6 +78,7 @@ HuffmanTree HuffmanTreeBuilder::build(std::list<HuffmanTree> trees)
     return tr;
 }
 
+// todo: we need to adjust the sorting algorithm here, as it seems to be causing a slightly different set of codes than the other 2 apps
 void HuffmanTreeBuilder::sort_list(std::list<HuffmanTree> &trees) {
     trees.sort();
     //debug_print(trees);
@@ -99,5 +101,13 @@ void HuffmanTreeBuilder::debug_print(std::list<HuffmanTree> &trees) {
 }
 
 std::string HuffmanTreeBuilder::debug_find_all_frequency_pairs(HuffmanNode *node) {
-    return "";
+    if (node->_left != NULL && node->_right != NULL) {
+        std::ostringstream ss;
+        ss << debug_find_all_frequency_pairs(node->_left) << ", " << debug_find_all_frequency_pairs(node->_right);
+        return ss.str();
+    } else {
+        std::ostringstream ss;
+        ss << node->_freq << "|" << char(node->_data);
+        return ss.str();
+    }
 }
