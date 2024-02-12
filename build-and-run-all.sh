@@ -20,9 +20,19 @@ else
     exit 1
 fi
 
-# build rusthuffman
+# build rust-huffman
 printf "building rust-huffman..."
 (cd rust-huffman ; ./build.sh > /dev/null 2>&1)
+if [ $? -eq 0 ]; then
+    printf " done.\n"
+else
+    printf " failed!\n"
+    exit 1
+fi
+
+# build kotlin-huffman
+printf "building kotlin-huffman..."
+(cd kotlin-huffman ; ./build.sh > /dev/null 2>&1)
 if [ $? -eq 0 ]; then
     printf " done.\n"
 else
@@ -37,4 +47,6 @@ printf " ------------------------------|||java|||------------------------------\
 (cd java-huffman ; ./run.sh)
 printf " ------------------------------|||rust|||------------------------------\n"
 (cd rust-huffman ; ./run.sh)
+printf " ------------------------------||kotlin||------------------------------\n"
+(cd kotlin-huffman ; ./run.sh)
 printf " ----------------------------------------------------------------------\n"

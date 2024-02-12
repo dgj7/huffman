@@ -45,3 +45,9 @@ application {
     // Define the main class for the application.
     mainClass = 'org.dg.huffman.AppKt'
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.dg.huffman.AppKt'
+    }
+}

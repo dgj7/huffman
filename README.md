@@ -23,6 +23,7 @@ decoded: [this is a sample input string. its text is being used to test the huff
 * [c++](c++-huffman/)
 * [java](java-huffman/)
 * [rust](rust-huffman/)
+* [kotlin](kotlin-huffman/)
 
 # Other Resources
 * [algorithm](.docs/algorithm.md) used for generating output
