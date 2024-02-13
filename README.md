@@ -21,8 +21,9 @@ decoded: [this is a sample input string. its text is being used to test the huff
 
 ## Implementations
 * [c++](c++-huffman/)
-* [java](java-huffman/)
 * [rust](rust-huffman/)
+* [go](go-huffman/)
+* [java](java-huffman/)
 * [kotlin](kotlin-huffman/)
 
 # Other Resources
