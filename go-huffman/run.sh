@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ ! -f go-huffman ]; then
+if [ ! -f gohuff ]; then
     ./build.sh
 fi
 
-./go-huffman -i "this is a sample input string. its text is being used to test the huffman coding tree."
+./gohuff -i "this is a sample input string. its text is being used to test the huffman coding tree."

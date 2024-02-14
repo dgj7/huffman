@@ -7,4 +7,4 @@ c++-huffman/bin/huffman
 c++-huffman/bin/libhuffman.a
 c++-huffman/.vscode/*
 .vscode/*
-go-huffman/go-huffman
+go-huffman/gohuff

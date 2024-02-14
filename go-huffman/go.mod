@@ -1,3 +1,3 @@
-module go-huffman
+module gohuff
 
 go 1.15
