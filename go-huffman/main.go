@@ -12,16 +12,17 @@ func main() {
 	var encoded = htree.Encode(tree)
 	var decoded = htree.Decode(tree, encoded)
 
-	fmt.Printf("input:   [%s]\n", *input)
+	fmt.Printf("input:   [%s]\n", input)
 	fmt.Printf("encoded: [%s]\n", htree.Stringify(encoded))
 	fmt.Printf("decoded: [%s]\n", decoded)
 }
 
-func loadInput() *string {
-	var input = flag.String("i", "", "the input value")
+func loadInput() string {
+	var input string
+	flag.StringVar(&input, "i", "", "the input value")
 	flag.Parse()
 
-	if *input == "" {
+	if input == "" {
 		fmt.Fprintf(os.Stderr, "missing required argument -i\n")
 		os.Exit(2)
 	}
