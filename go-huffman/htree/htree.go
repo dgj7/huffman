@@ -1,8 +1,5 @@
 package htree
 
-// todo
-import "fmt"
-
 type HuffNode struct {
 	Left *HuffNode
 	Right *HuffNode
@@ -11,7 +8,7 @@ type HuffNode struct {
 	Frequency uint64
 }
 
-type HuffmanTree struct {
+type HuffTree struct {
 	Root *HuffNode
 }
 
@@ -19,15 +16,10 @@ type count struct {
 	freq uint64
 }
 
-func Create(input string) HuffmanTree {
+func Create(input string) HuffTree {
 	var frequencies = toFrequencyMap(input)
 	var nodes = toSlice(frequencies)
-
-	fmt.Println(len(frequencies))
-	fmt.Println(len(nodes))
-
-	var tree HuffmanTree
-	return tree
+	return toTree(nodes)
 }
 
 func toFrequencyMap(input string) map[rune]count {
@@ -62,4 +54,30 @@ func toSlice(input map[rune]count) []HuffNode {
 	}
 
 	return output
+}
+
+func toTree(input []HuffNode) HuffTree {
+	for len(input) > 1 {
+		/* sort the list */
+		// todo
+
+		/* pull the first two elements */
+		var left = input[0]
+		var right = input[1]
+
+		/* shorten the slice */
+		input = removeFromSlice(input, 0)
+		input = removeFromSlice(input, 0)
+
+		/* merge the first two elements into a tree */
+		var root = HuffNode { Left: &left, Right: &right }
+
+		/* add the tree back to the list */
+		input = append(input, root)
+	}
+	return HuffTree { Root: &input[0] }
+}
+
+func removeFromSlice(s []HuffNode, index int) []HuffNode {
+    return append(s[:index], s[index+1:]...)
 }
