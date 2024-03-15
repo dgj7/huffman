@@ -87,5 +87,19 @@ func treeSize(tree HuffTree) uint64 {
 }
 
 func nodeSize(root *HuffNode) uint64 {
-	return 1 + nodeSize(root.Left) + nodeSize(root.Right)
+	if root == nil {
+		return 0
+	}
+
+	var leftSize uint64 = 0
+	if root.Left != nil {
+		leftSize = nodeSize(root.Left)
+	}
+
+	var rightSize uint64 = 0
+	if root.Right != nil {
+		rightSize = nodeSize(root.Right)
+	}
+
+	return 1 + leftSize + rightSize
 }
