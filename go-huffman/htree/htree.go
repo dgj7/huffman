@@ -81,3 +81,11 @@ func toTree(input []HuffNode) HuffTree {
 func removeFromSlice(s []HuffNode, index int) []HuffNode {
     return append(s[:index], s[index+1:]...)
 }
+
+func treeSize(tree HuffTree) uint64 {
+	return nodeSize(tree.Root)
+}
+
+func nodeSize(root *HuffNode) uint64 {
+	return 1 + nodeSize(root.Left) + nodeSize(root.Right)
+}
