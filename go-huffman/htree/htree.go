@@ -1,5 +1,8 @@
 package htree
 
+// todo
+import "fmt"
+
 type HuffNode struct {
 	Left *HuffNode
 	Right *HuffNode
@@ -17,13 +20,17 @@ type count struct {
 }
 
 func Create(input string) HuffmanTree {
-	var _ = determineFrequencies(input)
+	var frequencies = toFrequencyMap(input)
+	var nodes = toSlice(frequencies)
+
+	fmt.Println(len(frequencies))
+	fmt.Println(len(nodes))
 
 	var tree HuffmanTree
 	return tree
 }
 
-func determineFrequencies(input string) map[rune]count {
+func toFrequencyMap(input string) map[rune]count {
 	frequencies := make(map[rune]count)
 	runes := []rune(input)
 	for i := 0; i < len(runes); i++ {
@@ -44,4 +51,15 @@ func determineFrequencies(input string) map[rune]count {
 	//}
 
 	return frequencies
+}
+
+func toSlice(input map[rune]count) []HuffNode {
+	output := make([]HuffNode, 0)
+	
+	for k, v := range input {
+		node := HuffNode { Symbol: k, Frequency: v.freq }
+		output = append(output, node)
+	}
+
+	return output
 }
