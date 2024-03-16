@@ -1,5 +1,7 @@
 package htree
 
+import "sort"
+
 type HuffNode struct {
 	Left *HuffNode
 	Right *HuffNode
@@ -59,7 +61,19 @@ func toSlice(input map[rune]count) []HuffNode {
 func toTree(input []HuffNode) HuffTree {
 	for len(input) > 1 {
 		/* sort the list */
-		// todo
+		sort.Slice(input, func(lex, rix int) bool {
+			var le = input[lex]
+			var ri = input[rix]
+			if le.Frequency == ri.Frequency {
+				if isLeaf(&le) && isLeaf(&ri) {
+					return le.Symbol < ri.Symbol
+				} else {
+					return nodeSize(&le) < nodeSize(&ri)
+				}
+			} else {
+				return le.Frequency < ri.Frequency
+			}
+		})
 
 		/* pull the first two elements */
 		var left = input[0]
@@ -70,7 +84,7 @@ func toTree(input []HuffNode) HuffTree {
 		input = removeFromSlice(input, 0)
 
 		/* merge the first two elements into a tree */
-		var root = HuffNode { Left: &left, Right: &right }
+		var root = HuffNode { Left: &left, Right: &right, Frequency: left.Frequency + right.Frequency }
 
 		/* add the tree back to the list */
 		input = append(input, root)
@@ -102,4 +116,8 @@ func nodeSize(root *HuffNode) uint64 {
 	}
 
 	return 1 + leftSize + rightSize
+}
+
+func isLeaf(node *HuffNode) bool {
+	return node.Left == nil && node.Right == nil
 }
