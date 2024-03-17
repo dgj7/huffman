@@ -8,7 +8,7 @@ import "gohuff/htree"
 func main() {
 	var input = loadInput()
 	var tree = htree.Create(input)
-	var encoded = htree.Encode(tree)
+	var encoded = htree.Encode(tree, input)
 	var decoded = htree.Decode(tree, encoded)
 
 	fmt.Printf("input:   [%s]\n", input)

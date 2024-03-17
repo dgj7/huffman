@@ -4,7 +4,7 @@ type Encoded struct {
 	//
 }
 
-func Encode(tree HuffTree) Encoded {
+func Encode(tree HuffTree, input string) Encoded {
 	var encoded Encoded
 	return encoded
 }
