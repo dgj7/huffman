@@ -24,6 +24,21 @@ func Create(input string) HuffTree {
 	return toTree(nodes)
 }
 
+func MaxDepth(input *HuffNode) int {
+	if input == nil {
+		return 0
+	}
+
+	var leftDepth int = MaxDepth(input.Left)
+	var rightDepth int = MaxDepth(input.Right)
+
+	if leftDepth > rightDepth {
+		return leftDepth +1
+	} else {
+		return rightDepth +1
+	}
+}
+
 func toFrequencyMap(input string) map[rune]count {
 	frequencies := make(map[rune]count)
 	runes := []rune(input)
