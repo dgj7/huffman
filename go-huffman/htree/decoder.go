@@ -1,5 +1,5 @@
 package htree
 
-func Decode(tree HuffTree, encoded Encoded) string {
+func Decode(tree HuffTree, encoded BitSet) string {
 	return "todo"
 }
