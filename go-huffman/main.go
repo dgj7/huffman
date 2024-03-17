@@ -12,7 +12,7 @@ func main() {
 	var decoded = htree.Decode(tree, encoded)
 
 	fmt.Printf("input:   [%s]\n", input)
-	fmt.Printf("encoded: [%s]\n", htree.Stringify(encoded))
+	fmt.Printf("encoded: [%s]\n", encoded.ToString())
 	fmt.Printf("decoded: [%s]\n", decoded)
 }
 
