@@ -45,8 +45,7 @@ func toFrequencyMap(input string) map[rune]count {
 	for i := 0; i < len(runes); i++ {
 		var letter = runes[i]
 
-		if _, ok := frequencies[letter]; ok {
-			var oldCount = frequencies[letter]
+		if oldCount, ok := frequencies[letter]; ok {
 			newCount := count{ freq: oldCount.freq + 1 }
 			frequencies[letter] = newCount
 		} else {
