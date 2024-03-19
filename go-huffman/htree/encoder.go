@@ -1,10 +1,7 @@
 package htree
 
-import "unicode/utf8"
-
 func Encode(tree HuffTree, input string) BitSet {
-	var messageLength = uint64(utf8.RuneCountInString(input))
-	var output = NewBitSet(messageLength)
+	var output = NewBitSet(0)
 	var table = toEncodingTable(tree)
 
 	for _, char := range input {

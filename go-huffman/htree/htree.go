@@ -54,10 +54,6 @@ func toFrequencyMap(input string) map[rune]count {
 		}
 	}
 
-	//for k, v := range frequencies {
-	//	fmt.Printf("key[%q] value[%d]\n", k, v)
-	//}
-
 	return frequencies
 }
 
