@@ -139,6 +139,17 @@ func (tree HuffTree) ToEncodingTable() map[rune]BitSet {
 	return output
 }
 
+func (tree HuffTree) ToDecodingTable() map[string]rune {
+	var encoding = tree.ToEncodingTable()
+	var decoding = make(map[string]rune)
+
+	for k, v := range encoding {
+		decoding[v.ToString()] = k
+	}
+
+	return decoding
+}
+
 func descendTree(tree HuffTree, table map[rune]BitSet, capacity uint64) {
 	if tree.Root.Left != nil {
 		descendNode(tree.Root.Left, capacity, 0, false, make([]bool, capacity), table)
