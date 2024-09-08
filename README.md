@@ -30,4 +30,7 @@ decoded: [this is a sample input string. its text is being used to test the huff
 * [analysis](.docs/analysis.md) comparing all program outputs
 * [todo](.docs/todo.md) items remaining
 
+# Todo
+* [ ] update each project to generate a library (?.jar, ?.a) that is linked to a small main program with the output from above
+
 ---
