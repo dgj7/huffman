@@ -13,8 +13,7 @@ cmake .
 
 # build the huffman library, `libhuffman.a`
 make clean
-#make config=release
-make
+make config=release
 
 # build a test program `huffman`, linking to `libhuffman.a`
 (cd src ; gcc -o ../bin/huffman main.c -L../bin -l:libhuffman.a)
