@@ -1,10 +1,1 @@
-c++-huffman/CMakeFiles/**.*
-c++-huffman/CMakeFiles/*
-c++-huffman/Makefile
-c++-huffman/CMakeCache.txt
-c++-huffman/cmake_install.cmake
-c++-huffman/bin/huffman
-c++-huffman/bin/libhuffman.a
-c++-huffman/.vscode/*
 .vscode/*
-go-huffman/gohuff
