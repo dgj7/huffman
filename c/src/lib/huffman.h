@@ -3,7 +3,7 @@
 
 #define EXPORT __attribute__((__visibility__("default")))
 
-EXPORT int encode(char *message);
+EXPORT int encode(char *message, int length);
 //EXPORT char *decode(huffman_t message);
 
 #endif

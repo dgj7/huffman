@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5.1)
 project(huffman C)
 
-set(CMAKE_BUILD_TYPE Release)
+set (CMAKE_BUILD_TYPE Debug)
 set(LIBRARY_OUTPUT_PATH "bin/")
 
 include_directories(src)
