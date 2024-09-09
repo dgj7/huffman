@@ -20,11 +20,11 @@ decoded: [this is a sample input string. its text is being used to test the huff
 ```
 
 ## Implementations
-* [c++](c++/)
-* [rust](rust/)
-* [go](go/)
-* [java](java/)
-* [c](c/)
+* [c++](c++/); _building requires *cmake* and *g++*_
+* [rust](rust/); _build requires *cargo*_
+* [go](go/); _build requires *go*_
+* [java](java/); _build requires *maven* and *jdk*_
+* [c](c/); _build requires *cmake* and *gcc*_
 
 # Other Resources
 * [algorithm](.docs/algorithm.md) used for generating output
