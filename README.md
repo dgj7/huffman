@@ -20,30 +20,15 @@ decoded: [this is a sample input string. its text is being used to test the huff
 ```
 
 ## Implementations
-* [c++](c++-huffman/)
-* [rust](rust-huffman/)
-* [go](go-huffman/)
-* [java](java-huffman/)
-* [c](c-huffman/)
+* [c++](c++/)
+* [rust](rust/)
+* [go](go/)
+* [java](java/)
+* [c](c/)
 
 # Other Resources
 * [algorithm](.docs/algorithm.md) used for generating output
 * [analysis](.docs/analysis.md) comparing all program outputs
 * [todo](.docs/todo.md) items remaining
-
-# Todo
-* [ ] implement in various languages
-  * [x] c++
-  * [x] rust
-  * [x] java
-  * [x] go
-  * [ ] c
-  * [ ] c#
-* [ ] update each project to generate a library (?.jar, ?.a) that is linked to a small main program with the output from above
-  * [x] c++: _libhuffman.a is linked to main.c in build.sh_
-  * [x] c: _libhuffman.a is linked to main.c in build.sh_
-  * [ ] go
-  * [ ] java
-  * [ ] rust
 
 ---
