@@ -4,14 +4,17 @@
 #include "frequency.h"
 #include "huffman.h"
 
-frequency_t * count_frequencies(char *message, size_t length) {
+const int ERROR_MALLOC_FREQUENCIES = 200;
+
+frequency_t count_frequencies(char *message, size_t length) {
 	/* initialize the frequency array */
+	frequency_t wrapper;
 	size_t uniques = unique_characters(message, length);
-	frequency_t *frequencies = malloc(uniques * sizeof(frequency_t));
-	size_t used = 0;
+	wrapper.pairs = malloc(uniques * sizeof(frequency_pair_t));
+	int used = 0;
 
 	/* panic if we weren't able to get memory */
-	if (frequencies == NULL) {
+	if (wrapper.pairs == NULL) {
 		printf("ERROR: %d: can't allocate memory for frequencies", ERROR_MALLOC_FREQUENCIES);
 		exit(ERROR_MALLOC_FREQUENCIES);
 	}
@@ -19,16 +22,26 @@ frequency_t * count_frequencies(char *message, size_t length) {
 	/* count characters */
 	for (int c = 0; c < length; c++) {
 		char symbol = message[c];
-		int index = find_matching_index(frequencies, used, symbol);
+		int index = find_matching_index(wrapper.pairs, used, symbol);
 		if (index >= 0) {
-			frequencies[index].frequency = frequencies[index].frequency + 1;
+			wrapper.pairs[index].frequency = wrapper.pairs[index].frequency + 1;
 		} else {
-			frequencies[used++] = (frequency_t) { .symbol = symbol, .frequency = 1 };
+			wrapper.pairs[used] = (frequency_pair_t) { .symbol = symbol, .frequency = 1 };
+			used++;
 		}
 	}
 
+	/* update structure */
+	wrapper.count = used;
+
+	/* debug only */
+	//printf("frequency_t.count=[%d]\n", wrapper.count);
+	//for (int d = 0; d < used; d++) {
+	//	printf("\tfrequency_t[%d]: .symbol=[%c], .frequency=[%d]\n", d, wrapper.pairs[d].symbol, wrapper.pairs[d].frequency);
+	//}
+
 	/* done */
-	return frequencies;
+	return wrapper;
 }
 
 size_t unique_characters(char *message, size_t length) {
@@ -44,6 +57,7 @@ size_t unique_characters(char *message, size_t length) {
 					break;
 				}
 			}
+
 			if (flag == 0) {
 				count++;
 			}
@@ -53,11 +67,11 @@ size_t unique_characters(char *message, size_t length) {
 	return 0;
 }
 
-int find_matching_index(frequency_t *frequencies, size_t length, char symbol) {
+int find_matching_index(frequency_pair_t *frequencies, size_t length, char symbol) {
 	for (int c = 0; c < length; c++) {
-		frequency_t copy = frequencies[c];
-		if (copy.symbol == symbol) {
-			c;
+		char potential = frequencies[c].symbol;
+		if (potential == symbol) {
+			return c;
 		}
 	}
 	return -1;

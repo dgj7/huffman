@@ -1,6 +1,10 @@
+#include <stddef.h> // size_t
+
 #include "huffman.h"
+#include "frequency.h"
 
 huffman_t encode(char *message, int length) {
+	frequency_t frequency = count_frequencies(message, length);
 	return (huffman_t) {.value = 1};
 }
 
