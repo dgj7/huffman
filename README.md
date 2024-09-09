@@ -32,9 +32,16 @@ decoded: [this is a sample input string. its text is being used to test the huff
 * [todo](.docs/todo.md) items remaining
 
 # Todo
-* [ ] update each project to generate a library (?.jar, ?.a) that is linked to a small main program with the output from above
+* [ ] implement in various languages
   * [x] c++
-  * [x] c
+  * [x] rust
+  * [x] java
+  * [x] go
+  * [ ] c
+  * [ ] c#
+* [ ] update each project to generate a library (?.jar, ?.a) that is linked to a small main program with the output from above
+  * [x] c++ _libhuffman.a is linked to main.c in build.sh_
+  * [x] c _libhuffman.a is linked to main.c in build.sh_
   * [ ] go
   * [ ] java
   * [ ] rust
