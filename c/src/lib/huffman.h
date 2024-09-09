@@ -3,6 +3,17 @@
 
 #define EXPORT __attribute__((__visibility__("default")))
 
+typedef enum { INTERNAL = 0, LEAF = 1 } nodetype_t;
+
+struct node_t;
+typedef struct {
+	long frequency;
+	char symbol;
+	nodetype_t nt;
+	struct node_t *left;
+	struct node_t *right;
+} node_t;
+
 typedef struct {
 	int value;
 } huffman_t;
