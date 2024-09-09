@@ -24,6 +24,7 @@ decoded: [this is a sample input string. its text is being used to test the huff
 * [rust](rust-huffman/)
 * [go](go-huffman/)
 * [java](java-huffman/)
+* [c](c-huffman/)
 
 # Other Resources
 * [algorithm](.docs/algorithm.md) used for generating output
@@ -32,5 +33,10 @@ decoded: [this is a sample input string. its text is being used to test the huff
 
 # Todo
 * [ ] update each project to generate a library (?.jar, ?.a) that is linked to a small main program with the output from above
+  * [x] c++
+  * [x] c
+  * [ ] go
+  * [ ] java
+  * [ ] rust
 
 ---
