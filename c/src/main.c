@@ -18,13 +18,13 @@ int main(int argc, char **argv) {
 
 	if (argc == 3) {
 		if (strcmp(argv[IDX_ARG], "-i") == 0) {
-			int length = strlen(argv[IDX_MESSAGE]);
+			size_t length = strlen(argv[IDX_MESSAGE]);
 			char *message = malloc(length);
 			if (message) {
 				strcpy(message, argv[IDX_MESSAGE]);
 				huffman_t result = encode(message, length);
-				char * encoded = printable_encoded_message(result);
-				char * decoded = decode(result);
+				char *encoded = printable_encoded_message(result);
+				char *decoded = decode(result);
 
 				printf("input:   [%s]\n", message);
 				printf("encoded: [%s]\n", encoded);
