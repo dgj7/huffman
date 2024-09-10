@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <time.h>
+#include <stdio.h> // printf()
+#include <string.h> // strcpy(), strlen()
+#include <stdlib.h> // malloc(), free()
+#include <time.h> // clock_t, CLOCKS_PER_SEC
 
 #include "lib/huffman.h"
 
@@ -22,13 +22,16 @@ int main(int argc, char **argv) {
 			char *message = malloc(length);
 			if (message) {
 				strcpy(message, argv[IDX_MESSAGE]);
-				huffman_t result = encode(message, length);
-				char *encoded = printable_encoded_message(result);
-				char *decoded = decode(result);
+				huffman_t * tree = encode(message, length);
+				char *encoded = printable_encoded_message(tree);
+				char *decoded = decode(tree);
 
 				printf("input:   [%s]\n", message);
 				printf("encoded: [%s]\n", encoded);
 				printf("decoded: [%s]\n", decoded);
+
+				free(tree);
+
 				printf("done. (%.0lf ms)\n", compute_elapsed(start));
 			} else {
 				printf("ERROR: can't read message: %s", argv[IDX_MESSAGE]);

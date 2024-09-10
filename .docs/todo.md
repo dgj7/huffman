@@ -28,6 +28,7 @@
 * [ ] don't forget to update `analysis.md`
 * [x] ~~externalize huffman functionality as a library~~ _libhuffman.a is linked to main.c in build.sh_
 * [ ] add unit tests; this will involve implementing a build hook to run them and conditionally fail
+* [ ] investigate `free()` for each `malloc()`
 
 ## C#
 * [ ] implement

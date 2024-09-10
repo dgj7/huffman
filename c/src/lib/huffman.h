@@ -15,12 +15,12 @@ typedef struct {
 } node_t;
 
 typedef struct {
-	int value;
+	node_t *root;
 } huffman_t;
 
-EXPORT huffman_t encode(char *message, int length);
-EXPORT char * decode(huffman_t message);
+EXPORT huffman_t * encode(char *message, int length);
+EXPORT char * decode(huffman_t * message);
 
-EXPORT char * printable_encoded_message(huffman_t message);
+EXPORT char * printable_encoded_message(huffman_t * message);
 
 #endif
