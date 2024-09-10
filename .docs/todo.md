@@ -5,6 +5,7 @@
 * [x] ~~incorrect output; probably needs sorting adjustment~~
 * [x] ~~externalize huffman functionality as a library~~ _libhuffman.a is linked to main.cpp in build.sh_
 * [ ] add unit tests
+* [ ] investigate `delete` for each `new` and `delete[]` for each `new[]`
 
 ## Rust
 * [x] ~~implement~~
