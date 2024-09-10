@@ -5,13 +5,13 @@
 
 typedef enum { INTERNAL = 0, LEAF = 1 } nodetype_t;
 
-struct node_t;
-typedef struct {
+typedef struct _node_t node_t;
+typedef struct _node_t {
 	long frequency;
 	char symbol;
 	nodetype_t nt;
-	struct node_t *left;
-	struct node_t *right;
+	node_t *left;
+	node_t *right;
 } node_t;
 
 typedef struct {

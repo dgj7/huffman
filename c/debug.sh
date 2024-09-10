@@ -16,4 +16,4 @@ if [ ! -f bin/huffman ]; then
     ./build.sh
 fi
 
-gdb -ex 'break frequency.c:28' --args bin/huffman -i "this is a sample input string. its text is being used to test the huffman coding tree."
+gdb -ex 'break encode' --args bin/huffman -i "this is a sample input string. its text is being used to test the huffman coding tree."
