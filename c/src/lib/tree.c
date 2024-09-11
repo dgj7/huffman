@@ -1,6 +1,7 @@
 #include <stddef.h> // size_t
 #include <stdio.h> // printf()
 #include <stdlib.h> // malloc(), exit(), qsort()
+#include <stdbool.h> // bool
 
 #include "huffman.h"
 #include "frequency.h"
@@ -11,6 +12,10 @@ const int ERROR_MALLOC_LIST_CREATE = 301;
 const int ERROR_MALLOC_LIST_RESIZE = 302;
 const int ERROR_MALLOC_NODE_T = 303;
 const int ERROR_INVALID_NODE_STATE = 304;
+
+const int COMPARE_LESS = -1;
+const int COMPARE_EQUAL = 0;
+const int COMPARE_GREATER = 1;
 
 huffman_t * to_tree(frequency_t * frequency) {
 	/* allocate space for the new tree */
@@ -59,6 +64,7 @@ huffman_t * to_tree(frequency_t * frequency) {
 
 	/* debug only */
 	//printf("tree->root->frequency=[%d]\n", tree->root->frequency);
+	//debug_print_tree(tree->root);
 
 	/* done */
 	return tree;
@@ -78,10 +84,6 @@ node_t * to_list(frequency_pair_t * pairs, long length) {
 	}
 
 	return list;
-}
-
-void sort_list(node_t * list, long length) {
-	// todo
 }
 
 node_t * merge_nodes(node_t * left, node_t * right) {
@@ -107,4 +109,65 @@ node_t * merge_nodes(node_t * left, node_t * right) {
 
 	/* done */
 	return parent;
+}
+
+void sort_list(node_t * list, long length) {
+	// todo
+	//qsort(list, length, sizeof(node_t), compare);
+}
+
+/**
+ * Compare function, intended for node_t.
+ * 
+ * This function should:
+ * 1) return NEGATIVE if: left < right
+ * 2) return ZERO if: left == right
+ * 3) return POSITIVE if: left > right
+ * 
+ * This function will compare by checking three fields, in order of importance/priority:
+ * 1) frequency
+ * 2) symbol
+ * 3) tree size (total node count)
+ * 
+ * see also: https://www.gnu.org/software/libc/manual/html_node/Comparison-Functions.html
+ * see also: https://github.com/dgj7/huffman/blob/main/.docs/algorithm.md
+ */
+int compare(const void *_left, const void *_right) {
+	const node_t left = *((node_t *) _left);
+	const node_t right = *((node_t *) _right);
+
+	int compare_freq = (left.frequency == right.frequency ? COMPARE_EQUAL : (left.frequency < right.frequency ? COMPARE_LESS : COMPARE_GREATER));
+	int compare_symbol = (left.symbol == right.symbol ? COMPARE_EQUAL : (left.symbol < right.symbol ? COMPARE_LESS : COMPARE_GREATER));
+	bool both_leaves = left.nt == LEAF && right.nt == LEAF;
+
+	if (compare_freq == COMPARE_EQUAL) {
+		if (both_leaves) {
+			return compare_symbol;
+		} else {
+			int left_size = tree_size((node_t *)_left);
+			int right_size = tree_size((node_t *)_right);
+
+			return left_size == right_size ? COMPARE_EQUAL : (left_size < right_size ? COMPARE_LESS : COMPARE_GREATER);
+		}
+	} else {
+		return compare_freq;
+	}
+}
+
+int tree_size(node_t * root) {
+	int left_size = root->left == NULL ? 0 : tree_size(root->left);
+	int right_size = root->right== NULL ? 0 : tree_size(root->right);
+	return left_size + right_size + 1;
+}
+
+void debug_print_tree(node_t * root) {
+	if (root == NULL) {
+		printf("ROOT NULL");
+	} else if (root->nt == INTERNAL) {
+		printf("INTERNAL: frequency=[%d]\n", root->frequency);
+		debug_print_tree(root->left);
+		debug_print_tree(root->right);
+	} else {
+		printf("LEAF: frequency=[%d], symbol=[%c]\n", root->frequency, root->symbol);
+	}
 }
