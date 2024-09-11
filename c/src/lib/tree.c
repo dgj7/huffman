@@ -90,7 +90,7 @@ node_t * to_list(frequency_pair_t * pairs, long length) {
 
 	for (int c = 0; c < length; c++) {
 		frequency_pair_t * pair = &pairs[c];
-		node_t node = (node_t) { .frequency = pair->frequency, .symbol = pair->symbol, .nt = LEAF };
+		node_t node = (node_t) { .frequency = pair->frequency, .symbol = pair->symbol, .nt = LEAF, .tree_size = 1 };
 		list[c] = node;
 		//printf("to_list(): adding element to list idx [%d/%d]: [%s|%d|%c]\n", c, length, node.nt == INTERNAL ? "INTERNAL" : "LEAF", node.frequency, node.symbol);
 	}
@@ -118,6 +118,7 @@ node_t * merge_nodes(node_t * left, node_t * right) {
 	parent->left = copy_node(left);
 	parent->right = copy_node(right);
 	parent->nt = INTERNAL;
+	parent->tree_size = 1 + left->tree_size + right->tree_size;
 
 	/* done */
 	return parent;
@@ -140,6 +141,7 @@ node_t * copy_node(node_t * source) {
 	result->frequency = source->frequency;
 	result->symbol = source->symbol;
 	result->nt = source->nt;
+	result->tree_size = source->tree_size;
 
 	/* copy left and right child nodes */
 	result->left = copy_node(source->left);
@@ -215,10 +217,10 @@ void debug_print_tree(node_t * root, char * prefix, int level) {
 	if (root == NULL) {
 		printf("%sROOT NULL", prefix);
 	} else if (root->nt == INTERNAL) {
-		printf("%s[%d]INTERNAL: frequency=[%d]\n", prefix, level, root->frequency);
+		printf("%s[LVL=%d][SZ=%d] INTERNAL: frequency=[%d]\n", prefix, level, root->tree_size, root->frequency);
 		debug_print_tree(root->left, prefix, level + 1);
 		debug_print_tree(root->right, prefix, level + 1);
 	} else {
-		printf("%s[%d]LEAF: frequency=[%d], symbol=[%c]\n", prefix, level, root->frequency, root->symbol);
+		printf("%s[LVL=%d][SZ=%d] LEAF: frequency=[%d], symbol=[%c]\n", prefix, level, root->tree_size, root->frequency, root->symbol);
 	}
 }

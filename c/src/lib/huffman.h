@@ -12,6 +12,7 @@ typedef struct _node_t {
 	nodetype_t nt;
 	node_t *left;
 	node_t *right;
+	short tree_size;
 } node_t;
 
 typedef struct {
