@@ -2,6 +2,7 @@
 #include <stdio.h> // printf()
 #include <stdlib.h> // malloc(), exit(), qsort()
 #include <stdbool.h> // bool
+#include <string.h> // strcat()
 
 #include "huffman.h"
 #include "frequency.h"
@@ -11,7 +12,8 @@ const int ERROR_MALLOC_HUFFMAN_T = 300;
 const int ERROR_MALLOC_LIST_CREATE = 301;
 const int ERROR_MALLOC_LIST_RESIZE = 302;
 const int ERROR_MALLOC_NODE_T = 303;
-const int ERROR_INVALID_NODE_STATE = 304;
+const int ERROR_MALLOC_NODE_T_COPY = 304;
+const int ERROR_INVALID_NODE_STATE = 305;
 
 const int COMPARE_LESS = -1;
 const int COMPARE_EQUAL = 0;
@@ -28,7 +30,7 @@ huffman_t * to_tree(frequency_t * frequency) {
 	/* create an initial list of nodes, and sort it */
 	node_t * list = to_list(frequency->pairs, frequency->count);
 	long list_size = frequency->count;
-	sort_list(list, list_size);
+	bubble_sort(list, list_size);
 
 	/* shrink the list until it has only one element remaining */
 	while (list_size > 1) {
@@ -50,13 +52,22 @@ huffman_t * to_tree(frequency_t * frequency) {
 		}
 		free(list);
 		list = temp_list;
+		list_size--;
 
 		/* add the merged element on the end */
-		list[list_size-2] = *merged;
+		const int MERGED_INDEX = list_size - 1;
+		list[MERGED_INDEX] = *merged;
 
-		/* sort the list, and adjust it's size */
-		sort_list(list, list_size);
-		list_size--;
+		/* debug only */
+		//printf("to_tree(): adding merged element to list idx [%d/%d->%d]: [%s|%d|%c]\n", MERGED_INDEX, list_size+1, list_size, merged->nt == INTERNAL ? "INTERNAL" : "LEAF", merged->frequency, merged->symbol);
+		for (int c = 0; c < list_size; c++) {
+			node_t element = list[c];
+			//printf("\tto_tree(): list[%d]: [%s|%d|%c]\n", c, element.nt == INTERNAL ? "INTERNAL" : "LEAF", element.frequency, element.symbol);
+			//debug_print_tree(&element, "\t", 0);
+		}
+
+		/* sort the list */
+		bubble_sort(list, list_size);
 	}
 
 	/* assign single element to tree struct */
@@ -64,7 +75,7 @@ huffman_t * to_tree(frequency_t * frequency) {
 
 	/* debug only */
 	//printf("tree->root->frequency=[%d]\n", tree->root->frequency);
-	//debug_print_tree(tree->root);
+	//debug_print_tree(tree->root, "", 0);
 
 	/* done */
 	return tree;
@@ -81,6 +92,7 @@ node_t * to_list(frequency_pair_t * pairs, long length) {
 		frequency_pair_t * pair = &pairs[c];
 		node_t node = (node_t) { .frequency = pair->frequency, .symbol = pair->symbol, .nt = LEAF };
 		list[c] = node;
+		//printf("to_list(): adding element to list idx [%d/%d]: [%s|%d|%c]\n", c, length, node.nt == INTERNAL ? "INTERNAL" : "LEAF", node.frequency, node.symbol);
 	}
 
 	return list;
@@ -103,17 +115,56 @@ node_t * merge_nodes(node_t * left, node_t * right) {
 	/* assign fields to the new node */
 	long frequency = left->frequency + right->frequency;
 	parent->frequency = frequency;
-	parent->left = left;
-	parent->right = right;
+	parent->left = copy_node(left);
+	parent->right = copy_node(right);
 	parent->nt = INTERNAL;
 
 	/* done */
 	return parent;
 }
 
-void sort_list(node_t * list, long length) {
-	// todo
-	//qsort(list, length, sizeof(node_t), compare);
+node_t * copy_node(node_t * source) {
+	/* no work to do if incoming node is NULL */
+	if (source == NULL) {
+		return NULL;
+	}
+
+	/* allocate memory */
+	node_t * result = malloc(sizeof(node_t));
+	if (result == NULL) {
+		printf("ERROR: %d: can't allocate memory for node_t copy", ERROR_MALLOC_NODE_T_COPY);
+		exit(ERROR_MALLOC_NODE_T_COPY);
+	}
+
+	/* set non-pointer fields */
+	result->frequency = source->frequency;
+	result->symbol = source->symbol;
+	result->nt = source->nt;
+
+	/* copy left and right child nodes */
+	result->left = copy_node(source->left);
+	result->right = copy_node(source->right);
+
+	/* done */
+	return result;
+}
+
+void bubble_sort(node_t * list, long length) {
+	for (int i = 0; i < length - 1; i++) {
+		for (int j = 0; j < length - i - 1; j++) {
+			const int LEFT_IDX = j;
+			const int RIGHT_IDX = j+1;
+			//printf("bubble_sort(): length=[%d], i=[%d], j=[%d], left_idx=[%d], right_idx=[%d]\n", length, i, j, LEFT_IDX, RIGHT_IDX);
+			const node_t left = list[LEFT_IDX];
+			const node_t right = list[RIGHT_IDX];
+
+			if (compare(&left, &right) == COMPARE_GREATER) {
+				//printf("\tbubble_sort(): swapping: left=[%s|%d|%c], right=[%s|%d|%c]\n", left.nt == INTERNAL ? "INTERNAL" : "LEAF", left.frequency, left.symbol, right.nt == INTERNAL ? "INTERNAL" : "LEAF", right.frequency, right.symbol);
+				list[LEFT_IDX] = right;
+				list[RIGHT_IDX] = left;
+			}
+		}
+	}
 }
 
 /**
@@ -156,18 +207,18 @@ int compare(const void *_left, const void *_right) {
 
 int tree_size(node_t * root) {
 	int left_size = root->left == NULL ? 0 : tree_size(root->left);
-	int right_size = root->right== NULL ? 0 : tree_size(root->right);
+	int right_size = root->right == NULL ? 0 : tree_size(root->right);
 	return left_size + right_size + 1;
 }
 
-void debug_print_tree(node_t * root) {
+void debug_print_tree(node_t * root, char * prefix, int level) {
 	if (root == NULL) {
-		printf("ROOT NULL");
+		printf("%sROOT NULL", prefix);
 	} else if (root->nt == INTERNAL) {
-		printf("INTERNAL: frequency=[%d]\n", root->frequency);
-		debug_print_tree(root->left);
-		debug_print_tree(root->right);
+		printf("%s[%d]INTERNAL: frequency=[%d]\n", prefix, level, root->frequency);
+		debug_print_tree(root->left, prefix, level + 1);
+		debug_print_tree(root->right, prefix, level + 1);
 	} else {
-		printf("LEAF: frequency=[%d], symbol=[%c]\n", root->frequency, root->symbol);
+		printf("%s[%d]LEAF: frequency=[%d], symbol=[%c]\n", prefix, level, root->frequency, root->symbol);
 	}
 }
