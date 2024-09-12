@@ -7,13 +7,11 @@ typedef struct {
 } bitvec_t;
 
 typedef struct {
-	short length;
-	bitvec_t encoding;
+	bitvec_t bitvec;
 	char symbol;
 } encoding_t;
 
 encoding_t * make_encodings(huffman_t * tree);
-
-encoding_t make_encoding(node_t * node, bool * input_bits, short level, bool next);
+void make_encodings_recursive(node_t * node, encoding_t * encodings, bool bits[], bool next, short index);
 
 #endif
