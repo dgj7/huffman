@@ -11,8 +11,6 @@ const int ERROR_READ = 1;
 const int ERROR_UNKNOWN_ARG = 2;
 const int ERROR_UNKNOWN_ARG_COUNT = 3;
 
-double compute_elapsed(clock_t start);
-
 int main(int argc, char **argv) {
 	clock_t start = clock();
 
@@ -31,8 +29,6 @@ int main(int argc, char **argv) {
 				printf("decoded: [%s]\n", decoded);
 
 				free(tree);
-
-				printf("done. (%.0lf ms)\n", compute_elapsed(start));
 			} else {
 				printf("ERROR: can't read message: %s", argv[IDX_MESSAGE]);
 				return ERROR_READ;
@@ -46,10 +42,10 @@ int main(int argc, char **argv) {
 		return ERROR_UNKNOWN_ARG_COUNT;
 	}
 
-	return 0;
-}
-
-double compute_elapsed(clock_t start) {
+	/* declare success, print profiling info */
 	clock_t elapsed = clock() - start;
-	return (((double)elapsed)/CLOCKS_PER_SEC)/1000;
+	double ms = (((double)elapsed)/CLOCKS_PER_SEC)/1000;
+	printf("done. (%.0lf ms)\n", ms);
+
+	return 0;
 }
