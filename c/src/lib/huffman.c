@@ -22,7 +22,7 @@ node_t * create_tree(char * message, int length) {
 	return root;
 }
 
-encoding_list_t * encode(node_t * tree) {
+encoding_list_t * create_encodings(node_t * tree) {
 	return make_encodings_helper(tree, tree->tree_size);
 }
 

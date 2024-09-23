@@ -13,10 +13,18 @@ const int ERROR_READ = 1;
 const int ERROR_UNKNOWN_ARG = 2;
 const int ERROR_UNKNOWN_ARG_COUNT = 3;
 const int ERROR_NO_SYMBOL_MATCH = 4;
-const int ERROR_MALLOC_PRINTABLE_ENCODED_MESSAGE = 5;
+const int ERROR_MALLOC_BITS = 5;
+const int ERROR_MALLOC_ENCODED_MESSAGE_T = 6;
+const int ERROR_MALLOC_PRINTABLE_MESSAGE = 7;
 
-char * printable_encoded_message(char * message, encoding_list_t * encodings);
-char * decode(char * encoded, encoding_list_t * encodings);
+typedef struct {
+	bool * bits;
+	int length;
+} encoded_message_t;
+
+encoded_message_t * encode(char * message, encoding_list_t * list);
+char * printable_encoded_message(encoded_message_t * em);
+char * decode(encoded_message_t * encoded, encoding_list_t * list);
 
 encoding_t * find_encoding_by_symbol(encoding_list_t * list, char symbol_key);
 
@@ -31,13 +39,14 @@ int main(int argc, char **argv) {
 				strcpy(message, argv[IDX_MESSAGE]);
 
 				node_t * tree = create_tree(message, length);
-				encoding_list_t * encodings = encode(tree);
+				encoding_list_t * encodings = create_encodings(tree);
 
-				char *encoded = printable_encoded_message(message, encodings);
+				encoded_message_t * encoded = encode(message, encodings);
+				char *printable = printable_encoded_message(encoded);
 				char *decoded = decode(encoded, encodings);
 
 				printf("input:   [%s]\n", message);
-				printf("encoded: [%s]\n", encoded);
+				printf("encoded: [%s]\n", printable);
 				printf("decoded: [%s]\n", decoded);
 
 				free_tree(tree);
@@ -64,7 +73,7 @@ int main(int argc, char **argv) {
 	return 0;
 }
 
-char * printable_encoded_message(char * message, encoding_list_t * list) {
+encoded_message_t * encode(char * message, encoding_list_t * list) {
 	/* determine the length of the outgoing encoded string; start at 1 to include \0 */
 	int out_len = 1;
 	for (int msg_idx = 0; msg_idx < strlen(message); msg_idx++) {
@@ -73,29 +82,56 @@ char * printable_encoded_message(char * message, encoding_list_t * list) {
 		out_len = out_len + encoding->bitvec->length;
 	}
 
-	/* allocate memory for the output string */
-	char * output = malloc(out_len * sizeof(char));
-	if (output == NULL) {
-		printf("ERROR: %d: can't allocate memory for printable encoded message string\n", ERROR_MALLOC_PRINTABLE_ENCODED_MESSAGE);
-		exit(ERROR_MALLOC_PRINTABLE_ENCODED_MESSAGE);
+	/* allocate memory for encoded message struct */
+	encoded_message_t * em = malloc(sizeof(encoded_message_t));
+	if (em == NULL) {
+		printf("ERROR: %d: can't allocate memory for encoded_message_t", ERROR_MALLOC_ENCODED_MESSAGE_T);
+		exit(ERROR_MALLOC_ENCODED_MESSAGE_T);
 	}
 
-	/* find and append the matching bits to the output string */
+	/* set the output length */
+	em->length = out_len;
+
+	/* allocate memory for the output array */
+	em->bits = malloc(out_len * sizeof(bool));
+	if (em->bits == NULL) {
+		printf("ERROR: %d: can't allocate memory for printable encoded message string\n", ERROR_MALLOC_BITS);
+		exit(ERROR_MALLOC_BITS);
+	}
+
+	/* find and append the matching bits to the output array */
 	int out_idx = 0;
 	for (int msg_idx = 0; msg_idx < strlen(message); msg_idx++) {
 		char symbol_key = message[msg_idx];
 		encoding_t * encoding = find_encoding_by_symbol(list, symbol_key);
 		for (int bit_idx = 0; bit_idx < encoding->bitvec->length; bit_idx++) {
-			output[out_idx] = encoding->bitvec->bits[bit_idx] ? '1' : '0';
+			em->bits[out_idx] = encoding->bitvec->bits[bit_idx] ? true : false;
 			out_idx++;
 		}
 	}
 
 	/* todo */
+	return em;
+}
+
+char * printable_encoded_message(encoded_message_t * em) {
+	/* allocate memory for output string */
+	char * output = malloc(em->length * sizeof(char));
+	if (output == NULL) {
+		printf("ERROR: %d: can't allocate memory for printable encoded message", ERROR_MALLOC_PRINTABLE_MESSAGE);
+		exit(ERROR_MALLOC_PRINTABLE_MESSAGE);
+	}
+
+	/* copy bits */
+	for (int idx = 0; idx < em->length; idx++) {
+		output[idx] = em->bits[idx] ? '1' : '0';
+	}
+
+	/* done */
 	return output;
 }
 
-char * decode(char * encoded, encoding_list_t * list) {
+char * decode(encoded_message_t * encoded, encoding_list_t * list) {
 	return "not yet implemented";
 }
 

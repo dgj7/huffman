@@ -34,7 +34,7 @@ typedef struct {
 } encoding_list_t;
 
 EXPORT node_t * create_tree(char * message, int length);
-EXPORT encoding_list_t * encode(node_t * tree);
+EXPORT encoding_list_t * create_encodings(node_t * tree);
 
 EXPORT void free_tree(node_t * tree);
 EXPORT void free_encodings(encoding_list_t * list);
