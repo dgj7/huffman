@@ -1,5 +1,6 @@
 #include <stddef.h> // size_t
 #include <stdlib.h> // free()
+#include <stdbool.h> // bool
 
 #include "huffman.h"
 #include "frequency.h"

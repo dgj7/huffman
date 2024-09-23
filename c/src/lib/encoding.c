@@ -3,7 +3,7 @@
 #include <stdlib.h> // malloc(), exit()
 
 #include "huffman.h"
-#include "bitvec.h"
+#include "encoding.h"
 
 const int ERROR_MALLOC_BIT_ARRAY = 400;
 const int ERROR_MALLOC_ENCODINGS = 401;
