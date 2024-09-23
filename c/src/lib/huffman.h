@@ -37,4 +37,8 @@ EXPORT node_t * create_tree(char * message, int length);
 EXPORT char * decode(node_t * message);
 EXPORT char * printable_encoded_message(node_t * message);
 
+// todo: create free() functions
+//EXPORT void huffman_free(node_t * tree);
+//EXPORT void encoding_free(encoding_info_t )
+
 #endif
