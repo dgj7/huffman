@@ -9,14 +9,14 @@ const int ERROR_MALLOC_BIT_ARRAY = 400;
 const int ERROR_MALLOC_ENCODINGS = 401;
 const int ERROR_MALLOC_BITVEC = 402;
 
-encoding_t * make_encodings(huffman_t * tree) {
+encoding_t * make_encodings(node_t * tree) {
 	/* handle bad input */
 	if (tree == NULL) {
 		return NULL;
 	}
 
 	/* allocate memory */
-	short nodes = tree->root->tree_size;
+	short nodes = tree->tree_size;
 	encoding_t * encodings = malloc(nodes * sizeof(encoding_t));
 	if (encodings == NULL) {
 		printf("ERROR: %d: can't allocate memory for encoding_t *\n", ERROR_MALLOC_ENCODINGS);
@@ -27,8 +27,8 @@ encoding_t * make_encodings(huffman_t * tree) {
 	bool bits[256];
 
 	/* call for both child nodes */
-	make_encodings_recursive(tree->root->left, encodings, bits, 0, 0);
-	make_encodings_recursive(tree->root->right, encodings, bits, 1, 0);
+	make_encodings_recursive(tree->left, encodings, bits, 0, 0);
+	make_encodings_recursive(tree->right, encodings, bits, 1, 0);
 
 	/* done */
 	return encodings;

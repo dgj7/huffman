@@ -15,13 +15,9 @@ typedef struct _node_t {
 	short tree_size;
 } node_t;
 
-typedef struct {
-	node_t *root;
-} huffman_t;
+EXPORT node_t * create_tree(char * message, int length);
 
-EXPORT huffman_t * encode(char *message, int length);
-EXPORT char * decode(huffman_t * message);
-
-EXPORT char * printable_encoded_message(huffman_t * message);
+EXPORT char * decode(node_t * message);
+EXPORT char * printable_encoded_message(node_t * message);
 
 #endif

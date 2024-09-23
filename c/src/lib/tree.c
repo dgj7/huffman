@@ -19,14 +19,7 @@ const int COMPARE_LESS = -1;
 const int COMPARE_EQUAL = 0;
 const int COMPARE_GREATER = 1;
 
-huffman_t * to_tree(frequency_t * frequency) {
-	/* allocate space for the new tree */
-	huffman_t * tree = malloc(sizeof(huffman_t));
-	if (tree == NULL) {
-		printf("ERROR: %d: can't allocate memory for huffman_t", ERROR_MALLOC_HUFFMAN_T);
-		exit(ERROR_MALLOC_HUFFMAN_T);
-	}
-
+node_t * to_tree(frequency_t * frequency) {
 	/* create an initial list of nodes, and sort it */
 	node_t * list = to_list(frequency->pairs, frequency->count);
 	long list_size = frequency->count;
@@ -70,15 +63,11 @@ huffman_t * to_tree(frequency_t * frequency) {
 		bubble_sort(list, list_size);
 	}
 
-	/* assign single element to tree struct */
-	tree->root = &list[0];
-
 	/* debug only */
-	//printf("tree->root->frequency=[%d]\n", tree->root->frequency);
-	//debug_print_tree(tree->root, "", 0);
+	//debug_print_tree(&list[0], "\t", 0);
 
 	/* done */
-	return tree;
+	return &list[0];
 }
 
 node_t * to_list(frequency_pair_t * pairs, long length) {

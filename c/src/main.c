@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 			char *message = malloc(length);
 			if (message) {
 				strcpy(message, argv[IDX_MESSAGE]);
-				huffman_t * tree = encode(message, length);
+				node_t * tree = create_tree(message, length);
 				char *encoded = printable_encoded_message(tree);
 				char *decoded = decode(tree);
 

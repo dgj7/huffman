@@ -11,7 +11,12 @@ typedef struct {
 	char symbol;
 } encoding_t;
 
-encoding_t * make_encodings(huffman_t * tree);
+typedef struct {
+	short length;
+	encoding_t * encodings;
+} encoding_info_t;
+
+encoding_t * make_encodings(node_t * tree);
 void make_encodings_recursive(node_t * node, encoding_t * encodings, bool bits[], bool next, short index);
 
 #endif
