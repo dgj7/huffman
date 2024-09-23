@@ -9,15 +9,14 @@ const int ERROR_MALLOC_BIT_ARRAY = 400;
 const int ERROR_MALLOC_ENCODINGS = 401;
 const int ERROR_MALLOC_BITVEC = 402;
 
-encoding_t * make_encodings(node_t * tree) {
+encoding_t * make_encodings_helper(node_t * tree, int length) {
 	/* handle bad input */
 	if (tree == NULL) {
 		return NULL;
 	}
 
 	/* allocate memory */
-	short nodes = tree->tree_size;
-	encoding_t * encodings = malloc(nodes * sizeof(encoding_t));
+	encoding_t * encodings = malloc(length * sizeof(encoding_t));
 	if (encodings == NULL) {
 		printf("ERROR: %d: can't allocate memory for encoding_t *\n", ERROR_MALLOC_ENCODINGS);
 		exit(ERROR_MALLOC_ENCODINGS);
@@ -27,16 +26,16 @@ encoding_t * make_encodings(node_t * tree) {
 	bool bits[256];
 
 	/* call for both child nodes */
-	make_encodings_recursive(tree->left, encodings, bits, 0, 0);
-	make_encodings_recursive(tree->right, encodings, bits, 1, 0);
+	make_encodings_helper_recursive(tree->left, encodings, bits, 0, 0);
+	make_encodings_helper_recursive(tree->right, encodings, bits, 1, 0);
 
 	/* done */
 	return encodings;
 }
 
-void make_encodings_recursive(node_t * node, encoding_t * encodings, bool bits[], bool next, short index) {
+void make_encodings_helper_recursive(node_t * node, encoding_t * encodings, bool bits[], bool next, short index) {
 	if (node == NULL) {
-		printf("WARNING: make_encodings_recursive given null node\n");
+		printf("WARNING: make_encodings_helper_recursive given null node\n");
 		return;
 	} else {
 		bits[index] = next;
@@ -58,8 +57,8 @@ void make_encodings_recursive(node_t * node, encoding_t * encodings, bool bits[]
 				encoding.bitvec.bits[c] = bits[c];
 			}
 		} else {
-			make_encodings_recursive(node->left, encodings, bits, 0, index + 1);
-			make_encodings_recursive(node->right, encodings, bits, 1, index + 1);
+			make_encodings_helper_recursive(node->left, encodings, bits, 0, index + 1);
+			make_encodings_helper_recursive(node->right, encodings, bits, 1, index + 1);
 		}
 	}
 }

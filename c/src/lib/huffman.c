@@ -5,6 +5,7 @@
 #include "huffman.h"
 #include "frequency.h"
 #include "tree.h"
+#include "encoding.h"
 
 node_t * create_tree(char * message, int length) {
 	/* gather frequency data, needed to build tree */
@@ -21,10 +22,14 @@ node_t * create_tree(char * message, int length) {
 	return root;
 }
 
-char * decode(node_t * encoded) {
-	return "not yet implemented";
+encoding_t * encode(node_t * tree) {
+	return make_encodings_helper(tree, tree->tree_size);
 }
 
-char * printable_encoded_message(node_t * encoded) {
-	return "not yet implemented";
+void free_tree(node_t * tree) {
+	// todo
+}
+
+void free_encodings(encoding_t * encodings) {
+	// todo
 }

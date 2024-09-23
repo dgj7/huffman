@@ -11,6 +11,9 @@ const int ERROR_READ = 1;
 const int ERROR_UNKNOWN_ARG = 2;
 const int ERROR_UNKNOWN_ARG_COUNT = 3;
 
+char * printable_encoded_message(char * message, encoding_t * encodings);
+char * decode(char * encoded, encoding_t * encodings);
+
 int main(int argc, char **argv) {
 	clock_t start = clock();
 
@@ -20,15 +23,19 @@ int main(int argc, char **argv) {
 			char *message = malloc(length);
 			if (message) {
 				strcpy(message, argv[IDX_MESSAGE]);
+
 				node_t * tree = create_tree(message, length);
-				char *encoded = printable_encoded_message(tree);
-				char *decoded = decode(tree);
+				encoding_t * encodings = encode(tree);
+
+				char *encoded = printable_encoded_message(message, encodings);
+				char *decoded = decode(encoded, encodings);
 
 				printf("input:   [%s]\n", message);
 				printf("encoded: [%s]\n", encoded);
 				printf("decoded: [%s]\n", decoded);
 
-				free(tree);
+				free_tree(tree);
+				free_encodings(encodings);
 			} else {
 				printf("ERROR: can't read message: %s", argv[IDX_MESSAGE]);
 				return ERROR_READ;
@@ -49,4 +56,12 @@ int main(int argc, char **argv) {
 
 	/* done */
 	return 0;
+}
+
+char * printable_encoded_message(char * message, encoding_t * encodings) {
+	return "not yet implemented";
+}
+
+char * decode(char * encoded, encoding_t * encodings) {
+	return "not yet implemented";
 }

@@ -27,18 +27,10 @@ typedef struct {
 	char symbol;
 } encoding_t;
 
-typedef struct {
-	short length;
-	encoding_t * encodings;
-} encoding_info_t;
-
 EXPORT node_t * create_tree(char * message, int length);
+EXPORT encoding_t * encode(node_t * tree);
 
-EXPORT char * decode(node_t * message);
-EXPORT char * printable_encoded_message(node_t * message);
-
-// todo: create free() functions
-//EXPORT void huffman_free(node_t * tree);
-//EXPORT void encoding_free(encoding_info_t )
+EXPORT void free_tree(node_t * tree);
+EXPORT void free_encodings(encoding_t * encodings);
 
 #endif
