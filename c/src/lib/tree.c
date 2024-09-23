@@ -60,11 +60,11 @@ huffman_t * to_tree(frequency_t * frequency) {
 
 		/* debug only */
 		//printf("to_tree(): adding merged element to list idx [%d/%d->%d]: [%s|%d|%c]\n", MERGED_INDEX, list_size+1, list_size, merged->nt == INTERNAL ? "INTERNAL" : "LEAF", merged->frequency, merged->symbol);
-		for (int c = 0; c < list_size; c++) {
-			node_t element = list[c];
+		//for (int c = 0; c < list_size; c++) {
+			//node_t element = list[c];
 			//printf("\tto_tree(): list[%d]: [%s|%d|%c]\n", c, element.nt == INTERNAL ? "INTERNAL" : "LEAF", element.frequency, element.symbol);
 			//debug_print_tree(&element, "\t", 0);
-		}
+		//}
 
 		/* sort the list */
 		bubble_sort(list, list_size);

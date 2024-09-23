@@ -47,5 +47,6 @@ int main(int argc, char **argv) {
 	double ms = (((double)elapsed)/CLOCKS_PER_SEC)/1000;
 	printf("done. (%.0lf ms)\n", ms);
 
+	/* done */
 	return 0;
 }
