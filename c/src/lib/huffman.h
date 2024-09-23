@@ -22,15 +22,21 @@ typedef struct {
 	bool * bits;
 } bitvec_t;
 
-typedef struct {
-	bitvec_t bitvec;
+typedef struct _encoding_t encoding_t;
+typedef struct _encoding_t {
+	bitvec_t * bitvec;
 	char symbol;
+	encoding_t * next;
 } encoding_t;
 
+typedef struct {
+	encoding_t * head;
+} encoding_list_t;
+
 EXPORT node_t * create_tree(char * message, int length);
-EXPORT encoding_t * encode(node_t * tree);
+EXPORT encoding_list_t * encode(node_t * tree);
 
 EXPORT void free_tree(node_t * tree);
-EXPORT void free_encodings(encoding_t * encodings);
+EXPORT void free_encodings(encoding_list_t * list);
 
 #endif

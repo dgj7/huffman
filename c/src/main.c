@@ -11,8 +11,8 @@ const int ERROR_READ = 1;
 const int ERROR_UNKNOWN_ARG = 2;
 const int ERROR_UNKNOWN_ARG_COUNT = 3;
 
-char * printable_encoded_message(char * message, encoding_t * encodings);
-char * decode(char * encoded, encoding_t * encodings);
+char * printable_encoded_message(char * message, encoding_list_t * encodings);
+char * decode(char * encoded, encoding_list_t * encodings);
 
 int main(int argc, char **argv) {
 	clock_t start = clock();
@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 				strcpy(message, argv[IDX_MESSAGE]);
 
 				node_t * tree = create_tree(message, length);
-				encoding_t * encodings = encode(tree);
+				encoding_list_t * encodings = encode(tree);
 
 				char *encoded = printable_encoded_message(message, encodings);
 				char *decoded = decode(encoded, encodings);
@@ -58,10 +58,10 @@ int main(int argc, char **argv) {
 	return 0;
 }
 
-char * printable_encoded_message(char * message, encoding_t * encodings) {
+char * printable_encoded_message(char * message, encoding_list_t * list) {
 	return "not yet implemented";
 }
 
-char * decode(char * encoded, encoding_t * encodings) {
+char * decode(char * encoded, encoding_list_t * list) {
 	return "not yet implemented";
 }
