@@ -16,6 +16,10 @@ const int ERROR_NO_SYMBOL_MATCH = 4;
 const int ERROR_MALLOC_BITS = 5;
 const int ERROR_MALLOC_ENCODED_MESSAGE_T = 6;
 const int ERROR_MALLOC_PRINTABLE_MESSAGE = 7;
+const int ERROR_MALLOC_DECODED_STRING = 8;
+const int ERROR_INTERNAL_RIGHT_NODE_NULL = 9;
+const int ERROR_INTERNAL_LEFT_NODE_NULL = 10;
+
 
 typedef struct {
 	bool * bits;
@@ -24,7 +28,7 @@ typedef struct {
 
 encoded_message_t * encode(char * message, encoding_list_t * list);
 char * printable_encoded_message(encoded_message_t * em);
-char * decode(encoded_message_t * encoded, encoding_list_t * list);
+char * decode(encoded_message_t * encoded, node_t * tree, int msg_len);
 
 encoding_t * find_encoding_by_symbol(encoding_list_t * list, char symbol_key);
 
@@ -36,19 +40,26 @@ int main(int argc, char **argv) {
 			size_t length = strlen(argv[IDX_MESSAGE]);
 			char *message = malloc(length);
 			if (message) {
+				/* copy the message into somewhere it's usable */
 				strcpy(message, argv[IDX_MESSAGE]);
 
+				/* create huffman-related data structures */
 				node_t * tree = create_tree(message, length);
 				encoding_list_t * encodings = create_encodings(tree);
 
+				/* do transformations with the huffman data */
 				encoded_message_t * encoded = encode(message, encodings);
 				char *printable = printable_encoded_message(encoded);
-				char *decoded = decode(encoded, encodings);
+				char *decoded = decode(encoded, tree, length);
 
+				/* print results */
 				printf("input:   [%s]\n", message);
 				printf("encoded: [%s]\n", printable);
 				printf("decoded: [%s]\n", decoded);
 
+				/* todo: add more free() calls here; test them */
+
+				/* free memory */
 				free_tree(tree);
 				free_encodings(encodings);
 			} else {
@@ -111,7 +122,7 @@ encoded_message_t * encode(char * message, encoding_list_t * list) {
 	}
 
 	/* debug only */
-	printf("out_len=[%d], sizeof(bool)=[%d], out_len * sizeof(bool)=[%d]\n", out_len, sizeof(bool), out_len * sizeof(bool));
+	//printf("out_len=[%d], sizeof(bool)=[%d], out_len * sizeof(bool)=[%d]\n", out_len, sizeof(bool), out_len * sizeof(bool));
 
 	/* todo */
 	return em;
@@ -134,8 +145,48 @@ char * printable_encoded_message(encoded_message_t * em) {
 	return output;
 }
 
-char * decode(encoded_message_t * encoded, encoding_list_t * list) {
-	return "not yet implemented";
+char * decode(encoded_message_t * encoded, node_t * tree, int msg_len) {
+	/* store current output string index */
+	int out_str_idx = 0;
+
+	/* allocate memory for the output string */
+	char * output = malloc(msg_len * sizeof(char));
+	if (output == NULL) {
+		printf("ERROR: %d: can't allocate memory for decoded string\n", ERROR_MALLOC_DECODED_STRING);
+		exit(ERROR_MALLOC_DECODED_STRING);
+	}
+
+	/* loop over bits */
+	node_t * node = tree;
+	for (int bit_idx = 0; bit_idx < encoded->length; bit_idx++) {
+		/* if it's a leaf node, we can grab the symbol and put it on the output string */
+		if (node->nt == LEAF) {
+			output[out_str_idx] = node->symbol;
+			out_str_idx++;
+			node = tree;
+		}
+
+		/* get the current bit */
+		bool bit = encoded->bits[bit_idx];
+
+		/* use the current bit to reassign the node pointer */
+		if (bit) {
+			if (node->right == NULL) {
+				printf("ERROR: %d: node->right of INTERNAL node is null!", ERROR_INTERNAL_RIGHT_NODE_NULL);
+				exit(ERROR_INTERNAL_RIGHT_NODE_NULL);
+			}
+			node = node->right;
+		} else {
+			if (node->left == NULL) {
+				printf("ERROR: %d: node->left of INTERNAL node is null!", ERROR_INTERNAL_LEFT_NODE_NULL);
+				exit(ERROR_INTERNAL_LEFT_NODE_NULL);
+			}
+			node = node->left;
+		}
+	}
+
+	/* done */
+	return output;
 }
 
 encoding_t * find_encoding_by_symbol(encoding_list_t * list, char symbol_key) {

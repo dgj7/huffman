@@ -12,9 +12,6 @@ const int ERROR_MISCOUNT = 403;
 const int ERROR_MALLOC_ENCODING_NEXT = 404;
 const int ERROR_MALLOC_ENCODING_LIST = 405;
 
-const int LEFT = 0;
-const int RIGHT = 1;
-
 encoding_list_t * make_encodings_helper(node_t * tree, int length) {
 	/* handle bad input */
 	if (tree == NULL) {

@@ -6,6 +6,7 @@
 #define EXPORT __attribute__((__visibility__("default")))
 
 typedef enum { INTERNAL = 98, LEAF = 99 } nodetype_t;
+typedef enum { LEFT = false, RIGHT = true } tree_dir_t;
 
 typedef struct _node_t node_t;
 typedef struct _node_t {
