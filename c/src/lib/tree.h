@@ -1,6 +1,10 @@
 #ifndef __TREE__DG__H__
 #define __TREE__DG__H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 node_t * to_tree(frequency_t * frequency);
 
 node_t * to_list(frequency_pair_t * pairs, long length);
@@ -11,5 +15,9 @@ int compare(const void *_left, const void *_right);
 int tree_size(node_t * root);
 
 void debug_print_tree(node_t * root, char * prefix, int level);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

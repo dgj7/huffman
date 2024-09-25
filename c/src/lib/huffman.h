@@ -1,6 +1,10 @@
 #ifndef __HUFFMAN__DG__H__
 #define __HUFFMAN__DG__H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h> // bool
 
 #define EXPORT __attribute__((__visibility__("default")))
@@ -39,5 +43,9 @@ EXPORT encoding_list_t * create_encodings(node_t * tree);
 
 EXPORT void free_tree(node_t * tree);
 EXPORT void free_encodings(encoding_list_t * list);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
