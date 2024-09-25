@@ -83,8 +83,8 @@ int main(int argc, char **argv) {
 }
 
 encoded_message_t * encode(char * message, encoding_list_t * list) {
-	/* determine the length of the outgoing encoded string; start at 1 to include \0 */
-	int out_len = 1;
+	/* determine the length of the outgoing encoded bit array */
+	int out_len = 0;
 	for (int msg_idx = 0; msg_idx < strlen(message); msg_idx++) {
 		char symbol_key = message[msg_idx];
 		encoding_t * encoding = find_encoding_by_symbol(list, symbol_key);
