@@ -27,17 +27,23 @@ encoding_list_t * create_encodings(node_t * tree) {
 }
 
 void free_tree(node_t * tree) {
-	// todo
+	if (tree != NULL) {
+		free_tree(tree->left);
+		free_tree(tree->right);
+	}
+	free(tree);
 }
 
 void free_encodings(encoding_list_t * encodings) {
-	// todo
+	free_encoding(encodings->head);
+	free(encodings);
 }
 
 void free_encoding(encoding_t * encoding) {
-	//if (encoding->next != NULL) {
-	//	free_encoding(encoding->next);
-	//}
-
-	// todo
+	if (encoding->next != NULL) {
+		free_encoding(encoding->next);
+	}
+	free(encoding->bitvec->bits);
+	free(encoding->bitvec);
+	free(encoding);
 }

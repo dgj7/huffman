@@ -57,8 +57,6 @@ int main(int argc, char **argv) {
 				printf("encoded: [%s]\n", printable);
 				printf("decoded: [%s]\n", decoded);
 
-				/* todo: add more free() calls here; test them */
-
 				/* free memory */
 				free_tree(tree);
 				free_encodings(encodings);
