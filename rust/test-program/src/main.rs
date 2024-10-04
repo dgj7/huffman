@@ -1,8 +1,11 @@
+use huffman_coding_lib::StringInput;
+
 extern crate huffman_coding_lib;
 
 fn main() {
     let start = std::time::Instant::now();
     let input = parse(std::env::args());
+    let _message = StringInput::new(&input);
 
     println!("input:   [{}]", input);
     println!("done. ({}ms)", start.elapsed().as_millis());

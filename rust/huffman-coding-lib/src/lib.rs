@@ -3,6 +3,9 @@ use std::collections::HashMap;
 use core::str::Chars;
 use bitvec::vec::BitVec;
 
+pub mod input;
+pub mod node;
+
 pub const LEFT: bool = false;
 pub const RIGHT: bool = true;
 
