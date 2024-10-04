@@ -1,3 +1,4 @@
+use huffman_coding_lib::DecodedString;
 use huffman_coding_lib::Encoded;
 use huffman_coding_lib::HuffmanTree;
 use huffman_coding_lib::StringInput;
@@ -9,10 +10,12 @@ fn main() {
     let message = parse(std::env::args());
     let input = StringInput::new(&message);
     let tree = HuffmanTree::new(&input);
-    let encoded = Encoded::new(&input, &tree);
+    let mut encoded = Encoded::new(&input, &tree);
+    let decoded = DecodedString::new(&mut encoded, &tree);
 
     println!("input:   [{}]", message);
     println!("encoded: [{}]", encoded);
+    println!("decoded: [{}]", decoded);
     println!("done. ({}ms)", start.elapsed().as_millis());
 }
 
