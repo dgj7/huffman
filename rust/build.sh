@@ -1,5 +1,3 @@
 #!/bin/bash
 
-cargo clean
-cargo build
-
+(cd huffman-coding-lib; ./build_lib.sh) && (cd test-program; ./build_test_program.sh)
