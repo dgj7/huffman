@@ -1,7 +1,7 @@
 use crate::Encoded;
 use std::fmt;
 use bitvec::vec::BitVec;
-use crate::PrintableBitVec;
+use crate::bitvec::PrintableBitVec;
 use crate::Input;
 use crate::HuffmanTree;
 

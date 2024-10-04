@@ -1,7 +1,10 @@
-use crate::PrintableBitVec;
 use std::fmt::{Display, Formatter};
 use bitvec::macros::internal::funty::Fundamental;
 use bitvec::vec::BitVec;
+
+pub struct PrintableBitVec {
+    pub bits: BitVec,
+}
 
 impl PrintableBitVec {
     pub fn new(the_bits: &BitVec) -> PrintableBitVec {

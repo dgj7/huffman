@@ -1,9 +1,16 @@
-use crate::TreeNode;
 use crate::tree::LEFT;
 use crate::tree::RIGHT;
 use std::ops::Deref;
 use crate::HashMap;
 use bitvec::prelude::BitVec;
+
+#[derive(Clone)]
+pub struct TreeNode {
+    pub symbol: Option<char>,
+    pub frequency: usize,
+    pub left: Option<Box<TreeNode>>,
+    pub right: Option<Box<TreeNode>>,
+}
 
 impl TreeNode {
     pub fn new_internal(the_frequency: usize, the_left: TreeNode, the_right: TreeNode) -> TreeNode {
