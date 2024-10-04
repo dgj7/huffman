@@ -1,7 +1,7 @@
-use std::ops::Deref;
 use crate::TreeNode;
-use crate::LEFT;
-use crate::RIGHT;
+use crate::tree::LEFT;
+use crate::tree::RIGHT;
+use std::ops::Deref;
 use crate::HashMap;
 use bitvec::prelude::BitVec;
 
