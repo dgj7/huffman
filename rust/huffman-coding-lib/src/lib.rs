@@ -4,21 +4,21 @@ use crate::tree::HuffmanTree;
 use crate::input::StringInput;
 use crate::input::Input;
 
+pub mod bitvec;
+pub mod debug;
+pub mod decoded_byte;
+pub mod decoded_string;
+pub mod encoded;
 pub mod input;
 pub mod node;
 pub mod tree;
-pub mod decoded_byte;
-pub mod decoded_string;
-pub mod bitvec;
 pub mod vec;
-pub mod encoded;
-pub mod debug;
 
-pub fn parse_message(message: &String) -> impl Input {
+pub fn parse_input_string(message: &String) -> impl Input {
     return StringInput::new(&message);
 }
 
-pub fn to_tree(input: &impl Input) -> Option<HuffmanTree> {
+pub fn input_to_tree(input: &impl Input) -> Option<HuffmanTree> {
     return HuffmanTree::new(input);
 }
 
