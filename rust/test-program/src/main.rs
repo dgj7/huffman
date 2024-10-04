@@ -1,3 +1,4 @@
+use huffman_coding_lib::Encoded;
 use huffman_coding_lib::HuffmanTree;
 use huffman_coding_lib::StringInput;
 
@@ -5,11 +6,13 @@ extern crate huffman_coding_lib;
 
 fn main() {
     let start = std::time::Instant::now();
-    let input = parse(std::env::args());
-    let message = StringInput::new(&input);
-    let _tree = HuffmanTree::new(&message);
+    let message = parse(std::env::args());
+    let input = StringInput::new(&message);
+    let tree = HuffmanTree::new(&input);
+    let encoded = Encoded::new(&input, &tree);
 
-    println!("input:   [{}]", input);
+    println!("input:   [{}]", message);
+    println!("encoded: [{}]", encoded);
     println!("done. ({}ms)", start.elapsed().as_millis());
 }
 

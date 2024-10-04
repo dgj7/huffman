@@ -10,6 +10,7 @@ mod decoded_byte;
 mod decoded_string;
 mod bitvec;
 mod vec;
+mod encoded;
 
 pub trait Input {
     fn to_vector(&self) -> Vec<TreeNode>;
