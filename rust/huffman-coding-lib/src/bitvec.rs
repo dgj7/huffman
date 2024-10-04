@@ -2,12 +2,12 @@ use std::fmt::{Display, Formatter};
 use bitvec::macros::internal::funty::Fundamental;
 use bitvec::vec::BitVec;
 
-pub struct PrintableBitVec {
-    pub bits: BitVec,
+pub(crate) struct PrintableBitVec {
+    pub(crate) bits: BitVec,
 }
 
 impl PrintableBitVec {
-    pub fn new(the_bits: &BitVec) -> PrintableBitVec {
+    pub(crate) fn new(the_bits: &BitVec) -> PrintableBitVec {
         PrintableBitVec { bits: the_bits.clone() }
     }
 }

@@ -1,7 +1,8 @@
-use crate::TreeNode;
 use std::cmp::Ordering;
 
-pub fn sort(vec: &mut Vec<TreeNode>) {
+use crate::node::*;
+
+pub(crate) fn sort(vec: &mut Vec<TreeNode>) {
     vec.sort_by(|left, right| {
         let freq_result = left.frequency.partial_cmp(&right.frequency).unwrap();
 

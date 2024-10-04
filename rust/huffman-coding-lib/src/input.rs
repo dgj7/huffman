@@ -1,9 +1,17 @@
 use core::str::Chars;
-use crate::Input;
 use std::fmt;
-use crate::TreeNode;
-use crate::HashMap;
-use crate::StringInput;
+use std::collections::HashMap;
+
+use crate::node::TreeNode;
+
+pub trait Input {
+    fn to_vector(&self) -> Vec<TreeNode>;
+    fn to_char_array(&self) -> Chars;
+}
+
+pub struct StringInput {
+    pub message: String,
+}
 
 impl StringInput {
     pub fn new(the_message: &String) -> StringInput {

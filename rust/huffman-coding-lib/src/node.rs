@@ -1,8 +1,9 @@
+use std::ops::Deref;
+use std::collections::HashMap;
+use bitvec::prelude::BitVec;
+
 use crate::tree::LEFT;
 use crate::tree::RIGHT;
-use std::ops::Deref;
-use crate::HashMap;
-use bitvec::prelude::BitVec;
 
 #[derive(Clone)]
 pub struct TreeNode {
@@ -13,15 +14,15 @@ pub struct TreeNode {
 }
 
 impl TreeNode {
-    pub fn new_internal(the_frequency: usize, the_left: TreeNode, the_right: TreeNode) -> TreeNode {
+    pub(crate) fn new_internal(the_frequency: usize, the_left: TreeNode, the_right: TreeNode) -> TreeNode {
         TreeNode { symbol: None, frequency: the_frequency, left: Some(Box::new(the_left)), right: Some(Box::new(the_right)) }
     }
 
-    pub fn new_leaf(the_symbol: char, the_frequency: usize) -> TreeNode {
+    pub(crate) fn new_leaf(the_symbol: char, the_frequency: usize) -> TreeNode {
         TreeNode { symbol: Some(the_symbol), frequency: the_frequency, left: None, right: None }
     }
 
-    pub fn size(&self) -> usize {
+    pub(crate) fn size(&self) -> usize {
         let left_size = match &self.left {
             None => 0,
             Some(x) => x.size()
@@ -33,7 +34,7 @@ impl TreeNode {
         return 1 + left_size + right_size;
     }
 
-    pub fn find_node(&self, direction: bool) -> &Option<Box<TreeNode>> {
+    pub(crate) fn find_node(&self, direction: bool) -> &Option<Box<TreeNode>> {
         return if direction == LEFT && self.left.is_some() {
             &self.left
         } else if direction == RIGHT && self.right.is_some() {
@@ -44,7 +45,7 @@ impl TreeNode {
     }
 }
 
-pub fn descend_tree(node: &TreeNode, map: &mut HashMap<char, BitVec>) {
+pub(crate) fn descend_tree(node: &TreeNode, map: &mut HashMap<char, BitVec>) {
     if node.left.is_some() {
         descend(node.left.as_ref().unwrap().deref(), map, BitVec::new(), LEFT);
     }

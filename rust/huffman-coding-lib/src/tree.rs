@@ -1,22 +1,27 @@
-use crate::TreeNode;
-use crate::HuffmanTree;
 use std::collections::HashMap;
 use bitvec::macros::internal::funty::Fundamental;
 use bitvec::vec::BitVec;
+
+use crate::input::Input;
+use crate::node::TreeNode;
 use crate::bitvec::PrintableBitVec;
 use crate::decoded_byte::DecodedByte;
-use crate::Input;
 use crate::node::descend_tree;
 use crate::vec::sort;
 
-pub const LEFT: bool = false;
-pub const RIGHT: bool = true;
+pub(crate) const LEFT: bool = false;
+pub(crate) const RIGHT: bool = true;
+
+pub struct HuffmanTree {
+    pub root: TreeNode,
+    pub encodings: HashMap<char, BitVec>,
+}
 
 impl HuffmanTree {
-    pub fn new(input: &dyn Input) -> Option<HuffmanTree> {
+    pub(crate) fn new(input: &impl Input) -> Option<HuffmanTree> {
         /* get a vector with all the frequencies, represented as leaf nodes */
         let mut frequencies = input.to_vector();
-        //debug_print(&mut frequencies);
+        //crate::debug::debug_print(&mut frequencies);
 
         /* presently failing for an empty frequency list */
         if frequencies.len() == 0 {
@@ -45,7 +50,7 @@ impl HuffmanTree {
         Some(HuffmanTree { root: the_root, encodings: the_encodings })
     }
 
-    pub fn next_decoded(&self, encoded_bits: &BitVec, node: &TreeNode, index: usize, mut the_bits: BitVec) -> DecodedByte {
+    pub(crate) fn next_decoded(&self, encoded_bits: &BitVec, node: &TreeNode, index: usize, mut the_bits: BitVec) -> DecodedByte {
         let bit: bool = (encoded_bits.get(index).unwrap().as_u8()) != 0;// funty's as_bool() returns flipped bit
         the_bits.push(bit);
         let maybe_sub_node = node.find_node(bit);

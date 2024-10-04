@@ -1,11 +1,15 @@
-use crate::DecodedString;
 use std::fmt;
 use bitvec::vec::BitVec;
-use crate::Encoded;
-use crate::HuffmanTree;
+
+use crate::encoded::Encoded;
+use crate::tree::HuffmanTree;
+
+pub struct DecodedString {
+    pub message: String,
+}
 
 impl DecodedString {
-    pub fn new(encoded: &mut Encoded, maybe_tree: &Option<HuffmanTree>) -> DecodedString {
+    pub(crate) fn new(encoded: &mut Encoded, maybe_tree: &Option<HuffmanTree>) -> DecodedString {
         if maybe_tree.is_none() {
             return DecodedString { message: String::new() };
         }

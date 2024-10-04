@@ -1,36 +1,31 @@
+use crate::decoded_string::DecodedString;
+use crate::encoded::Encoded;
+use crate::tree::HuffmanTree;
+use crate::input::StringInput;
+use crate::input::Input;
 
-use crate::node::TreeNode;
-use ::bitvec::prelude::BitVec;
-use std::collections::HashMap;
-use core::str::Chars;
+pub mod input;
+pub mod node;
+pub mod tree;
+pub mod decoded_byte;
+pub mod decoded_string;
+pub mod bitvec;
+pub mod vec;
+pub mod encoded;
+pub mod debug;
 
-mod input;
-mod node;
-mod tree;
-mod decoded_byte;
-mod decoded_string;
-mod bitvec;
-mod vec;
-mod encoded;
-
-pub trait Input {
-    fn to_vector(&self) -> Vec<TreeNode>;
-    fn to_char_array(&self) -> Chars;
+pub fn parse_message(message: &String) -> impl Input {
+    return StringInput::new(&message);
 }
 
-pub struct StringInput {
-    pub message: String,
+pub fn to_tree(input: &impl Input) -> Option<HuffmanTree> {
+    return HuffmanTree::new(input);
 }
 
-pub struct HuffmanTree {
-    pub root: TreeNode,
-    pub encodings: HashMap<char, BitVec>,
+pub fn encode(input: &impl Input, tree: &Option<HuffmanTree>) -> Encoded {
+    return Encoded::new(input, &tree);
 }
 
-pub struct Encoded {
-    pub bits: BitVec,
-}
-
-pub struct DecodedString {
-    pub message: String,
+pub fn decode(encoded: &mut Encoded, tree: Option<HuffmanTree>) -> DecodedString {
+    return DecodedString::new(encoded, &tree);
 }

@@ -1,17 +1,18 @@
-use huffman_coding_lib::DecodedString;
-use huffman_coding_lib::Encoded;
-use huffman_coding_lib::HuffmanTree;
-use huffman_coding_lib::StringInput;
+use huffman_coding_lib::decode;
+use huffman_coding_lib::encode;
+use huffman_coding_lib::to_tree;
+use huffman_coding_lib::parse_message;
 
 extern crate huffman_coding_lib;
 
 fn main() {
     let start = std::time::Instant::now();
     let message = parse(std::env::args());
-    let input = StringInput::new(&message);
-    let tree = HuffmanTree::new(&input);
-    let mut encoded = Encoded::new(&input, &tree);
-    let decoded = DecodedString::new(&mut encoded, &tree);
+
+    let input = parse_message(&message);
+    let tree = to_tree(&input);
+    let mut encoded = encode(&input, &tree);
+    let decoded = decode(&mut encoded, tree);
 
     println!("input:   [{}]", message);
     println!("encoded: [{}]", encoded);

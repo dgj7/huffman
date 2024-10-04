@@ -1,12 +1,16 @@
-use crate::Encoded;
 use std::fmt;
 use bitvec::vec::BitVec;
+
+use crate::input::Input;
 use crate::bitvec::PrintableBitVec;
-use crate::Input;
-use crate::HuffmanTree;
+use crate::tree::HuffmanTree;
+
+pub struct Encoded {
+    pub bits: BitVec,
+}
 
 impl Encoded {
-    pub fn new(input: &dyn Input, maybe_tree: &Option<HuffmanTree>) -> Encoded {
+    pub(crate) fn new(input: &impl Input, maybe_tree: &Option<HuffmanTree>) -> Encoded {
         if maybe_tree.is_none() {
             return Encoded { bits: BitVec::new() }
         }

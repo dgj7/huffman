@@ -1,12 +1,12 @@
 use bitvec::vec::BitVec;
 
-pub struct DecodedByte {
-    pub symbol: char,
-    pub bits: BitVec,
+pub(crate) struct DecodedByte {
+    pub(crate) symbol: char,
+    pub(crate) bits: BitVec,
 }
 
 impl DecodedByte {
-    pub fn new(the_symbol: char, the_bits: BitVec) -> DecodedByte {
+    pub(crate) fn new(the_symbol: char, the_bits: BitVec) -> DecodedByte {
         DecodedByte { symbol: the_symbol, bits: the_bits }
     }
 }
