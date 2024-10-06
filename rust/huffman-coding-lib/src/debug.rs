@@ -1,9 +1,8 @@
 use std::collections::HashMap;
 use bitvec::vec::BitVec;
 
-use crate::bitvec::PrintableBitVec;
+use crate::bitvec::*;
 use crate::tree::*;
-use crate::tree::sort;
 
 #[allow(dead_code)]
 pub fn debug_print(vec: &mut Vec<TreeNode>) {

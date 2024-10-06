@@ -1,9 +1,9 @@
 use std::fmt;
 use bitvec::vec::BitVec;
 
-use crate::input::Input;
-use crate::bitvec::PrintableBitVec;
-use crate::tree::HuffmanTree;
+use crate::input::*;
+use crate::bitvec::*;
+use crate::tree::*;
 
 pub struct Encoded {
     pub bits: BitVec,

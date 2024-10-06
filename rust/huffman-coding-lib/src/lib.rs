@@ -1,8 +1,7 @@
-use crate::decoded_string::DecodedString;
-use crate::encoded::Encoded;
-use crate::tree::HuffmanTree;
-use crate::input::StringInput;
-use crate::input::Input;
+use crate::decoded_string::*;
+use crate::encoded::*;
+use crate::tree::*;
+use crate::input::*;
 
 pub mod bitvec;
 pub mod debug;

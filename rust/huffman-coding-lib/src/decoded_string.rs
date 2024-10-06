@@ -1,8 +1,8 @@
 use std::fmt;
 use bitvec::vec::BitVec;
 
-use crate::encoded::Encoded;
-use crate::tree::HuffmanTree;
+use crate::encoded::*;
+use crate::tree::*;
 
 pub struct DecodedString {
     pub message: String,
