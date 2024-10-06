@@ -11,7 +11,6 @@ pub mod decoded_string;
 pub mod encoded;
 pub mod input;
 pub mod tree;
-pub mod vec;
 
 pub fn parse_input_string(message: &String) -> impl Input {
     return StringInput::new(&message);

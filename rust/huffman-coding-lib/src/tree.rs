@@ -2,11 +2,11 @@ use std::collections::HashMap;
 use bitvec::macros::internal::funty::Fundamental;
 use bitvec::vec::BitVec;
 use std::ops::Deref;
+use std::cmp::Ordering;
 
 use crate::input::Input;
 use crate::bitvec::PrintableBitVec;
 use crate::decoded_byte::DecodedByte;
-use crate::vec::sort;
 
 pub(crate) const LEFT: bool = false;
 pub(crate) const RIGHT: bool = true;
@@ -130,4 +130,20 @@ fn descend(node: &TreeNode, map: &mut HashMap<char, BitVec>, mut bits: BitVec, b
         /* if the symbol is here, then we're done and can add to the map */
         map.insert(node.symbol.unwrap(), bits);
     }
+}
+
+pub(crate) fn sort(vec: &mut Vec<TreeNode>) {
+    vec.sort_by(|left, right| {
+        let freq_result = left.frequency.partial_cmp(&right.frequency).unwrap();
+
+        return if freq_result == Ordering::Equal {
+            if left.symbol.is_some() && right.symbol.is_some() {
+                left.symbol.unwrap().partial_cmp(&right.symbol.unwrap()).unwrap()
+            } else {
+                left.size().partial_cmp(&right.size()).unwrap()
+            }
+        } else {
+            freq_result
+        }
+    });
 }
