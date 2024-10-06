@@ -1,6 +1,6 @@
 use std::cmp::Ordering;
 
-use crate::node::*;
+use crate::tree::*;
 
 pub(crate) fn sort(vec: &mut Vec<TreeNode>) {
     vec.sort_by(|left, right| {

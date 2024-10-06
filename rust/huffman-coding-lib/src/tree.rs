@@ -1,16 +1,23 @@
 use std::collections::HashMap;
 use bitvec::macros::internal::funty::Fundamental;
 use bitvec::vec::BitVec;
+use std::ops::Deref;
 
 use crate::input::Input;
-use crate::node::TreeNode;
 use crate::bitvec::PrintableBitVec;
 use crate::decoded_byte::DecodedByte;
-use crate::node::descend_tree;
 use crate::vec::sort;
 
 pub(crate) const LEFT: bool = false;
 pub(crate) const RIGHT: bool = true;
+
+#[derive(Clone)]
+pub struct TreeNode {
+    pub symbol: Option<char>,
+    pub frequency: usize,
+    pub left: Option<Box<TreeNode>>,
+    pub right: Option<Box<TreeNode>>,
+}
 
 pub struct HuffmanTree {
     pub root: TreeNode,
@@ -65,5 +72,62 @@ impl HuffmanTree {
             // todo: unit test this
             panic!("[{}] is not a valid code", PrintableBitVec::new(&the_bits));
         }
+    }
+}
+
+impl TreeNode {
+    pub(crate) fn new_internal(the_frequency: usize, the_left: TreeNode, the_right: TreeNode) -> TreeNode {
+        TreeNode { symbol: None, frequency: the_frequency, left: Some(Box::new(the_left)), right: Some(Box::new(the_right)) }
+    }
+
+    pub(crate) fn new_leaf(the_symbol: char, the_frequency: usize) -> TreeNode {
+        TreeNode { symbol: Some(the_symbol), frequency: the_frequency, left: None, right: None }
+    }
+
+    pub(crate) fn size(&self) -> usize {
+        let left_size = match &self.left {
+            None => 0,
+            Some(x) => x.size()
+        };
+        let right_size = match &self.right {
+            None => 0,
+            Some(x) => x.size()
+        };
+        return 1 + left_size + right_size;
+    }
+
+    pub(crate) fn find_node(&self, direction: bool) -> &Option<Box<TreeNode>> {
+        return if direction == LEFT && self.left.is_some() {
+            &self.left
+        } else if direction == RIGHT && self.right.is_some() {
+            &self.right
+        } else {
+            &None
+        }
+    }
+}
+
+pub(crate) fn descend_tree(node: &TreeNode, map: &mut HashMap<char, BitVec>) {
+    if node.left.is_some() {
+        descend(node.left.as_ref().unwrap().deref(), map, BitVec::new(), LEFT);
+    }
+
+    if node.right.is_some() {
+        descend(node.right.as_ref().unwrap().deref(), map, BitVec::new(), RIGHT);
+    }
+}
+
+fn descend(node: &TreeNode, map: &mut HashMap<char, BitVec>, mut bits: BitVec, bit: bool) {
+    /* add to the current codes */
+    bits.push(bit);
+
+    /* next step depends on whether we have left/right, or a symbol */
+    if node.left.is_some() && node.right.is_some() {
+        /* if left/right exist, we need to descend with new bit vectors */
+        descend(node.left.as_ref().unwrap().deref(), map, bits.clone(), LEFT);
+        descend(node.right.as_ref().unwrap().deref(), map, bits.clone(), RIGHT);
+    } else if node.symbol.is_some() {
+        /* if the symbol is here, then we're done and can add to the map */
+        map.insert(node.symbol.unwrap(), bits);
     }
 }

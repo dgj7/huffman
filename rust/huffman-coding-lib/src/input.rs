@@ -2,7 +2,7 @@ use core::str::Chars;
 use std::fmt;
 use std::collections::HashMap;
 
-use crate::node::TreeNode;
+use crate::tree::*;
 
 pub trait Input {
     fn to_vector(&self) -> Vec<TreeNode>;

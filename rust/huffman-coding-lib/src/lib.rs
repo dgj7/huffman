@@ -10,7 +10,6 @@ pub mod decoded_byte;
 pub mod decoded_string;
 pub mod encoded;
 pub mod input;
-pub mod node;
 pub mod tree;
 pub mod vec;
 

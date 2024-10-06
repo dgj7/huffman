@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use bitvec::vec::BitVec;
 
 use crate::bitvec::PrintableBitVec;
-use crate::node::TreeNode;
+use crate::tree::*;
 use crate::vec::sort;
 
 #[allow(dead_code)]
