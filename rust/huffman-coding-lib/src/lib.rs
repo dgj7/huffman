@@ -1,13 +1,10 @@
-use crate::decoded_string::*;
-use crate::encoded::*;
+use crate::encoding::*;
 use crate::tree::*;
 use crate::input::*;
 
 pub mod bitvec;
 pub mod debug;
-pub mod decoded_byte;
-pub mod decoded_string;
-pub mod encoded;
+pub mod encoding;
 pub mod input;
 pub mod tree;
 
