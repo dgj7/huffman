@@ -6,16 +6,16 @@ use crate::bitvec::*;
 use crate::tree::*;
 
 pub struct Encoded {
-    pub bits: BitVec,
+    bits: BitVec,
 }
 
 pub(crate) struct DecodedByte {
-    pub(crate) symbol: char,
-    pub(crate) bits: BitVec,
+    symbol: char,
+    bits: BitVec,
 }
 
 pub struct DecodedString {
-    pub message: String,
+    message: String,
 }
 
 impl Encoded {

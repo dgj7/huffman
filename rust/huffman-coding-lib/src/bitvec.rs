@@ -3,7 +3,7 @@ use bitvec::macros::internal::funty::Fundamental;
 use bitvec::vec::BitVec;
 
 pub(crate) struct PrintableBitVec {
-    pub(crate) bits: BitVec,
+    bits: BitVec,
 }
 
 impl PrintableBitVec {

@@ -10,7 +10,7 @@ pub trait FrequencyProcessor {
 }
 
 pub struct StringFrequencyProcessor {
-    pub message: String,
+    message: String,
 }
 
 impl StringFrequencyProcessor {
