@@ -1,22 +1,22 @@
 use crate::encoding::*;
 use crate::tree::*;
-use crate::input::*;
+use crate::frequency::*;
 
 pub mod bitvec;
 pub mod debug;
 pub mod encoding;
-pub mod input;
+pub mod frequency;
 pub mod tree;
 
-pub fn parse_input_string(message: &String) -> impl Input {
-    return StringInput::new(&message);
+pub fn count_frequencies(message: &String) -> impl FrequencyProcessor {
+    return StringFrequencyProcessor::new(&message);
 }
 
-pub fn input_to_tree(input: &impl Input) -> Option<HuffmanTree> {
+pub fn frequencies_to_tree(input: &impl FrequencyProcessor) -> Option<HuffmanTree> {
     return HuffmanTree::new(input);
 }
 
-pub fn encode(input: &impl Input, tree: &Option<HuffmanTree>) -> Encoded {
+pub fn encode(input: &impl FrequencyProcessor, tree: &Option<HuffmanTree>) -> Encoded {
     return Encoded::new(input, &tree);
 }
 

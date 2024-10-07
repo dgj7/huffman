@@ -1,20 +1,20 @@
 use huffman_coding_lib::decode;
 use huffman_coding_lib::encode;
-use huffman_coding_lib::input_to_tree;
-use huffman_coding_lib::parse_input_string;
+use huffman_coding_lib::frequencies_to_tree;
+use huffman_coding_lib::count_frequencies;
 
 extern crate huffman_coding_lib;
 
 fn main() {
     let start = std::time::Instant::now();
-    let message = parse(std::env::args());
+    let input = parse(std::env::args());
 
-    let input = parse_input_string(&message);
-    let tree = input_to_tree(&input);
-    let mut encoded = encode(&input, &tree);
+    let frequencies = count_frequencies(&input);
+    let tree = frequencies_to_tree(&frequencies);
+    let mut encoded = encode(&frequencies, &tree);
     let decoded = decode(&mut encoded, tree);
 
-    println!("input:   [{}]", message);
+    println!("input:   [{}]", input);
     println!("encoded: [{}]", encoded);
     println!("decoded: [{}]", decoded);
     println!("done. ({}ms)", start.elapsed().as_millis());

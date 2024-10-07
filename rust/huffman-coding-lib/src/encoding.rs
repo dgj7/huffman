@@ -1,7 +1,7 @@
 use std::fmt;
 use bitvec::vec::BitVec;
 
-use crate::input::*;
+use crate::frequency::*;
 use crate::bitvec::*;
 use crate::tree::*;
 
@@ -19,7 +19,7 @@ pub struct DecodedString {
 }
 
 impl Encoded {
-    pub(crate) fn new(input: &impl Input, maybe_tree: &Option<HuffmanTree>) -> Encoded {
+    pub(crate) fn new(input: &impl FrequencyProcessor, maybe_tree: &Option<HuffmanTree>) -> Encoded {
         if maybe_tree.is_none() {
             return Encoded { bits: BitVec::new() }
         }

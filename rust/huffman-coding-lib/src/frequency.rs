@@ -4,22 +4,22 @@ use std::collections::HashMap;
 
 use crate::tree::*;
 
-pub trait Input {
+pub trait FrequencyProcessor {
     fn to_vector(&self) -> Vec<TreeNode>;
     fn to_char_array(&self) -> Chars;
 }
 
-pub struct StringInput {
+pub struct StringFrequencyProcessor {
     pub message: String,
 }
 
-impl StringInput {
-    pub fn new(the_message: &String) -> StringInput {
-        StringInput { message: the_message.to_string() }
+impl StringFrequencyProcessor {
+    pub fn new(the_message: &String) -> StringFrequencyProcessor {
+        StringFrequencyProcessor { message: the_message.to_string() }
     }
 }
 
-impl Input for StringInput {
+impl FrequencyProcessor for StringFrequencyProcessor {
     fn to_vector(&self) -> Vec<TreeNode> {
         let mut map: HashMap<char, usize> = HashMap::new();
         let mut vec = vec!();
@@ -47,7 +47,7 @@ impl Input for StringInput {
     }
 }
 
-impl fmt::Display for StringInput {
+impl fmt::Display for StringFrequencyProcessor {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.message)
     }

@@ -4,7 +4,7 @@ use bitvec::vec::BitVec;
 use std::ops::Deref;
 use std::cmp::Ordering;
 
-use crate::input::*;
+use crate::frequency::*;
 use crate::bitvec::*;
 use crate::encoding::*;
 
@@ -25,7 +25,7 @@ pub struct HuffmanTree {
 }
 
 impl HuffmanTree {
-    pub(crate) fn new(input: &impl Input) -> Option<HuffmanTree> {
+    pub(crate) fn new(input: &impl FrequencyProcessor) -> Option<HuffmanTree> {
         /* get a vector with all the frequencies, represented as leaf nodes */
         let mut frequencies = input.to_vector();
         //crate::debug::debug_print(&mut frequencies);
