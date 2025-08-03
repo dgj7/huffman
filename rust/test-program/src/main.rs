@@ -1,3 +1,5 @@
+mod translator;
+
 use huffman_coding_lib::decode;
 use huffman_coding_lib::encode;
 use huffman_coding_lib::frequencies_to_tree;
