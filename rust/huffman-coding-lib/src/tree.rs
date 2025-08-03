@@ -11,6 +11,13 @@ use crate::encoding::*;
 pub(crate) const LEFT: bool = false;
 pub(crate) const RIGHT: bool = true;
 
+///
+/// Internal storage for [HuffmanTree].
+///
+/// Represents both 'internal' and 'leaf' nodes, where
+/// *  internal nodes store only frequency (of combined leaf child symbols), and
+/// *  leaf nodes store a 'symbol' (byte).
+///
 #[derive(Clone)]
 pub struct TreeNode {
     pub symbol: Option<char>,
@@ -19,6 +26,11 @@ pub struct TreeNode {
     pub right: Option<Box<TreeNode>>,
 }
 
+///
+/// Huffman tree structure, owner of:
+/// * root ([TreeNode]), with tree data
+/// * encodings [HashMap], storing encoded data for each byte symbol
+/// 
 pub struct HuffmanTree {
     pub root: TreeNode,
     pub encodings: HashMap<char, BitVec>,

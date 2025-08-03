@@ -4,11 +4,17 @@ use std::collections::HashMap;
 
 use crate::tree::*;
 
+///
+/// Convert input data into [Vec]tor of [TreeNode]s.
+///
 pub trait FrequencyProcessor {
     fn to_vector(&self) -> Vec<TreeNode>;
     fn to_char_array(&self) -> Chars;
 }
 
+///
+/// [FrequencyProcessor] implementation for [String] input.
+///
 pub struct StringFrequencyProcessor {
     message: String,
 }
