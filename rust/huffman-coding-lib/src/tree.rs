@@ -5,7 +5,6 @@ use std::ops::Deref;
 use std::cmp::Ordering;
 
 use crate::frequency::*;
-use crate::bitvec::*;
 use crate::encoding::*;
 
 pub(crate) const LEFT: bool = false;
@@ -82,7 +81,7 @@ impl HuffmanTree {
             };
         } else {
             // todo: unit test this
-            panic!("[{}] is not a valid code", PrintableBitVec::new(&the_bits));
+            panic!("[{}] is not a valid code", &the_bits);
         }
     }
 }

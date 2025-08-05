@@ -1,46 +1,32 @@
-use std::fmt;
 use bitvec::vec::BitVec;
 
 use crate::frequency::*;
-use crate::bitvec::*;
 use crate::tree::*;
-
-pub struct Encoded {
-    bits: BitVec,
-}
 
 pub(crate) struct DecodedByte {
     symbol: u8,
     bits: BitVec,
 }
 
-impl Encoded {
-    pub(crate) fn new(input: &impl FrequencyProcessor, maybe_tree: &Option<HuffmanTree>) -> Encoded {
-        if maybe_tree.is_none() {
-            return Encoded { bits: BitVec::new() }
-        }
-
-        let tree = maybe_tree.as_ref().unwrap();
-        let mut the_bits = BitVec::new();
-
-        input.to_bytes()
-            .iter()
-            .for_each(|c| {
-                let maybe_symbol_bits = tree.encodings.get(&c).clone();
-                if maybe_symbol_bits.is_some() {
-                    let mut symbol_bits = maybe_symbol_bits.unwrap().clone();
-                    the_bits.append(&mut symbol_bits);
-                }
-            });
-
-        Encoded { bits: the_bits }
+pub(crate) fn do_encode(input: &impl FrequencyProcessor, maybe_tree: &Option<HuffmanTree>) -> BitVec {
+    if maybe_tree.is_none() {
+        return BitVec::new();
     }
-}
 
-impl fmt::Display for Encoded {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", PrintableBitVec::new(&self.bits))
-    }
+    let tree = maybe_tree.as_ref().unwrap();
+    let mut the_bits = BitVec::new();
+
+    input.to_bytes()
+        .iter()
+        .for_each(|c| {
+            let maybe_symbol_bits = tree.encodings.get(&c).clone();
+            if maybe_symbol_bits.is_some() {
+                let mut symbol_bits = maybe_symbol_bits.unwrap().clone();
+                the_bits.append(&mut symbol_bits);
+            }
+        });
+
+    return the_bits;
 }
 
 impl DecodedByte {
@@ -49,7 +35,7 @@ impl DecodedByte {
     }
 }
 
-pub(crate) fn do_decode(encoded: &mut Encoded, maybe_tree: &Option<HuffmanTree>) -> Vec<u8> {
+pub(crate) fn do_decode(encoded: &mut BitVec, maybe_tree: &Option<HuffmanTree>) -> Vec<u8> {
     let mut decoded = Vec::new();
 
     if maybe_tree.is_none() {
@@ -57,7 +43,7 @@ pub(crate) fn do_decode(encoded: &mut Encoded, maybe_tree: &Option<HuffmanTree>)
     }
     let tree = maybe_tree.as_ref().unwrap();
 
-    let mut bits = encoded.bits.clone();
+    let mut bits = encoded.clone();
 
     while !bits.is_empty() {
         let db = tree.next_decoded(&bits, &tree.root, 0, BitVec::new());
