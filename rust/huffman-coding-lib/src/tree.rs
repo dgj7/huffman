@@ -5,7 +5,7 @@ use std::ops::Deref;
 use std::cmp::Ordering;
 
 use crate::frequency::*;
-use crate::encoding::*;
+use crate::decoded::*;
 
 pub(crate) const LEFT: bool = false;
 pub(crate) const RIGHT: bool = true;
