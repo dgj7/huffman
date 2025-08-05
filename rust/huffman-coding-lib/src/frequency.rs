@@ -1,37 +1,35 @@
-use core::str::Chars;
-use std::fmt;
-use std::collections::HashMap;
-
 use crate::tree::*;
+use std::collections::HashMap;
+use std::fmt;
 
 ///
 /// Convert input data into [Vec]tor of [TreeNode]s.
 ///
 pub trait FrequencyProcessor {
-    fn to_vector(&self) -> Vec<TreeNode>;
-    fn to_char_array(&self) -> Chars;
+    fn to_frequencies(&self) -> Vec<TreeNode>;
+    fn to_bytes(&self) -> Vec<u8>;
 }
 
 ///
-/// [FrequencyProcessor] implementation for [String] input.
+/// [FrequencyProcessor] implementation for u8 [Vec] input.
 ///
-pub struct StringFrequencyProcessor {
-    message: String,
+pub struct DefaultFrequencyProcessor {
+    message: Vec<u8>,
 }
 
-impl StringFrequencyProcessor {
-    pub fn new(the_message: &String) -> StringFrequencyProcessor {
-        StringFrequencyProcessor { message: the_message.to_string() }
+impl DefaultFrequencyProcessor {
+    pub fn new(the_message: &Vec<u8>) -> DefaultFrequencyProcessor {
+        DefaultFrequencyProcessor { message: the_message.to_owned() }
     }
 }
 
-impl FrequencyProcessor for StringFrequencyProcessor {
-    fn to_vector(&self) -> Vec<TreeNode> {
-        let mut map: HashMap<char, usize> = HashMap::new();
+impl FrequencyProcessor for DefaultFrequencyProcessor {
+    fn to_frequencies(&self) -> Vec<TreeNode> {
+        let mut map: HashMap<u8, usize> = HashMap::new();
         let mut vec = vec!();
 
         self.message
-            .chars()
+            .iter()
             .for_each(|symbol| {
                 let value = if map.contains_key(&symbol) {
                     let temp: &usize = &map.get(&symbol).unwrap().to_owned();
@@ -40,7 +38,7 @@ impl FrequencyProcessor for StringFrequencyProcessor {
                     1
                 };
 
-                map.insert(symbol, value);
+                map.insert(*symbol, value);
             });
 
         map.iter().for_each(|elem| vec.push(TreeNode::new_leaf(*elem.0, *elem.1)));
@@ -48,13 +46,13 @@ impl FrequencyProcessor for StringFrequencyProcessor {
         return vec;
     }
 
-    fn to_char_array(&self) -> Chars {
-        self.message.chars().into_iter()
+    fn to_bytes(&self) -> Vec<u8> {
+        return self.message.clone()
     }
 }
 
-impl fmt::Display for StringFrequencyProcessor {
+impl fmt::Display for DefaultFrequencyProcessor {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.message)
+        write!(f, "{:?}", self.message)
     }
 }

@@ -10,12 +10,8 @@ pub struct Encoded {
 }
 
 pub(crate) struct DecodedByte {
-    symbol: char,
+    symbol: u8,
     bits: BitVec,
-}
-
-pub struct DecodedString {
-    message: String,
 }
 
 impl Encoded {
@@ -27,7 +23,8 @@ impl Encoded {
         let tree = maybe_tree.as_ref().unwrap();
         let mut the_bits = BitVec::new();
 
-        input.to_char_array()
+        input.to_bytes()
+            .iter()
             .for_each(|c| {
                 let maybe_symbol_bits = tree.encodings.get(&c).clone();
                 if maybe_symbol_bits.is_some() {
@@ -47,33 +44,26 @@ impl fmt::Display for Encoded {
 }
 
 impl DecodedByte {
-    pub(crate) fn new(the_symbol: char, the_bits: BitVec) -> DecodedByte {
+    pub(crate) fn new(the_symbol: u8, the_bits: BitVec) -> DecodedByte {
         DecodedByte { symbol: the_symbol, bits: the_bits }
     }
 }
 
-impl DecodedString {
-    pub(crate) fn new(encoded: &mut Encoded, maybe_tree: &Option<HuffmanTree>) -> DecodedString {
-        if maybe_tree.is_none() {
-            return DecodedString { message: String::new() };
-        }
-        let tree = maybe_tree.as_ref().unwrap();
+pub(crate) fn do_decode(encoded: &mut Encoded, maybe_tree: &Option<HuffmanTree>) -> Vec<u8> {
+    let mut decoded = Vec::new();
 
-        let mut builder = String::new();
-        let mut bits = encoded.bits.clone();
-
-        while !bits.is_empty() {
-            let db = tree.next_decoded(&bits, &tree.root, 0, BitVec::new());
-            bits.drain(0..db.bits.len());
-            builder.push(db.symbol);
-        }
-
-        DecodedString { message: builder }
+    if maybe_tree.is_none() {
+        return decoded;
     }
-}
+    let tree = maybe_tree.as_ref().unwrap();
 
-impl fmt::Display for DecodedString {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.message)
+    let mut bits = encoded.bits.clone();
+
+    while !bits.is_empty() {
+        let db = tree.next_decoded(&bits, &tree.root, 0, BitVec::new());
+        bits.drain(0..db.bits.len());
+        decoded.push(db.symbol);
     }
+
+    return decoded;
 }

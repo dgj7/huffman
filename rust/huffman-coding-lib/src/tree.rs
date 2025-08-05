@@ -20,7 +20,7 @@ pub(crate) const RIGHT: bool = true;
 ///
 #[derive(Clone)]
 pub struct TreeNode {
-    pub symbol: Option<char>,
+    pub symbol: Option<u8>,
     pub frequency: usize,
     pub left: Option<Box<TreeNode>>,
     pub right: Option<Box<TreeNode>>,
@@ -33,13 +33,13 @@ pub struct TreeNode {
 /// 
 pub struct HuffmanTree {
     pub root: TreeNode,
-    pub encodings: HashMap<char, BitVec>,
+    pub encodings: HashMap<u8, BitVec>,
 }
 
 impl HuffmanTree {
     pub(crate) fn new(input: &impl FrequencyProcessor) -> Option<HuffmanTree> {
         /* get a vector with all the frequencies, represented as leaf nodes */
-        let mut frequencies = input.to_vector();
+        let mut frequencies = input.to_frequencies();
         //crate::debug::debug_print(&mut frequencies);
 
         /* presently failing for an empty frequency list */
@@ -61,7 +61,7 @@ impl HuffmanTree {
         let the_root = frequencies[0].clone();
 
         /* descend the tree to gather all codes */
-        let mut the_encodings: HashMap<char, BitVec> = HashMap::new();
+        let mut the_encodings: HashMap<u8, BitVec> = HashMap::new();
         descend_tree(&the_root, &mut the_encodings);
         //crate::debug::debug_print_encodings(&the_encodings);
 
@@ -92,7 +92,7 @@ impl TreeNode {
         TreeNode { symbol: None, frequency: the_frequency, left: Some(Box::new(the_left)), right: Some(Box::new(the_right)) }
     }
 
-    pub(crate) fn new_leaf(the_symbol: char, the_frequency: usize) -> TreeNode {
+    pub(crate) fn new_leaf(the_symbol: u8, the_frequency: usize) -> TreeNode {
         TreeNode { symbol: Some(the_symbol), frequency: the_frequency, left: None, right: None }
     }
 
@@ -119,7 +119,7 @@ impl TreeNode {
     }
 }
 
-pub(crate) fn descend_tree(node: &TreeNode, map: &mut HashMap<char, BitVec>) {
+pub(crate) fn descend_tree(node: &TreeNode, map: &mut HashMap<u8, BitVec>) {
     if node.left.is_some() {
         descend(node.left.as_ref().unwrap().deref(), map, BitVec::new(), LEFT);
     }
@@ -129,7 +129,7 @@ pub(crate) fn descend_tree(node: &TreeNode, map: &mut HashMap<char, BitVec>) {
     }
 }
 
-fn descend(node: &TreeNode, map: &mut HashMap<char, BitVec>, mut bits: BitVec, bit: bool) {
+fn descend(node: &TreeNode, map: &mut HashMap<u8, BitVec>, mut bits: BitVec, bit: bool) {
     /* add to the current codes */
     bits.push(bit);
 

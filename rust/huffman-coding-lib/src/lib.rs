@@ -8,8 +8,8 @@ pub mod encoding;
 pub mod frequency;
 pub mod tree;
 
-pub fn count_frequencies(message: &String) -> impl FrequencyProcessor {
-    return StringFrequencyProcessor::new(&message);
+pub fn count_frequencies(message: &Vec<u8>) -> impl FrequencyProcessor {
+    return DefaultFrequencyProcessor::new(&message);
 }
 
 pub fn frequencies_to_tree(input: &impl FrequencyProcessor) -> Option<HuffmanTree> {
@@ -20,6 +20,6 @@ pub fn encode(input: &impl FrequencyProcessor, tree: &Option<HuffmanTree>) -> En
     return Encoded::new(input, &tree);
 }
 
-pub fn decode(encoded: &mut Encoded, tree: Option<HuffmanTree>) -> DecodedString {
-    return DecodedString::new(encoded, &tree);
+pub fn decode(encoded: &mut Encoded, tree: Option<HuffmanTree>) -> Vec<u8> {
+    return do_decode(encoded, &tree);
 }
