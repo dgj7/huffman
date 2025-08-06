@@ -6,6 +6,7 @@ pub mod debug;
 pub mod decoded;
 pub mod frequency;
 pub mod tree;
+mod bits;
 
 pub fn count_frequencies(message: &Vec<u8>) -> impl FrequencyProcessor {
     return DefaultFrequencyProcessor::new(&message);
