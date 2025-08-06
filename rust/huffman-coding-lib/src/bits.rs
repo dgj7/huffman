@@ -59,6 +59,12 @@ impl Bits {
         write_to_byte(byte, bit_index as u8, bit);
     }
 
+    pub fn append(&mut self, other: &Bits) {
+        other.bits_iter().for_each(|bit| {
+            self.push(bit);
+        });
+    }
+
     pub fn bits_iter(&self) -> BitsIterator {
         BitsIterator {
             bits: self,
@@ -318,5 +324,43 @@ mod test {
         bytes_string.push_str(&format!("{:08b}", byte5));
         assert_eq!("0000000000000000000000000000000000000000", bytes_string);
         assert_eq!(40, bytes_string.len());
+    }
+
+    #[test]
+    fn test_append() {
+        let mut left = Bits::new();
+        left.push(true);
+        left.push(false);
+        left.push(true);
+        left.push(false);
+        left.push(true);
+        left.push(false);
+        left.push(true);
+        left.push(false);
+        left.push(true);
+        left.push(false);
+        left.push(true);
+        let mut right = Bits::new();
+        right.push(true);
+        right.push(false);
+        right.push(true);
+        right.push(false);
+        right.push(true);
+        right.push(false);
+        right.push(true);
+        right.push(false);
+        right.push(true);
+
+        left.append(&right);
+
+        assert_eq!("10101010101101010101", left.to_string());
+        assert_eq!(20, left.to_string().len());
+        assert_eq!(20, left.bit_length);
+        assert_eq!(24, left.bit_capacity);
+
+        assert_eq!("101010101", right.to_string());
+        assert_eq!(9, right.to_string().len());
+        assert_eq!(9, right.bit_length);
+        assert_eq!(16, right.bit_capacity);
     }
 }
