@@ -1,6 +1,9 @@
 use std::fmt::{Display, Formatter};
 use bitvec::macros::internal::funty::Fundamental;
 
+///
+/// Data structure for storage and access to an array of bits.
+///
 pub struct Bits {
     storage: Vec<u8>,
     #[allow(dead_code)]// todo
@@ -8,9 +11,20 @@ pub struct Bits {
     bit_length: u64,
 }
 
+///
+/// Iterate over [Bits], one bit at a time.
+///
 pub struct BitsIterator<'a> {
     bits: &'a Bits,
     bit_index: u64,
+}
+
+///
+/// Iterate over [Bits], one byte at a time.
+///
+pub struct BytesIterator<'a> {
+    bits: &'a Bits,
+    byte_index: u64,
 }
 
 impl Bits {
@@ -49,6 +63,13 @@ impl Bits {
         BitsIterator {
             bits: self,
             bit_index: 0,
+        }
+    }
+
+    pub fn bytes_iter(&self) -> BytesIterator {
+        BytesIterator {
+            bits: self,
+            byte_index: 0,
         }
     }
 }
@@ -93,6 +114,20 @@ impl<'a> Iterator for BitsIterator<'a> {
     }
 }
 
+impl<'a> Iterator for BytesIterator<'a> {
+    type Item = u8;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.byte_index <= self.bits.bit_length / 8 {
+            let byte_index = self.byte_index as usize;
+            self.byte_index += 1;
+            return Some(self.bits.storage[byte_index]);
+        } else {
+            None
+        }
+    }
+}
+
 impl Display for Bits {
     fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
         let mut value = String::new();
@@ -116,9 +151,21 @@ mod test {
         bits.push(true);
         bits.push(false);
 
+        /* test storage/push, read/write bits, and bits iterator */
         assert_eq!("1010", bits.to_string());
         assert_eq!(4, bits.bit_length);
         assert_eq!(8, bits.bit_capacity);
+
+        /* test bytes iterator */
+        let mut byte_iterator = bits.bytes_iter();
+        let byte1 = byte_iterator.next().unwrap();
+        let byte2 = byte_iterator.next();
+        assert_eq!(5, byte1);
+        assert_eq!(None, byte2);
+        let mut bytes_string = String::new();
+        bytes_string.push_str(&format!("{:08b}", byte1));
+        assert_eq!("00000101", bytes_string);
+        assert_eq!(8, bytes_string.len());
     }
 
     #[test]
@@ -130,9 +177,21 @@ mod test {
         bits.push(false);
         bits.push(true);
 
+        /* test storage/push, read/write bits, and bits iterator */
         assert_eq!("0101", bits.to_string());
         assert_eq!(4, bits.bit_length);
         assert_eq!(8, bits.bit_capacity);
+
+        /* test bytes iterator */
+        let mut byte_iterator = bits.bytes_iter();
+        let byte1 = byte_iterator.next().unwrap();
+        let byte2 = byte_iterator.next();
+        assert_eq!(10, byte1);
+        assert_eq!(None, byte2);
+        let mut bytes_string = String::new();
+        bytes_string.push_str(&format!("{:08b}", byte1));
+        assert_eq!("00001010", bytes_string);
+        assert_eq!(8, bytes_string.len());
     }
 
     #[test]
@@ -144,9 +203,21 @@ mod test {
         bits.push(true);
         bits.push(true);
 
+        /* test storage/push, read/write bits, and bits iterator */
         assert_eq!("1111", bits.to_string());
         assert_eq!(4, bits.bit_length);
         assert_eq!(8, bits.bit_capacity);
+
+        /* test bytes iterator */
+        let mut byte_iterator = bits.bytes_iter();
+        let byte1 = byte_iterator.next().unwrap();
+        let byte2 = byte_iterator.next();
+        assert_eq!(15, byte1);
+        assert_eq!(None, byte2);
+        let mut bytes_string = String::new();
+        bytes_string.push_str(&format!("{:08b}", byte1));
+        assert_eq!("00001111", bytes_string);
+        assert_eq!(8, bytes_string.len());
     }
 
     #[test]
@@ -158,9 +229,21 @@ mod test {
         bits.push(false);
         bits.push(false);
 
+        /* test storage/push, read/write bits, and bits iterator */
         assert_eq!("0000", bits.to_string());
         assert_eq!(4, bits.bit_length);
         assert_eq!(8, bits.bit_capacity);
+
+        /* test bytes iterator */
+        let mut byte_iterator = bits.bytes_iter();
+        let byte1 = byte_iterator.next().unwrap();
+        let byte2 = byte_iterator.next();
+        assert_eq!(0, byte1);
+        assert_eq!(None, byte2);
+        let mut bytes_string = String::new();
+        bytes_string.push_str(&format!("{:08b}", byte1));
+        assert_eq!("00000000", bytes_string);
+        assert_eq!(8, bytes_string.len());
     }
 
     #[test]
@@ -171,14 +254,33 @@ mod test {
             bits.push(true);
         }// 4 bytes, +3 bits
 
+        /* test storage/push, read/write bits, and bits iterator */
         assert_eq!("11111111111111111111111111111111111", bits.to_string());
         assert_eq!(35, bits.bit_length);
         assert_eq!(40, bits.bit_capacity);
 
-        let mut bytes = String::new();
-        bits.storage.into_iter().map(|b| format!("{:08b}", b)).for_each(|s| bytes.push_str(&s));
-        assert_eq!("1111111111111111111111111111111100000111", bytes);
-        assert_eq!(40, bytes.len());
+        /* test bytes iterator */
+        let mut byte_iterator = bits.bytes_iter();
+        let byte1 = byte_iterator.next().unwrap();
+        let byte2 = byte_iterator.next().unwrap();
+        let byte3 = byte_iterator.next().unwrap();
+        let byte4 = byte_iterator.next().unwrap();
+        let byte5 = byte_iterator.next().unwrap();
+        let byte6 = byte_iterator.next();
+        assert_eq!(255, byte1);
+        assert_eq!(255, byte2);
+        assert_eq!(255, byte3);
+        assert_eq!(255, byte4);
+        assert_eq!(7, byte5);
+        assert_eq!(None, byte6);
+        let mut bytes_string = String::new();
+        bytes_string.push_str(&format!("{:08b}", byte1));
+        bytes_string.push_str(&format!("{:08b}", byte2));
+        bytes_string.push_str(&format!("{:08b}", byte3));
+        bytes_string.push_str(&format!("{:08b}", byte4));
+        bytes_string.push_str(&format!("{:08b}", byte5));
+        assert_eq!("1111111111111111111111111111111100000111", bytes_string);
+        assert_eq!(40, bytes_string.len());
     }
 
     #[test]
@@ -189,13 +291,32 @@ mod test {
             bits.push(false);
         }// 4 bytes, +3 bits
 
+        /* test storage/push, read/write bits, and bits iterator */
         assert_eq!("00000000000000000000000000000000000", bits.to_string());
         assert_eq!(35, bits.bit_length);
         assert_eq!(40, bits.bit_capacity);
 
-        let mut bytes = String::new();
-        bits.storage.into_iter().map(|b| format!("{:08b}", b)).for_each(|s| bytes.push_str(&s));
-        assert_eq!("0000000000000000000000000000000000000000", bytes);
-        assert_eq!(40, bytes.len());
+        /* test bytes iterator */
+        let mut byte_iterator = bits.bytes_iter();
+        let byte1 = byte_iterator.next().unwrap();
+        let byte2 = byte_iterator.next().unwrap();
+        let byte3 = byte_iterator.next().unwrap();
+        let byte4 = byte_iterator.next().unwrap();
+        let byte5 = byte_iterator.next().unwrap();
+        let byte6 = byte_iterator.next();
+        assert_eq!(0, byte1);
+        assert_eq!(0, byte2);
+        assert_eq!(0, byte3);
+        assert_eq!(0, byte4);
+        assert_eq!(0, byte5);
+        assert_eq!(None, byte6);
+        let mut bytes_string = String::new();
+        bytes_string.push_str(&format!("{:08b}", byte1));
+        bytes_string.push_str(&format!("{:08b}", byte2));
+        bytes_string.push_str(&format!("{:08b}", byte3));
+        bytes_string.push_str(&format!("{:08b}", byte4));
+        bytes_string.push_str(&format!("{:08b}", byte5));
+        assert_eq!("0000000000000000000000000000000000000000", bytes_string);
+        assert_eq!(40, bytes_string.len());
     }
 }
