@@ -91,7 +91,7 @@ fn read_from_byte(byte: u8, index: u8) -> bool {
         panic!("Index out of bounds");
     }
 
-    return byte >> index & 1 == 1;
+    byte >> index & 1 == 1
 }
 
 impl<'a> Iterator for BitsIterator<'a> {
@@ -107,7 +107,7 @@ impl<'a> Iterator for BitsIterator<'a> {
             let byte = self.bits.storage[byte_index as usize];
             let result = read_from_byte(byte, bit_index as u8);
 
-            return Some(result);
+            Some(result)
         } else {
             None
         }
@@ -121,7 +121,7 @@ impl<'a> Iterator for BytesIterator<'a> {
         if self.byte_index <= self.bits.bit_length / 8 {
             let byte_index = self.byte_index as usize;
             self.byte_index += 1;
-            return Some(self.bits.storage[byte_index]);
+            Some(self.bits.storage[byte_index])
         } else {
             None
         }
