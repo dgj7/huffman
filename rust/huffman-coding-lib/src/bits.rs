@@ -4,6 +4,7 @@ use bitvec::macros::internal::funty::Fundamental;
 ///
 /// Data structure for storage and access to an array of bits.
 ///
+#[derive(Clone)]
 pub struct Bits {
     storage: Vec<u8>,
     #[allow(dead_code)]// todo
@@ -172,6 +173,12 @@ mod test {
         bytes_string.push_str(&format!("{:08b}", byte1));
         assert_eq!("00000101", bytes_string);
         assert_eq!(8, bytes_string.len());
+
+        /* test clone */
+        let clone = bits.clone();
+        assert_eq!("1010", clone.to_string());
+        assert_eq!(4, clone.bit_length);
+        assert_eq!(8, clone.bit_capacity);
     }
 
     #[test]
@@ -198,6 +205,12 @@ mod test {
         bytes_string.push_str(&format!("{:08b}", byte1));
         assert_eq!("00001010", bytes_string);
         assert_eq!(8, bytes_string.len());
+
+        /* test clone */
+        let clone = bits.clone();
+        assert_eq!("0101", clone.to_string());
+        assert_eq!(4, clone.bit_length);
+        assert_eq!(8, clone.bit_capacity);
     }
 
     #[test]
@@ -224,6 +237,12 @@ mod test {
         bytes_string.push_str(&format!("{:08b}", byte1));
         assert_eq!("00001111", bytes_string);
         assert_eq!(8, bytes_string.len());
+
+        /* test clone */
+        let clone = bits.clone();
+        assert_eq!("1111", clone.to_string());
+        assert_eq!(4, clone.bit_length);
+        assert_eq!(8, clone.bit_capacity);
     }
 
     #[test]
@@ -250,6 +269,12 @@ mod test {
         bytes_string.push_str(&format!("{:08b}", byte1));
         assert_eq!("00000000", bytes_string);
         assert_eq!(8, bytes_string.len());
+
+        /* test clone */
+        let clone = bits.clone();
+        assert_eq!("0000", clone.to_string());
+        assert_eq!(4, clone.bit_length);
+        assert_eq!(8, clone.bit_capacity);
     }
 
     #[test]
@@ -287,6 +312,12 @@ mod test {
         bytes_string.push_str(&format!("{:08b}", byte5));
         assert_eq!("1111111111111111111111111111111100000111", bytes_string);
         assert_eq!(40, bytes_string.len());
+
+        /* test clone */
+        let clone = bits.clone();
+        assert_eq!("11111111111111111111111111111111111", clone.to_string());
+        assert_eq!(35, clone.bit_length);
+        assert_eq!(40, clone.bit_capacity);
     }
 
     #[test]
@@ -324,6 +355,12 @@ mod test {
         bytes_string.push_str(&format!("{:08b}", byte5));
         assert_eq!("0000000000000000000000000000000000000000", bytes_string);
         assert_eq!(40, bytes_string.len());
+
+        /* test clone */
+        let clone = bits.clone();
+        assert_eq!("00000000000000000000000000000000000", clone.to_string());
+        assert_eq!(35, clone.bit_length);
+        assert_eq!(40, clone.bit_capacity);
     }
 
     #[test]
