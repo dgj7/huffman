@@ -61,12 +61,12 @@ impl Bits {
     }
 
     pub fn append(&mut self, other: &Bits) {
-        other.bits_iter().for_each(|bit| {
+        other.iter().for_each(|bit| {
             self.push(bit);
         });
     }
 
-    pub fn bits_iter(&self) -> BitsIterator {
+    pub fn iter(&self) -> BitsIterator {
         BitsIterator {
             bits: self,
             bit_index: 0,
@@ -138,7 +138,7 @@ impl<'a> Iterator for BytesIterator<'a> {
 impl Display for Bits {
     fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
         let mut value = String::new();
-        self.bits_iter().for_each(|bit| {
+        self.iter().for_each(|bit| {
             value.push_str(bit.as_u8().to_string().as_str());
         });
         write!(f, "{}", value)
