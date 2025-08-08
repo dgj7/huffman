@@ -1,3 +1,5 @@
+#![allow(dead_code)]// todo: remove this eventually
+
 use std::fmt::{Display, Formatter};
 use bitvec::macros::internal::funty::Fundamental;
 
@@ -7,7 +9,6 @@ use bitvec::macros::internal::funty::Fundamental;
 #[derive(Clone)]
 pub struct Bits {
     storage: Vec<u8>,
-    #[allow(dead_code)]// todo
     bit_capacity: usize,
     bit_length: usize,
 }
@@ -29,7 +30,6 @@ pub struct BytesIterator<'a> {
 }
 
 impl Bits {
-    #[allow(dead_code)]// todo
     pub fn new() -> Self {
         Self {
             storage: Vec::new(),
@@ -38,7 +38,6 @@ impl Bits {
         }
     }
 
-    #[allow(dead_code)]// todo
     pub fn push(&mut self, bit: bool) {
         /* initialize storage, if needed */
         if self.bit_capacity <= self.bit_length {

@@ -35,28 +35,27 @@ mod test {
         let message = "Hello World!".to_string();
         let bytes = message_to_bytes(&message);
 
-        assert_eq!(bytes.len(), 13);
-        assert_eq!(bytes[0], 72);
-        assert_eq!(bytes[1], 101);
-        assert_eq!(bytes[2], 108);
-        assert_eq!(bytes[3], 108);
-        assert_eq!(bytes[4], 111);
-        assert_eq!(bytes[5], 32);
-        assert_eq!(bytes[6], 87);
-        assert_eq!(bytes[7], 111);
-        assert_eq!(bytes[8], 114);
-        assert_eq!(bytes[9], 108);
-        assert_eq!(bytes[10], 100);
-        assert_eq!(bytes[11], 33);
-        assert_eq!(bytes[12], 0);
+        assert_eq!(12, bytes.len());
+        assert_eq!(72, bytes[0]);
+        assert_eq!(101, bytes[1]);
+        assert_eq!(108, bytes[2]);
+        assert_eq!(108, bytes[3]);
+        assert_eq!(111, bytes[4]);
+        assert_eq!(32, bytes[5]);
+        assert_eq!(87, bytes[6]);
+        assert_eq!(111, bytes[7]);
+        assert_eq!(114, bytes[8]);
+        assert_eq!(108, bytes[9]);
+        assert_eq!(100, bytes[10]);
+        assert_eq!(33, bytes[11]);
     }
 
     #[test]
     fn test_to_string() {
-        let bytes = vec![72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100, 33, 0];
+        let bytes = vec![72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100, 33];
         let message = bytes_to_message(&bytes);
 
-        assert_eq!(message, "Hello World!");
+        assert_eq!(String::from("Hello World!"), message);
     }
 }
 
