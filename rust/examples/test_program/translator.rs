@@ -1,7 +1,7 @@
 ///
 /// Convert input String into byte [Vector].
 ///
-pub fn string_to_bytes(message : &String) -> Vec<u8> {
+pub fn string_to_bytes(message : &str) -> Vec<u8> {
     let mut vec = vec!();
 
     for c in message.chars() {

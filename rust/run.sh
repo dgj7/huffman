@@ -1,5 +1,17 @@
 #!/bin/bash
 
+cargo test > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  printf "ERROR: lib tests failed\n"
+  exit $?
+fi
+
+cargo test --examples > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  printf "ERROR: test_program tests failed\n"
+  exit $?
+fi
+
 if [ ! -f target/debug/examples/test_program.exe ]; then
     #printf "building...\n"
     (./build.sh) > /dev/null 2>&1
