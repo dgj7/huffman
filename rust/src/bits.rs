@@ -307,12 +307,12 @@ mod test {
         assert_eq!(8, clone.bit_capacity);
 
         /* test extract */
-        let extracted = bits.extract(1, 2);
-        assert_eq!("01", extracted.to_string());
-        assert_eq!(2, extracted.bit_length);
+        let extracted = bits.extract(0, 1);
+        assert_eq!("1", extracted.to_string());
+        assert_eq!(1, extracted.bit_length);
         assert_eq!(8, extracted.bit_capacity);
-        assert_eq!("10", bits.to_string());
-        assert_eq!(2, bits.bit_length);
+        assert_eq!("010", bits.to_string());
+        assert_eq!(3, bits.bit_length);
         assert_eq!(8, bits.bit_capacity);
         assert_eq!("1010", clone.to_string());
         assert_eq!(4, clone.bit_length);
