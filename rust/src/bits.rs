@@ -32,6 +32,7 @@ pub struct BytesIterator<'a> {
 
 impl Bits {
     pub fn new() -> Self {
+        println!("NEW");
         Self {
             storage: Vec::new(),
             bit_capacity: 0,
@@ -40,33 +41,30 @@ impl Bits {
     }
 
     pub fn push(&mut self, bit: bool) {
+        println!("PUSH: bit=[{}]", bit as u8);
+
         /* initialize storage, if needed */
         if self.bit_capacity <= self.bit_length {
             self.storage.push(0);
             self.bit_capacity += 8;
         }
 
-        /* determine bit and byte indices within the storage, based on the current length */
-        let bit_index: usize = self.bit_length % 8;
-        let byte_index: usize = self.bit_length / 8;
-
         /* increment length for the next call */
         self.bit_length += 1;
 
-        /* retrieve the byte to modify */
-        let byte = &mut self.storage[byte_index];
-
         /* write the bit to the byte */
-        write_to_byte(byte, bit_index, bit);
+        self.write(self.bit_length-1, bit);
     }
 
     pub fn append(&mut self, other: &Bits) {
+        println!("APPEND: other=[{}]", other.to_string());
         other.iter().for_each(|bit| {
             self.push(bit);
         });
     }
 
     pub fn iter(&self) -> BitsIterator {
+        println!("ITER");
         BitsIterator {
             bits: self,
             bit_index: 0,
@@ -74,6 +72,7 @@ impl Bits {
     }
 
     pub fn bytes_iter(&self) -> BytesIterator {
+        println!("BYTES_ITER");
         BytesIterator {
             bits: self,
             byte_index: 0,
@@ -85,6 +84,8 @@ impl Bits {
     /// Extract (start, start+count-1) bits and return as a new [Bits].
     ///
     pub fn extract(&mut self, start: usize, count: usize) -> Bits {
+        println!("EXTRACT: start=[{}], end=[{}+{}]", start, start, count);
+
         /* storage for output */
         let mut bits = Bits::new();
 
@@ -101,28 +102,20 @@ impl Bits {
             let replacement_bit: bool = if replacement_byte_index > self.storage.len() - 1 {
                 false
             } else {
-                let replacement_source_byte = self.storage[replacement_byte_index];
-                let replacement_bit_index = replacement_index % 8;
-                read_from_byte(replacement_source_byte, replacement_bit_index)
+                self.read(replacement_index)
             };
 
             /* get the value of the current bit, and store it in the output */
-            let current_byte_index = current_index / 8;
-            let mut current_byte = self.storage[current_byte_index];
-            let current_bit_index = current_index % 8;
-            let current_bit = read_from_byte(current_byte, current_bit_index);
+            let current_bit = self.read(current_index);
             bits.push(current_bit);
 
             /* overwrite the current bit index with the replacement bit */
-            write_to_byte(&mut current_byte, current_bit_index, replacement_bit);
+            self.write(current_index, replacement_bit);
         }
 
         /* remove (zero) the last 'count' bits */
         for remove_index in (self.bit_capacity - count) .. self.bit_capacity {
-            let remove_byte_index = remove_index / 8;
-            let remove_bit_index = remove_index % 8;
-            let remove_byte = &mut self.storage[remove_byte_index];
-            write_to_byte(remove_byte, remove_bit_index, false);
+            self.write(remove_index, false);
         }
 
         /* update size */
@@ -153,26 +146,85 @@ impl Bits {
     pub fn is_empty(&self) -> bool {
         self.bit_length == 0
     }
-}
 
-fn write_to_byte(byte: &mut u8, bit_index: usize, bit: bool) {
-    if bit_index >= 8 {
-        panic!("Index out of bounds");
+    ///
+    /// Read/return the bit at the given read index.
+    ///
+    /// NOT the byte index.
+    ///
+    fn read(&self, read_index : usize) -> bool {
+        /* validate that read_index is within bounds */
+        //println!("READ: read_index=[{}]; length/capacity=[{}/{}]", read_index, self.bit_length, self.bit_capacity);
+        if read_index >= self.bit_length {
+            panic!("ERROR: READ: [read_index({})] >= [bit_length({})]", read_index, self.bit_length);
+        }
+
+        /* determine and validate the byte index */
+        let byte_index = read_index / 8;
+        //println!("\tbyte_index=[{}]", byte_index);
+        if byte_index >= self.storage.len() {
+            panic!("ERROR: READ: [byte_index({})] >= [byte_capacity({})]", byte_index, self.storage.len());
+        }
+
+        /* determine and validate the bit index */
+        let bit_index = read_index % 8;
+        //println!("\tbit_index=[{}]", bit_index);
+        if bit_index >= 8 {
+            panic!("ERROR: READ: [bit_index({})] >= 8", bit_index);
+        }
+
+        /* load the byte */
+        let byte = self.storage[byte_index];
+
+        /* done */
+        let bit = byte >> bit_index & 1 == 1;
+        println!("READ: SUCCESS: read value=[{}] from read_index=[{}] of byte#{}=[{:08b}]  u8=[{}])", bit as u8, read_index, byte_index, byte.reverse_bits(), byte);
+        bit
     }
 
-    let mask : u8 = !(1 << bit_index);
-    let flag : u8 = (bit as u8) << bit_index;
+    ///
+    /// Write the given bit to the given write index.
+    ///
+    /// NOT the byte index.
+    ///
+    fn write(&mut self, write_index: usize, bit: bool) {
+        /* validate that write is within bounds */
+        //println!("WRITE: write_index=[{}]; value=[{}]; length/capacity=[{}/{}]", write_index, bit as u8, self.bit_length, self.bit_capacity);
+        if write_index >= self.bit_capacity {
+            panic!("ERROR: WRITE: [write_index({})] >= [bit_length({})]", write_index, self.bit_length);
+        }
 
-    *byte &= mask;
-    *byte |= flag;
-}
+        /* determine and validate the byte index */
+        let byte_index = write_index / 8;
+        //println!("\tbyte_index=[{}]", byte_index);
+        if byte_index >= self.storage.len() {}
+        if byte_index >= self.storage.len() {
+            panic!("ERROR: WRITE: [byte_index({})] >= [byte_capacity({})]", byte_index, self.storage.len());
+        }
 
-fn read_from_byte(byte: u8, index: usize) -> bool {
-    if index >= 8 {
-        panic!("Index out of bounds");
+        /* determine and validate the bit index */
+        let bit_index = write_index % 8;
+        //println!("\tbit_index=[{}]", bit_index);
+        if bit_index >= 8 {
+            panic!("ERROR: WRITE: [bit_index({})] >= 8", bit_index);
+        }
+
+        /* load the byte */
+        let mut byte = &mut self.storage[byte_index];
+
+        /* write data */
+        Self::write_helper(&mut byte, bit_index, bit);
     }
 
-    byte >> index & 1 == 1
+    fn write_helper(byte: &mut u8, bit_index : usize, bit: bool) {
+        let mask : u8 = !(1 << bit_index);
+        let flag : u8 = (bit as u8) << bit_index;
+
+        *byte &= mask;
+        *byte |= flag;
+
+        println!("WRITE: SUCCESS: wrote value=[{}] to write_index=[{}] (byte=[{:08b}]  u8=[{}]))", bit as u8, bit_index, byte.reverse_bits(), byte);
+    }
 }
 
 impl<'a> Iterator for BitsIterator<'a> {
@@ -180,14 +232,8 @@ impl<'a> Iterator for BitsIterator<'a> {
 
     fn next(&mut self) -> Option<Self::Item> {
         if self.bit_index < self.bits.bit_length {
-            let bit_index: usize = (self.bit_index % 8) as usize;
-            let byte_index: usize = (self.bit_index / 8) as usize;
-
+            let result = self.bits.read(self.bit_index);
             self.bit_index += 1;
-
-            let byte = self.bits.storage[byte_index as usize];
-            let result = read_from_byte(byte, bit_index);
-
             Some(result)
         } else {
             None
