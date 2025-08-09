@@ -27,6 +27,7 @@ pub struct BitsIterator<'a> {
 pub struct BytesIterator<'a> {
     bits: &'a Bits,
     byte_index: usize,
+    max: usize,
 }
 
 impl Bits {
@@ -76,6 +77,7 @@ impl Bits {
         BytesIterator {
             bits: self,
             byte_index: 0,
+            max: self.storage.len(),
         }
     }
 
@@ -85,6 +87,11 @@ impl Bits {
     pub fn extract(&mut self, start: usize, count: usize) -> Bits {
         /* storage for output */
         let mut bits = Bits::new();
+
+        /* sc if count < 1 */
+        if count < 1 {
+            return bits;
+        }
 
         /* iterate over the bits specified by the range */
         for current_index in start..start + count {
@@ -111,7 +118,7 @@ impl Bits {
         }
 
         /* remove (zero) the last 'count' bits */
-        for remove_index in (self.bit_capacity - 1 - count) .. self.bit_capacity {
+        for remove_index in (self.bit_capacity - count) .. self.bit_capacity {
             let remove_byte_index = remove_index / 8;
             let remove_bit_index = remove_index % 8;
             let remove_byte = &mut self.storage[remove_byte_index];
@@ -123,16 +130,28 @@ impl Bits {
 
         /* determine if any storage bytes can be freed */
         let needed_storage_bytes = self.bit_capacity / 8;
-        let actual_storage_bytes = self.storage.len();
-        if needed_storage_bytes < actual_storage_bytes {
-            self.storage.truncate(needed_storage_bytes);
+        let mut actual_storage_bytes = self.storage.len();
+        while needed_storage_bytes < actual_storage_bytes {
+            self.storage.remove(actual_storage_bytes - 1);
+            actual_storage_bytes -= 1;
         }
 
         /* update capacity; must always be multiple of 8 */
-        self.bit_capacity = self.storage.len() * 8;
+        self.bit_capacity = if self.bit_length == 0 {
+            0
+        } else {
+            actual_storage_bytes * 8
+        };
 
         /* done */
         bits
+    }
+
+    ///
+    /// Determine if the array is empty.
+    ///
+    pub fn is_empty(&self) -> bool {
+        self.bit_length == 0
     }
 }
 
@@ -180,10 +199,10 @@ impl<'a> Iterator for BytesIterator<'a> {
     type Item = u8;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if self.byte_index <= self.bits.bit_length / 8 {
-            let byte_index = self.byte_index as usize;
-            self.byte_index += 1;
-            Some(self.bits.storage[byte_index])
+        let prior_byte_index = self.byte_index;
+        self.byte_index += 1;
+        if prior_byte_index < self.max {
+            Some(self.bits.storage[prior_byte_index])
         } else {
             None
         }
@@ -252,6 +271,12 @@ mod test {
         assert_eq!("1010", clone.to_string());
         assert_eq!(4, clone.bit_length);
         assert_eq!(8, clone.bit_capacity);
+
+        /* test is_empty */
+        assert_eq!(false, bits.is_empty());
+        assert_eq!(false, appendage.is_empty());
+        assert_eq!(false, clone.is_empty());
+        assert_eq!(false, extracted.is_empty());
     }
 
     #[test]
@@ -302,6 +327,12 @@ mod test {
         assert_eq!("0101", clone.to_string());
         assert_eq!(4, clone.bit_length);
         assert_eq!(8, clone.bit_capacity);
+
+        /* test is_empty */
+        assert_eq!(false, bits.is_empty());
+        assert_eq!(false, appendage.is_empty());
+        assert_eq!(false, clone.is_empty());
+        assert_eq!(false, extracted.is_empty());
     }
 
     #[test]
@@ -352,6 +383,12 @@ mod test {
         assert_eq!("1111", clone.to_string());
         assert_eq!(4, clone.bit_length);
         assert_eq!(8, clone.bit_capacity);
+
+        /* test is_empty */
+        assert_eq!(false, bits.is_empty());
+        assert_eq!(false, appendage.is_empty());
+        assert_eq!(false, clone.is_empty());
+        assert_eq!(false, extracted.is_empty());
     }
 
     #[test]
@@ -402,6 +439,12 @@ mod test {
         assert_eq!("0000", clone.to_string());
         assert_eq!(4, clone.bit_length);
         assert_eq!(8, clone.bit_capacity);
+
+        /* test is_empty */
+        assert_eq!(false, bits.is_empty());
+        assert_eq!(false, appendage.is_empty());
+        assert_eq!(false, clone.is_empty());
+        assert_eq!(false, extracted.is_empty());
     }
 
     #[test]
@@ -466,6 +509,12 @@ mod test {
         assert_eq!("11111111111111111111111111111111111", clone.to_string());
         assert_eq!(35, clone.bit_length);
         assert_eq!(40, clone.bit_capacity);
+
+        /* test is_empty */
+        assert_eq!(false, bits.is_empty());
+        assert_eq!(false, appendage.is_empty());
+        assert_eq!(false, clone.is_empty());
+        assert_eq!(false, extracted.is_empty());
     }
 
     #[test]
@@ -530,6 +579,99 @@ mod test {
         assert_eq!("00000000000000000000000000000000000", clone.to_string());
         assert_eq!(35, clone.bit_length);
         assert_eq!(40, clone.bit_capacity);
+
+        /* test is_empty */
+        assert_eq!(false, bits.is_empty());
+        assert_eq!(false, appendage.is_empty());
+        assert_eq!(false, clone.is_empty());
+        assert_eq!(false, extracted.is_empty());
+    }
+
+    #[test]
+    fn test_empty() {
+        let mut bits = Bits::new();
+
+        /* test push: unnecessary */
+        /* test append: unnecessary */
+
+        /* test bytes iterator */
+        let mut byte_iterator = bits.bytes_iter();
+        let byte1 = byte_iterator.next();
+        assert_eq!(None, byte1);
+
+        /* test clone */
+        let clone = bits.clone();
+        assert_eq!("", clone.to_string());
+        assert_eq!(0, clone.bit_length);
+        assert_eq!(0, clone.bit_capacity);
+
+        /* test extract */
+        let extracted = bits.extract(0, 0);
+        assert_eq!("", extracted.to_string());
+        assert_eq!(0, extracted.bit_length);
+        assert_eq!(0, extracted.bit_capacity);
+        assert_eq!("", bits.to_string());
+        assert_eq!(0, bits.bit_length);
+        assert_eq!(0, bits.bit_capacity);
+        assert_eq!("", clone.to_string());
+        assert_eq!(0, clone.bit_length);
+        assert_eq!(0, clone.bit_capacity);
+
+        /* test is_empty */
+        assert_eq!(true, bits.is_empty());
+        assert_eq!(true, clone.is_empty());
+        assert_eq!(true, extracted.is_empty());
+    }
+
+    #[test]
+    fn test_extract_to_empty() {
+        let mut bits = Bits::new();
+
+        /* test push */
+        for _ in 0 .. 8 {
+            bits.push(true);
+        }
+
+        /* test append: unnecessary */
+
+        /* test bytes iterator */
+        let mut byte_iterator = bits.bytes_iter();
+        let byte1 = byte_iterator.next().unwrap();
+        let byte2 = byte_iterator.next();
+        assert_eq!(255, byte1);
+        assert_eq!(None, byte2);
+
+        /* test clone */
+        let clone = bits.clone();
+        assert_eq!("11111111", clone.to_string());
+        assert_eq!(8, clone.bit_length);
+        assert_eq!(8, clone.bit_capacity);
+
+        /* test extract */
+        let extracted = bits.extract(0, 8);
+        assert_eq!("11111111", extracted.to_string());
+        assert_eq!(8, extracted.bit_length);
+        assert_eq!(8, extracted.bit_capacity);
+        assert_eq!("", bits.to_string());
+        assert_eq!(0, bits.bit_length);
+        assert_eq!(0, bits.bit_capacity);
+        assert_eq!("11111111", clone.to_string());
+        assert_eq!(8, clone.bit_length);
+        assert_eq!(8, clone.bit_capacity);
+
+        /* test is_empty */
+        assert_eq!(true, bits.is_empty());
+        assert_eq!(false, clone.is_empty());
+        assert_eq!(false, extracted.is_empty());
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_extract_out_of_range() {
+        let mut bits = Bits::new();
+
+        /* test extract */
+        bits.extract(0, 1);
     }
 
     #[test]
@@ -596,6 +738,12 @@ mod test {
         assert_eq!("10101010101101010101", clone.to_string());
         assert_eq!(20, clone.bit_length);
         assert_eq!(24, clone.bit_capacity);
+
+        /* test is_empty */
+        assert_eq!(false, bits.is_empty());
+        assert_eq!(false, appendage.is_empty());
+        assert_eq!(false, clone.is_empty());
+        assert_eq!(false, extracted.is_empty());
     }
 
     #[test]
@@ -648,5 +796,65 @@ mod test {
         assert_eq!("1111111111111111111", clone.to_string());
         assert_eq!(19, clone.bit_length);
         assert_eq!(24, clone.bit_capacity);
+
+        /* test is_empty */
+        assert_eq!(false, bits.is_empty());
+        assert_eq!(false, appendage.is_empty());
+        assert_eq!(false, clone.is_empty());
+        assert_eq!(false, extracted.is_empty());
+    }
+
+    #[test]
+    fn test_scenario3() {
+        let mut bits = Bits::new();
+
+        /* test push */
+        for _ in 0 .. 7 {
+            bits.push(true);
+        }
+        assert_eq!("1111111", bits.to_string());
+        assert_eq!(7, bits.bit_length);
+        assert_eq!(8, bits.bit_capacity);
+
+        /* test append */
+        let mut appendage = Bits::new();
+        for _ in 0 .. 1 {
+            appendage.push(true);
+        }
+        bits.append(&appendage);
+        assert_eq!("11111111", bits.to_string());
+        assert_eq!(8, bits.bit_length);
+        assert_eq!(8, bits.bit_capacity);
+
+        /* test bytes iterator */
+        let mut byte_iterator = bits.bytes_iter();
+        let byte1 = byte_iterator.next().unwrap();
+        let byte2 = byte_iterator.next();
+        assert_eq!(255, byte1);
+        assert_eq!(None, byte2);
+
+        /* test clone */
+        let clone = bits.clone();
+        assert_eq!("11111111", clone.to_string());
+        assert_eq!(8, clone.bit_length);
+        assert_eq!(8, clone.bit_capacity);
+
+        /* test extract */
+        let extracted = bits.extract(0, 8);
+        assert_eq!("11111111", extracted.to_string());
+        assert_eq!(8, extracted.bit_length);
+        assert_eq!(8, extracted.bit_capacity);
+        assert_eq!("", bits.to_string());
+        assert_eq!(0, bits.bit_length);
+        assert_eq!(0, bits.bit_capacity);
+        assert_eq!("11111111", clone.to_string());
+        assert_eq!(8, clone.bit_length);
+        assert_eq!(8, clone.bit_capacity);
+
+        /* test is_empty */
+        assert_eq!(true, bits.is_empty());
+        assert_eq!(false, appendage.is_empty());
+        assert_eq!(false, clone.is_empty());
+        assert_eq!(false, extracted.is_empty());
     }
 }
