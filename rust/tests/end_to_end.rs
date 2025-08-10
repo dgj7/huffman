@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod test {
-    use huffman_coding_lib::{count_frequencies, decode, encode, frequencies_to_tree};
     use huffman_coding_lib::translator::{bytes_to_string, string_to_bytes};
+    use huffman_coding_lib::{count_frequencies, decode, encode, frequencies_to_tree};
 
     #[test]
     fn test_end_to_end_1() {

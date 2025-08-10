@@ -7,6 +7,9 @@ pub(crate) struct DecodedByte {
 
 impl DecodedByte {
     pub(crate) fn new(the_symbol: u8, the_bits: Bits) -> DecodedByte {
-        DecodedByte { symbol: the_symbol, bits: the_bits }
+        DecodedByte {
+            symbol: the_symbol,
+            bits: the_bits,
+        }
     }
 }

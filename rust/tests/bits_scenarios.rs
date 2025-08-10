@@ -79,7 +79,7 @@ mod test {
         let mut bits = Bits::new();
 
         /* test push */
-        for _ in 0 .. 16 {
+        for _ in 0..16 {
             bits.push(true);
         }
         assert_eq!("1111111111111111", bits.to_string());
@@ -88,7 +88,7 @@ mod test {
 
         /* test append */
         let mut appendage = Bits::new();
-        for _ in 0 .. 3 {
+        for _ in 0..3 {
             appendage.push(true);
         }
         bits.append(&appendage);
@@ -137,7 +137,7 @@ mod test {
         let mut bits = Bits::new();
 
         /* test push */
-        for _ in 0 .. 7 {
+        for _ in 0..7 {
             bits.push(true);
         }
         assert_eq!("1111111", bits.to_string());
@@ -146,7 +146,7 @@ mod test {
 
         /* test append */
         let mut appendage = Bits::new();
-        for _ in 0 .. 1 {
+        for _ in 0..1 {
             appendage.push(true);
         }
         bits.append(&appendage);

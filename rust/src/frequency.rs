@@ -19,35 +19,36 @@ pub struct DefaultFrequencyProcessor {
 
 impl DefaultFrequencyProcessor {
     pub fn new(the_message: &Vec<u8>) -> DefaultFrequencyProcessor {
-        DefaultFrequencyProcessor { message: the_message.to_owned() }
+        DefaultFrequencyProcessor {
+            message: the_message.to_owned(),
+        }
     }
 }
 
 impl FrequencyProcessor for DefaultFrequencyProcessor {
     fn to_frequencies(&self) -> Vec<TreeNode> {
         let mut map: HashMap<u8, usize> = HashMap::new();
-        let mut vec = vec!();
+        let mut vec = vec![];
 
-        self.message
-            .iter()
-            .for_each(|symbol| {
-                let value = if map.contains_key(&symbol) {
-                    let temp: &usize = &map.get(&symbol).unwrap().to_owned();
-                    temp + 1
-                } else {
-                    1
-                };
+        self.message.iter().for_each(|symbol| {
+            let value = if map.contains_key(&symbol) {
+                let temp: &usize = &map.get(&symbol).unwrap().to_owned();
+                temp + 1
+            } else {
+                1
+            };
 
-                map.insert(*symbol, value);
-            });
+            map.insert(*symbol, value);
+        });
 
-        map.iter().for_each(|elem| vec.push(TreeNode::new_leaf(*elem.0, *elem.1)));
+        map.iter()
+            .for_each(|elem| vec.push(TreeNode::new_leaf(*elem.0, *elem.1)));
 
         return vec;
     }
 
     fn to_bytes(&self) -> Vec<u8> {
-        return self.message.clone()
+        return self.message.clone();
     }
 }
 

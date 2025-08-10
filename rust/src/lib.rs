@@ -1,13 +1,13 @@
+use crate::bits::Bits;
 use crate::frequency::*;
 use crate::tree::*;
-use crate::bits::Bits;
 
+pub mod bits;
 pub mod debug;
 pub mod decoded;
 pub mod frequency;
-pub mod tree;
-pub mod bits;
 pub mod translator;
+pub mod tree;
 
 pub fn count_frequencies(message: &Vec<u8>) -> impl FrequencyProcessor {
     return DefaultFrequencyProcessor::new(&message);
@@ -20,21 +20,19 @@ pub fn frequencies_to_tree(input: &impl FrequencyProcessor) -> Option<HuffmanTre
 // todo: potentially create our own bitvec, so that we don't require an external library to use _this_ library
 pub fn encode(input: &impl FrequencyProcessor, maybe_tree: &Option<HuffmanTree>) -> Bits {
     if maybe_tree.is_none() {
-        return Bits::new();// todo: only make one instance
+        return Bits::new(); // todo: only make one instance
     }
 
     let tree = maybe_tree.as_ref().unwrap();
     let mut the_bits = Bits::new();
 
-    input.to_bytes()
-        .iter()
-        .for_each(|c| {
-            let maybe_symbol_bits = tree.encodings.get(&c).clone();
-            if maybe_symbol_bits.is_some() {
-                let mut symbol_bits = maybe_symbol_bits.unwrap().clone();
-                the_bits.append(&mut symbol_bits);
-            }
-        });
+    input.to_bytes().iter().for_each(|c| {
+        let maybe_symbol_bits = tree.encodings.get(&c).clone();
+        if maybe_symbol_bits.is_some() {
+            let mut symbol_bits = maybe_symbol_bits.unwrap().clone();
+            the_bits.append(&mut symbol_bits);
+        }
+    });
 
     return the_bits;
 }

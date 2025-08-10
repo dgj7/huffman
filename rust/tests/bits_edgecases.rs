@@ -43,7 +43,7 @@ mod test {
         let mut bits = Bits::new();
 
         /* test push */
-        for _ in 0 .. 8 {
+        for _ in 0..8 {
             bits.push(true);
         }
 

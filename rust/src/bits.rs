@@ -1,4 +1,4 @@
-#![allow(dead_code)]// todo: remove this eventually
+#![allow(dead_code)] // todo: remove this eventually
 
 use std::fmt::{Display, Formatter};
 
@@ -51,7 +51,7 @@ impl Bits {
         self.bit_length += 1;
 
         /* write the bit to the byte */
-        self.write(self.bit_length-1, bit);
+        self.write(self.bit_length - 1, bit);
     }
 
     pub fn append(&mut self, other: &Bits) {
@@ -93,12 +93,15 @@ impl Bits {
 
         /* panic if state illegal */
         if start >= self.bit_length {
-            panic!("ERROR: EXTRACT: [start({})] >= [bit_length({})]", start, self.bit_length);
+            panic!(
+                "ERROR: EXTRACT: [start({})] >= [bit_length({})]",
+                start, self.bit_length
+            );
         }
 
         /* iterate over all bits, copying (count) bits for output, and shifting all bits */
         let mut counter = 0;
-        for current_index in start .. self.bit_length {
+        for current_index in start..self.bit_length {
             /* if this is a bit that we need to copy over, grab it */
             if counter < count {
                 let current_bit = self.read(current_index);
@@ -121,7 +124,7 @@ impl Bits {
         }
 
         /* remove (zero) the last 'count' bits */
-        for remove_index in (self.bit_capacity - count) .. self.bit_capacity {
+        for remove_index in (self.bit_capacity - count)..self.bit_capacity {
             self.write(remove_index, false);
         }
 
@@ -163,7 +166,7 @@ impl Bits {
 
     ///
     /// Determine capacity.
-    /// 
+    ///
     pub fn capacity(&self) -> usize {
         self.bit_capacity
     }
@@ -173,18 +176,25 @@ impl Bits {
     ///
     /// NOT the byte index.
     ///
-    pub(crate) fn read(&self, read_index : usize) -> bool {
+    pub(crate) fn read(&self, read_index: usize) -> bool {
         /* validate that read_index is within bounds */
         //println!("READ: read_index=[{}]; length/capacity=[{}/{}]", read_index, self.bit_length, self.bit_capacity);
         if read_index >= self.bit_length {
-            panic!("ERROR: READ: [read_index({})] >= [bit_length({})]", read_index, self.bit_length);
+            panic!(
+                "ERROR: READ: [read_index({})] >= [bit_length({})]",
+                read_index, self.bit_length
+            );
         }
 
         /* determine and validate the byte index */
         let byte_index = read_index / 8;
         //println!("\tbyte_index=[{}]", byte_index);
         if byte_index >= self.storage.len() {
-            panic!("ERROR: READ: [byte_index({})] >= [byte_capacity({})]", byte_index, self.storage.len());
+            panic!(
+                "ERROR: READ: [byte_index({})] >= [byte_capacity({})]",
+                byte_index,
+                self.storage.len()
+            );
         }
 
         /* determine and validate the bit index */
@@ -212,7 +222,10 @@ impl Bits {
         /* validate that write is within bounds */
         //println!("WRITE: write_index=[{}]; value=[{}]; length/capacity=[{}/{}]", write_index, bit as u8, self.bit_length, self.bit_capacity);
         if write_index >= self.bit_capacity {
-            panic!("ERROR: WRITE: [write_index({})] >= [bit_length({})]", write_index, self.bit_length);
+            panic!(
+                "ERROR: WRITE: [write_index({})] >= [bit_length({})]",
+                write_index, self.bit_length
+            );
         }
 
         /* determine and validate the byte index */
@@ -220,7 +233,11 @@ impl Bits {
         //println!("\tbyte_index=[{}]", byte_index);
         if byte_index >= self.storage.len() {}
         if byte_index >= self.storage.len() {
-            panic!("ERROR: WRITE: [byte_index({})] >= [byte_capacity({})]", byte_index, self.storage.len());
+            panic!(
+                "ERROR: WRITE: [byte_index({})] >= [byte_capacity({})]",
+                byte_index,
+                self.storage.len()
+            );
         }
 
         /* determine and validate the bit index */
@@ -237,9 +254,9 @@ impl Bits {
         Self::write_helper(&mut byte, bit_index, bit);
     }
 
-    fn write_helper(byte: &mut u8, bit_index : usize, bit: bool) {
-        let mask : u8 = !(1 << bit_index);
-        let flag : u8 = (bit as u8) << bit_index;
+    fn write_helper(byte: &mut u8, bit_index: usize, bit: bool) {
+        let mask: u8 = !(1 << bit_index);
+        let flag: u8 = (bit as u8) << bit_index;
 
         *byte &= mask;
         *byte |= flag;

@@ -233,14 +233,14 @@ mod test {
         /* test push */
         for _ in 0..28 {
             bits.push(true);
-        }// 4 bytes, +3 bits
+        } // 4 bytes, +3 bits
         assert_eq!("1111111111111111111111111111", bits.to_string());
         assert_eq!(28, bits.len());
         assert_eq!(32, bits.capacity());
 
         /* test append */
         let mut appendage = Bits::new();
-        for _ in 0 .. 7 {
+        for _ in 0..7 {
             appendage.push(true);
         }
         bits.append(&appendage);
@@ -303,14 +303,14 @@ mod test {
         /* test push */
         for _ in 0..26 {
             bits.push(false);
-        }// 4 bytes, +3 bits
+        } // 4 bytes, +3 bits
         assert_eq!("00000000000000000000000000", bits.to_string());
         assert_eq!(26, bits.len());
         assert_eq!(32, bits.capacity());
 
         /* test append */
         let mut appendage = Bits::new();
-        for _ in 0 .. 9 {
+        for _ in 0..9 {
             appendage.push(false);
         }
         bits.append(&appendage);
