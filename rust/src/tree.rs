@@ -82,10 +82,10 @@ impl HuffmanTree {
         if maybe_sub_node.is_some() {
             let sub_node = maybe_sub_node.clone().unwrap();
 
-            return match sub_node.symbol {
+            match sub_node.symbol {
                 None => self.next_decoded(encoded_bits, sub_node.as_ref(), index + 1, the_bits),
                 Some(x) => DecodedByte::new(x, the_bits),
-            };
+            }
         } else {
             // todo: unit test this
             panic!("[{}] is not a valid code", &the_bits);
@@ -125,7 +125,7 @@ impl TreeNode {
             None => 0,
             Some(x) => x.size(),
         };
-        return 1 + left_size + right_size;
+        1 + left_size + right_size
     }
 
     pub(crate) fn find_node(&self, direction: bool) -> &Option<Box<TreeNode>> {

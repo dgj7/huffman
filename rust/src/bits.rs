@@ -1,5 +1,3 @@
-#![allow(dead_code)] // todo: remove this eventually
-
 use std::fmt::{Display, Formatter};
 
 ///
@@ -31,7 +29,6 @@ pub struct BytesIterator<'a> {
 
 impl Bits {
     pub fn new() -> Self {
-        //println!("NEW");
         Self {
             storage: Vec::new(),
             bit_capacity: 0,
@@ -40,7 +37,6 @@ impl Bits {
     }
 
     pub fn push(&mut self, bit: bool) {
-        //println!("PUSH: bit=[{}]", bit as u8);
         /* initialize storage, if needed */
         if self.bit_capacity <= self.bit_length {
             self.storage.push(0);
@@ -55,14 +51,12 @@ impl Bits {
     }
 
     pub fn append(&mut self, other: &Bits) {
-        //println!("APPEND: other=[{}]", other.to_string());
         other.iter().for_each(|bit| {
             self.push(bit);
         });
     }
 
     pub fn iter(&self) -> BitsIterator {
-        //println!("ITER");
         BitsIterator {
             bits: self,
             bit_index: 0,
@@ -70,7 +64,6 @@ impl Bits {
     }
 
     pub fn bytes_iter(&self) -> BytesIterator {
-        //println!("BYTES_ITER");
         BytesIterator {
             bits: self,
             byte_index: 0,
@@ -82,7 +75,6 @@ impl Bits {
     /// Extract (start, start+count-1) bits and return as a new [Bits].
     ///
     pub fn extract(&mut self, start: usize, count: usize) -> Bits {
-        //println!("EXTRACT: start=[{}], end=[{}+{}]", start, start, count);
         /* storage for output */
         let mut bits = Bits::new();
 
@@ -178,7 +170,6 @@ impl Bits {
     ///
     pub(crate) fn read(&self, read_index: usize) -> bool {
         /* validate that read_index is within bounds */
-        //println!("READ: read_index=[{}]; length/capacity=[{}/{}]", read_index, self.bit_length, self.bit_capacity);
         if read_index >= self.bit_length {
             panic!(
                 "ERROR: READ: [read_index({})] >= [bit_length({})]",
@@ -188,7 +179,6 @@ impl Bits {
 
         /* determine and validate the byte index */
         let byte_index = read_index / 8;
-        //println!("\tbyte_index=[{}]", byte_index);
         if byte_index >= self.storage.len() {
             panic!(
                 "ERROR: READ: [byte_index({})] >= [byte_capacity({})]",
@@ -199,7 +189,6 @@ impl Bits {
 
         /* determine and validate the bit index */
         let bit_index = read_index % 8;
-        //println!("\tbit_index=[{}]", bit_index);
         if bit_index >= 8 {
             panic!("ERROR: READ: [bit_index({})] >= 8", bit_index);
         }
@@ -208,9 +197,7 @@ impl Bits {
         let byte = self.storage[byte_index];
 
         /* done */
-        let bit = byte >> bit_index & 1 == 1;
-        //println!("READ: SUCCESS: read value=[{}] from read_index=[{}] of byte#{}=[{:08b}]  u8=[{}])", bit as u8, read_index, byte_index, byte.reverse_bits(), byte);
-        bit
+        byte >> bit_index & 1 == 1
     }
 
     ///
@@ -220,7 +207,6 @@ impl Bits {
     ///
     pub(crate) fn write(&mut self, write_index: usize, bit: bool) {
         /* validate that write is within bounds */
-        //println!("WRITE: write_index=[{}]; value=[{}]; length/capacity=[{}/{}]", write_index, bit as u8, self.bit_length, self.bit_capacity);
         if write_index >= self.bit_capacity {
             panic!(
                 "ERROR: WRITE: [write_index({})] >= [bit_length({})]",
@@ -230,7 +216,6 @@ impl Bits {
 
         /* determine and validate the byte index */
         let byte_index = write_index / 8;
-        //println!("\tbyte_index=[{}]", byte_index);
         if byte_index >= self.storage.len() {}
         if byte_index >= self.storage.len() {
             panic!(
@@ -242,7 +227,6 @@ impl Bits {
 
         /* determine and validate the bit index */
         let bit_index = write_index % 8;
-        //println!("\tbit_index=[{}]", bit_index);
         if bit_index >= 8 {
             panic!("ERROR: WRITE: [bit_index({})] >= 8", bit_index);
         }
@@ -260,8 +244,6 @@ impl Bits {
 
         *byte &= mask;
         *byte |= flag;
-
-        //println!("WRITE: SUCCESS: wrote value=[{}] to write_index=[{}] (byte=[{:08b}]  u8=[{}]))", bit as u8, bit_index, byte.reverse_bits(), byte);
     }
 }
 

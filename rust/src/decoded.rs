@@ -1,5 +1,6 @@
 use crate::bits::Bits;
 
+// todo: see if this can be replaced with a tuple
 pub(crate) struct DecodedByte {
     pub(crate) symbol: u8,
     pub(crate) bits: Bits,

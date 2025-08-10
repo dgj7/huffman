@@ -10,21 +10,21 @@ pub mod translator;
 pub mod tree;
 
 pub fn count_frequencies(message: &Vec<u8>) -> impl FrequencyProcessor {
-    return DefaultFrequencyProcessor::new(&message);
+    DefaultFrequencyProcessor::new(&message)
 }
 
 pub fn frequencies_to_tree(input: &impl FrequencyProcessor) -> Option<HuffmanTree> {
-    return HuffmanTree::new(input);
+    HuffmanTree::new(input)
 }
 
-// todo: potentially create our own bitvec, so that we don't require an external library to use _this_ library
 pub fn encode(input: &impl FrequencyProcessor, maybe_tree: &Option<HuffmanTree>) -> Bits {
+    let mut the_bits = Bits::new();
+    
     if maybe_tree.is_none() {
-        return Bits::new(); // todo: only make one instance
+        return the_bits;
     }
 
     let tree = maybe_tree.as_ref().unwrap();
-    let mut the_bits = Bits::new();
 
     input.to_bytes().iter().for_each(|c| {
         let maybe_symbol_bits = tree.encodings.get(&c).clone();
@@ -34,7 +34,7 @@ pub fn encode(input: &impl FrequencyProcessor, maybe_tree: &Option<HuffmanTree>)
         }
     });
 
-    return the_bits;
+    the_bits
 }
 
 pub fn decode(encoded: &mut Bits, maybe_tree: Option<HuffmanTree>) -> Vec<u8> {
@@ -53,5 +53,5 @@ pub fn decode(encoded: &mut Bits, maybe_tree: Option<HuffmanTree>) -> Vec<u8> {
         decoded.push(db.symbol);
     }
 
-    return decoded;
+    decoded
 }

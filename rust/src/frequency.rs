@@ -2,6 +2,8 @@ use crate::tree::*;
 use std::collections::HashMap;
 use std::fmt;
 
+// todo: see if this can be replaced with a simple method
+
 ///
 /// Convert input data into [Vec]tor of [TreeNode]s.
 ///
@@ -44,11 +46,11 @@ impl FrequencyProcessor for DefaultFrequencyProcessor {
         map.iter()
             .for_each(|elem| vec.push(TreeNode::new_leaf(*elem.0, *elem.1)));
 
-        return vec;
+        vec
     }
 
     fn to_bytes(&self) -> Vec<u8> {
-        return self.message.clone();
+        self.message.clone()
     }
 }
 
