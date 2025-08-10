@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod test {
     use huffman_coding_lib::{count_frequencies, decode, encode, frequencies_to_tree};
-    use huffman_coding_lib::translator::{bytes_to_message, string_to_bytes};
+    use huffman_coding_lib::translator::{bytes_to_string, string_to_bytes};
 
     #[test]
     fn test_end_to_end_1() {
@@ -13,7 +13,7 @@ mod test {
         let tree = frequencies_to_tree(&frequencies);
         let mut encoded = encode(&frequencies, &tree);
         let decoded = decode(&mut encoded, tree);
-        let translated = bytes_to_message(&decoded);
+        let translated = bytes_to_string(&decoded);
 
         let mut encoded_str = String::new();
         for index in 0 .. encoded.len() {

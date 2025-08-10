@@ -6,7 +6,7 @@ use huffman_coding_lib::count_frequencies;
 use huffman_coding_lib::decode;
 use huffman_coding_lib::encode;
 use huffman_coding_lib::frequencies_to_tree;
-use huffman_coding_lib::translator::{bytes_to_message, string_to_bytes};
+use huffman_coding_lib::translator::{bytes_to_string, string_to_bytes};
 
 fn main() {
     let start = std::time::Instant::now();
@@ -17,7 +17,7 @@ fn main() {
     let tree = frequencies_to_tree(&frequencies);
     let mut encoded = encode(&frequencies, &tree);
     let decoded = decode(&mut encoded, tree);
-    let translated = bytes_to_message(&decoded);
+    let translated = bytes_to_string(&decoded);
 
     println!("input:   [{}]", input);
     println!("encoded: [{}]", PrintableBitVec::new(&encoded));

@@ -14,7 +14,7 @@ pub fn string_to_bytes(message : &str) -> Vec<u8> {
 ///
 /// Translate output byte [Vector] into String.
 ///
-pub fn bytes_to_message(bytes : &Vec<u8>) -> String {
+pub fn bytes_to_string(bytes : &Vec<u8>) -> String {
     let mut sb = String::new();
 
     for b in bytes {

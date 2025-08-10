@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod test {
-    use huffman_coding_lib::translator::{bytes_to_message, string_to_bytes};
+    use huffman_coding_lib::translator::{bytes_to_string, string_to_bytes};
 
     #[test]
     fn test_string_to_bytes() {
@@ -25,7 +25,7 @@ mod test {
     #[test]
     fn test_bytes_to_string() {
         let bytes = vec![72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100, 33];
-        let message = bytes_to_message(&bytes);
+        let message = bytes_to_string(&bytes);
 
         assert_eq!(String::from("Hello World!"), message);
     }
