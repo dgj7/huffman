@@ -7,6 +7,7 @@ pub mod decoded;
 pub mod frequency;
 pub mod tree;
 pub mod bits;
+pub mod translator;
 
 pub fn count_frequencies(message: &Vec<u8>) -> impl FrequencyProcessor {
     return DefaultFrequencyProcessor::new(&message);
