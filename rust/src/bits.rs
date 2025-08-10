@@ -94,23 +94,33 @@ impl Bits {
             return bits;
         }
 
-        /* iterate over the bits specified by the range */
-        for current_index in start..start + count {
-            /* determine the value of the replacement bit; it either comes from later in the array, or it's 0 because there isn't a later */
-            let replacement_index = start + count;
-            let replacement_byte_index = replacement_index / 8;
-            let replacement_bit: bool = if replacement_byte_index > self.storage.len() - 1 {
+        /* panic if state illegal */
+        if start >= self.bit_length {
+            panic!("ERROR: EXTRACT: [start({})] >= [bit_length({})]", start, self.bit_length);
+        }
+
+        /* iterate over all bits, copying (count) bits for output, and shifting all bits */
+        let mut counter = 0;
+        for current_index in start .. self.bit_length {
+            /* if this is a bit that we need to copy over, grab it */
+            if counter < count {
+                let current_bit = self.read(current_index);
+                bits.push(current_bit);
+            }
+
+            /* locate the replacement bit */
+            let replacement_index = current_index + count;
+            let replacement_bit = if replacement_index > self.bit_length - 1 {
                 false
             } else {
                 self.read(replacement_index)
             };
 
-            /* get the value of the current bit, and store it in the output */
-            let current_bit = self.read(current_index);
-            bits.push(current_bit);
-
-            /* overwrite the current bit index with the replacement bit */
+            /* overwrite the current bit with the replacement bit */
             self.write(current_index, replacement_bit);
+
+            /* increment */
+            counter += 1;
         }
 
         /* remove (zero) the last 'count' bits */
@@ -778,7 +788,7 @@ mod test {
         assert_eq!("01", extracted.to_string());
         assert_eq!(2, extracted.bit_length);
         assert_eq!(8, extracted.bit_capacity);
-        assert_eq!("101010101011010101", bits.to_string());
+        assert_eq!("101010101101010101", bits.to_string());
         assert_eq!(18, bits.bit_length);
         assert_eq!(24, bits.bit_capacity);
         assert_eq!("10101010101101010101", clone.to_string());
