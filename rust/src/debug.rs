@@ -1,6 +1,5 @@
 use std::collections::HashMap;
-use bitvec::vec::BitVec;
-
+use crate::bits::Bits;
 use crate::tree::*;
 
 #[allow(dead_code)]
@@ -44,6 +43,6 @@ pub fn debug_find_all_frequency_pairs(node: &TreeNode, string: &mut String) {
 }
 
 #[allow(dead_code)]
-pub fn debug_print_encodings(map: &HashMap<char, BitVec>) {
+pub fn debug_print_encodings(map: &HashMap<char, Bits>) {
     map.iter().for_each(|entry| println!("[{}]:    [{}]", entry.0, entry.1));
 }

@@ -1,7 +1,5 @@
 extern crate huffman_coding_lib;
-mod printable;
 
-use crate::printable::PrintableBitVec;
 use huffman_coding_lib::count_frequencies;
 use huffman_coding_lib::decode;
 use huffman_coding_lib::encode;
@@ -20,7 +18,7 @@ fn main() {
     let translated = bytes_to_string(&decoded);
 
     println!("input:   [{}]", input);
-    println!("encoded: [{}]", PrintableBitVec::new(&encoded));
+    println!("encoded: [{}]", encoded.to_string());
     println!("decoded: [{}]", translated);
     println!("done. ({}ms)", start.elapsed().as_millis());
 }

@@ -1,9 +1,7 @@
 use std::collections::HashMap;
-use bitvec::macros::internal::funty::Fundamental;
-use bitvec::vec::BitVec;
 use std::ops::Deref;
 use std::cmp::Ordering;
-
+use crate::bits::Bits;
 use crate::frequency::*;
 use crate::decoded::*;
 
@@ -32,7 +30,7 @@ pub struct TreeNode {
 /// 
 pub struct HuffmanTree {
     pub root: TreeNode,
-    pub encodings: HashMap<u8, BitVec>,
+    pub encodings: HashMap<u8, Bits>,
 }
 
 impl HuffmanTree {
@@ -60,7 +58,7 @@ impl HuffmanTree {
         let the_root = frequencies[0].clone();
 
         /* descend the tree to gather all codes */
-        let mut the_encodings: HashMap<u8, BitVec> = HashMap::new();
+        let mut the_encodings: HashMap<u8, Bits> = HashMap::new();
         descend_tree(&the_root, &mut the_encodings);
         //crate::debug::debug_print_encodings(&the_encodings);
 
@@ -68,8 +66,8 @@ impl HuffmanTree {
         Some(HuffmanTree { root: the_root, encodings: the_encodings })
     }
 
-    pub(crate) fn next_decoded(&self, encoded_bits: &BitVec, node: &TreeNode, index: usize, mut the_bits: BitVec) -> DecodedByte {
-        let bit: bool = (encoded_bits.get(index).unwrap().as_u8()) != 0;// funty's as_bool() returns flipped bit
+    pub(crate) fn next_decoded(&self, encoded_bits: &Bits, node: &TreeNode, index: usize, mut the_bits: Bits) -> DecodedByte {
+        let bit: bool = encoded_bits.read(index);
         the_bits.push(bit);
         let maybe_sub_node = node.find_node(bit);
         if maybe_sub_node.is_some() {
@@ -118,17 +116,17 @@ impl TreeNode {
     }
 }
 
-pub(crate) fn descend_tree(node: &TreeNode, map: &mut HashMap<u8, BitVec>) {
+pub(crate) fn descend_tree(node: &TreeNode, map: &mut HashMap<u8, Bits>) {
     if node.left.is_some() {
-        descend(node.left.as_ref().unwrap().deref(), map, BitVec::new(), LEFT);
+        descend(node.left.as_ref().unwrap().deref(), map, Bits::new(), LEFT);
     }
 
     if node.right.is_some() {
-        descend(node.right.as_ref().unwrap().deref(), map, BitVec::new(), RIGHT);
+        descend(node.right.as_ref().unwrap().deref(), map, Bits::new(), RIGHT);
     }
 }
 
-fn descend(node: &TreeNode, map: &mut HashMap<u8, BitVec>, mut bits: BitVec, bit: bool) {
+fn descend(node: &TreeNode, map: &mut HashMap<u8, Bits>, mut bits: Bits, bit: bool) {
     /* add to the current codes */
     bits.push(bit);
 

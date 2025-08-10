@@ -1,7 +1,6 @@
 #![allow(dead_code)]// todo: remove this eventually
 
 use std::fmt::{Display, Formatter};
-use bitvec::macros::internal::funty::Fundamental;
 
 ///
 /// Data structure for storage and access to an array of bits.
@@ -174,7 +173,7 @@ impl Bits {
     ///
     /// NOT the byte index.
     ///
-    fn read(&self, read_index : usize) -> bool {
+    pub(crate) fn read(&self, read_index : usize) -> bool {
         /* validate that read_index is within bounds */
         //println!("READ: read_index=[{}]; length/capacity=[{}/{}]", read_index, self.bit_length, self.bit_capacity);
         if read_index >= self.bit_length {
@@ -209,7 +208,7 @@ impl Bits {
     ///
     /// NOT the byte index.
     ///
-    fn write(&mut self, write_index: usize, bit: bool) {
+    pub(crate) fn write(&mut self, write_index: usize, bit: bool) {
         /* validate that write is within bounds */
         //println!("WRITE: write_index=[{}]; value=[{}]; length/capacity=[{}/{}]", write_index, bit as u8, self.bit_length, self.bit_capacity);
         if write_index >= self.bit_capacity {
@@ -281,7 +280,8 @@ impl Display for Bits {
     fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
         let mut value = String::new();
         self.iter().for_each(|bit| {
-            value.push_str(bit.as_u8().to_string().as_str());
+            let num = bit as u8;
+            value.push_str(num.to_string().as_str());
         });
         write!(f, "{}", value)
     }

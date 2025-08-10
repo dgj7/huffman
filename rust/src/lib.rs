@@ -1,6 +1,6 @@
 use crate::frequency::*;
 use crate::tree::*;
-use ::bitvec::vec::BitVec;
+use crate::bits::Bits;
 
 pub mod debug;
 pub mod decoded;
@@ -18,13 +18,13 @@ pub fn frequencies_to_tree(input: &impl FrequencyProcessor) -> Option<HuffmanTre
 }
 
 // todo: potentially create our own bitvec, so that we don't require an external library to use _this_ library
-pub fn encode(input: &impl FrequencyProcessor, maybe_tree: &Option<HuffmanTree>) -> BitVec {
+pub fn encode(input: &impl FrequencyProcessor, maybe_tree: &Option<HuffmanTree>) -> Bits {
     if maybe_tree.is_none() {
-        return BitVec::new();
+        return Bits::new();// todo: only make one instance
     }
 
     let tree = maybe_tree.as_ref().unwrap();
-    let mut the_bits = BitVec::new();
+    let mut the_bits = Bits::new();
 
     input.to_bytes()
         .iter()
@@ -39,7 +39,7 @@ pub fn encode(input: &impl FrequencyProcessor, maybe_tree: &Option<HuffmanTree>)
     return the_bits;
 }
 
-pub fn decode(encoded: &mut BitVec, maybe_tree: Option<HuffmanTree>) -> Vec<u8> {
+pub fn decode(encoded: &mut Bits, maybe_tree: Option<HuffmanTree>) -> Vec<u8> {
     let mut decoded = Vec::new();
 
     if maybe_tree.is_none() {
@@ -50,8 +50,8 @@ pub fn decode(encoded: &mut BitVec, maybe_tree: Option<HuffmanTree>) -> Vec<u8> 
     let mut bits = encoded.clone();
 
     while !bits.is_empty() {
-        let db = tree.next_decoded(&bits, &tree.root, 0, BitVec::new());
-        bits.drain(0..db.bits.len());
+        let db = tree.next_decoded(&bits, &tree.root, 0, Bits::new());
+        bits.extract(0, db.bits.len());
         decoded.push(db.symbol);
     }
 

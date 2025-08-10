@@ -1,7 +1,6 @@
 [package]
 name = "huffman_coding_lib"
-version = "0.39.0"
+version = "0.40.0"
 edition = "2021"
 
 [dependencies]
-bitvec = "1.0.1"

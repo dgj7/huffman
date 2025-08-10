@@ -15,16 +15,10 @@ mod test {
         let decoded = decode(&mut encoded, tree);
         let translated = bytes_to_string(&decoded);
 
-        let mut encoded_str = String::new();
-        for index in 0 .. encoded.len() {
-            let num = encoded[index] as u8;
-            encoded_str.push_str(&format!("{}", num));
-        }
-
         assert_eq!("this is a sample input string. its text is being used to test the huffman coding tree.", translated);
         assert_eq!(86, translated.len());
 
-        assert_eq!(expected, encoded_str);
+        assert_eq!(expected, encoded.to_string());
         assert_eq!(339, encoded.len());
     }
 }
