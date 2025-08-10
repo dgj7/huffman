@@ -9,8 +9,8 @@ use bitvec::macros::internal::funty::Fundamental;
 #[derive(Clone)]
 pub struct Bits {
     storage: Vec<u8>,
-    pub bit_capacity: usize,
-    pub bit_length: usize,
+    bit_capacity: usize,
+    bit_length: usize,
 }
 
 ///
@@ -153,6 +153,20 @@ impl Bits {
     ///
     pub fn is_empty(&self) -> bool {
         self.bit_length == 0
+    }
+
+    ///
+    /// Determine length.
+    ///
+    pub fn len(&self) -> usize {
+        self.bit_length
+    }
+
+    ///
+    /// Determine capacity.
+    /// 
+    pub fn capacity(&self) -> usize {
+        self.bit_capacity
     }
 
     ///

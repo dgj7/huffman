@@ -19,8 +19,8 @@ mod test {
         bits.push(false);
         bits.push(true);
         assert_eq!("10101010101", bits.to_string());
-        assert_eq!(11, bits.bit_length);
-        assert_eq!(16, bits.bit_capacity);
+        assert_eq!(11, bits.len());
+        assert_eq!(16, bits.capacity());
 
         /* test append */
         let mut appendage = Bits::new();
@@ -35,8 +35,8 @@ mod test {
         appendage.push(true);
         bits.append(&appendage);
         assert_eq!("10101010101101010101", bits.to_string());
-        assert_eq!(20, bits.bit_length);
-        assert_eq!(24, bits.bit_capacity);
+        assert_eq!(20, bits.len());
+        assert_eq!(24, bits.capacity());
 
         /* test bytes iterator */
         let mut byte_iterator = bits.bytes_iter();
@@ -52,20 +52,20 @@ mod test {
         /* test clone */
         let clone = bits.clone();
         assert_eq!("10101010101101010101", clone.to_string());
-        assert_eq!(20, clone.bit_length);
-        assert_eq!(24, clone.bit_capacity);
+        assert_eq!(20, clone.len());
+        assert_eq!(24, clone.capacity());
 
         /* test extract */
         let extracted = bits.extract(1, 2);
         assert_eq!("01", extracted.to_string());
-        assert_eq!(2, extracted.bit_length);
-        assert_eq!(8, extracted.bit_capacity);
+        assert_eq!(2, extracted.len());
+        assert_eq!(8, extracted.capacity());
         assert_eq!("101010101101010101", bits.to_string());
-        assert_eq!(18, bits.bit_length);
-        assert_eq!(24, bits.bit_capacity);
+        assert_eq!(18, bits.len());
+        assert_eq!(24, bits.capacity());
         assert_eq!("10101010101101010101", clone.to_string());
-        assert_eq!(20, clone.bit_length);
-        assert_eq!(24, clone.bit_capacity);
+        assert_eq!(20, clone.len());
+        assert_eq!(24, clone.capacity());
 
         /* test is_empty */
         assert_eq!(false, bits.is_empty());
@@ -83,8 +83,8 @@ mod test {
             bits.push(true);
         }
         assert_eq!("1111111111111111", bits.to_string());
-        assert_eq!(16, bits.bit_length);
-        assert_eq!(16, bits.bit_capacity);
+        assert_eq!(16, bits.len());
+        assert_eq!(16, bits.capacity());
 
         /* test append */
         let mut appendage = Bits::new();
@@ -93,8 +93,8 @@ mod test {
         }
         bits.append(&appendage);
         assert_eq!("1111111111111111111", bits.to_string());
-        assert_eq!(19, bits.bit_length);
-        assert_eq!(24, bits.bit_capacity);
+        assert_eq!(19, bits.len());
+        assert_eq!(24, bits.capacity());
 
         /* test bytes iterator */
         let mut byte_iterator = bits.bytes_iter();
@@ -110,20 +110,20 @@ mod test {
         /* test clone */
         let clone = bits.clone();
         assert_eq!("1111111111111111111", clone.to_string());
-        assert_eq!(19, clone.bit_length);
-        assert_eq!(24, clone.bit_capacity);
+        assert_eq!(19, clone.len());
+        assert_eq!(24, clone.capacity());
 
         /* test extract */
         let extracted = bits.extract(10, 3);
         assert_eq!("111", extracted.to_string());
-        assert_eq!(3, extracted.bit_length);
-        assert_eq!(8, extracted.bit_capacity);
+        assert_eq!(3, extracted.len());
+        assert_eq!(8, extracted.capacity());
         assert_eq!("1111111111111111", bits.to_string());
-        assert_eq!(16, bits.bit_length);
-        assert_eq!(24, bits.bit_capacity);
+        assert_eq!(16, bits.len());
+        assert_eq!(24, bits.capacity());
         assert_eq!("1111111111111111111", clone.to_string());
-        assert_eq!(19, clone.bit_length);
-        assert_eq!(24, clone.bit_capacity);
+        assert_eq!(19, clone.len());
+        assert_eq!(24, clone.capacity());
 
         /* test is_empty */
         assert_eq!(false, bits.is_empty());
@@ -141,8 +141,8 @@ mod test {
             bits.push(true);
         }
         assert_eq!("1111111", bits.to_string());
-        assert_eq!(7, bits.bit_length);
-        assert_eq!(8, bits.bit_capacity);
+        assert_eq!(7, bits.len());
+        assert_eq!(8, bits.capacity());
 
         /* test append */
         let mut appendage = Bits::new();
@@ -151,8 +151,8 @@ mod test {
         }
         bits.append(&appendage);
         assert_eq!("11111111", bits.to_string());
-        assert_eq!(8, bits.bit_length);
-        assert_eq!(8, bits.bit_capacity);
+        assert_eq!(8, bits.len());
+        assert_eq!(8, bits.capacity());
 
         /* test bytes iterator */
         let mut byte_iterator = bits.bytes_iter();
@@ -164,20 +164,20 @@ mod test {
         /* test clone */
         let clone = bits.clone();
         assert_eq!("11111111", clone.to_string());
-        assert_eq!(8, clone.bit_length);
-        assert_eq!(8, clone.bit_capacity);
+        assert_eq!(8, clone.len());
+        assert_eq!(8, clone.capacity());
 
         /* test extract */
         let extracted = bits.extract(0, 8);
         assert_eq!("11111111", extracted.to_string());
-        assert_eq!(8, extracted.bit_length);
-        assert_eq!(8, extracted.bit_capacity);
+        assert_eq!(8, extracted.len());
+        assert_eq!(8, extracted.capacity());
         assert_eq!("", bits.to_string());
-        assert_eq!(0, bits.bit_length);
-        assert_eq!(0, bits.bit_capacity);
+        assert_eq!(0, bits.len());
+        assert_eq!(0, bits.capacity());
         assert_eq!("11111111", clone.to_string());
-        assert_eq!(8, clone.bit_length);
-        assert_eq!(8, clone.bit_capacity);
+        assert_eq!(8, clone.len());
+        assert_eq!(8, clone.capacity());
 
         /* test is_empty */
         assert_eq!(true, bits.is_empty());

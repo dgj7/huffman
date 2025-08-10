@@ -17,20 +17,20 @@ mod test {
         /* test clone */
         let clone = bits.clone();
         assert_eq!("", clone.to_string());
-        assert_eq!(0, clone.bit_length);
-        assert_eq!(0, clone.bit_capacity);
+        assert_eq!(0, clone.len());
+        assert_eq!(0, clone.capacity());
 
         /* test extract */
         let extracted = bits.extract(0, 0);
         assert_eq!("", extracted.to_string());
-        assert_eq!(0, extracted.bit_length);
-        assert_eq!(0, extracted.bit_capacity);
+        assert_eq!(0, extracted.len());
+        assert_eq!(0, extracted.capacity());
         assert_eq!("", bits.to_string());
-        assert_eq!(0, bits.bit_length);
-        assert_eq!(0, bits.bit_capacity);
+        assert_eq!(0, bits.len());
+        assert_eq!(0, bits.capacity());
         assert_eq!("", clone.to_string());
-        assert_eq!(0, clone.bit_length);
-        assert_eq!(0, clone.bit_capacity);
+        assert_eq!(0, clone.len());
+        assert_eq!(0, clone.capacity());
 
         /* test is_empty */
         assert_eq!(true, bits.is_empty());
@@ -59,20 +59,20 @@ mod test {
         /* test clone */
         let clone = bits.clone();
         assert_eq!("11111111", clone.to_string());
-        assert_eq!(8, clone.bit_length);
-        assert_eq!(8, clone.bit_capacity);
+        assert_eq!(8, clone.len());
+        assert_eq!(8, clone.capacity());
 
         /* test extract */
         let extracted = bits.extract(0, 8);
         assert_eq!("11111111", extracted.to_string());
-        assert_eq!(8, extracted.bit_length);
-        assert_eq!(8, extracted.bit_capacity);
+        assert_eq!(8, extracted.len());
+        assert_eq!(8, extracted.capacity());
         assert_eq!("", bits.to_string());
-        assert_eq!(0, bits.bit_length);
-        assert_eq!(0, bits.bit_capacity);
+        assert_eq!(0, bits.len());
+        assert_eq!(0, bits.capacity());
         assert_eq!("11111111", clone.to_string());
-        assert_eq!(8, clone.bit_length);
-        assert_eq!(8, clone.bit_capacity);
+        assert_eq!(8, clone.len());
+        assert_eq!(8, clone.capacity());
 
         /* test is_empty */
         assert_eq!(true, bits.is_empty());
