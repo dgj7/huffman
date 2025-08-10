@@ -1,5 +1,4 @@
 use crate::bits::Bits;
-use crate::decoded::*;
 use crate::frequency::*;
 use std::cmp::Ordering;
 use std::collections::HashMap;
@@ -75,7 +74,7 @@ impl HuffmanTree {
         node: &TreeNode,
         index: usize,
         mut the_bits: Bits,
-    ) -> DecodedByte {
+    ) -> (u8, Bits) {
         let bit: bool = encoded_bits.read(index);
         the_bits.push(bit);
         let maybe_sub_node = node.find_node(bit);
@@ -84,7 +83,7 @@ impl HuffmanTree {
 
             match sub_node.symbol {
                 None => self.next_decoded(encoded_bits, sub_node.as_ref(), index + 1, the_bits),
-                Some(x) => DecodedByte::new(x, the_bits),
+                Some(x) => (x, the_bits),
             }
         } else {
             // todo: unit test this

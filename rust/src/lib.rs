@@ -4,7 +4,6 @@ use crate::tree::*;
 
 pub mod bits;
 pub mod debug;
-pub mod decoded;
 pub mod frequency;
 pub mod translator;
 pub mod tree;
@@ -19,7 +18,7 @@ pub fn frequencies_to_tree(input: &impl FrequencyProcessor) -> Option<HuffmanTre
 
 pub fn encode(input: &impl FrequencyProcessor, maybe_tree: &Option<HuffmanTree>) -> Bits {
     let mut the_bits = Bits::new();
-    
+
     if maybe_tree.is_none() {
         return the_bits;
     }
@@ -41,6 +40,7 @@ pub fn decode(encoded: &mut Bits, maybe_tree: Option<HuffmanTree>) -> Vec<u8> {
     let mut decoded = Vec::new();
 
     if maybe_tree.is_none() {
+        // todo: this should panic
         return decoded;
     }
     let tree = maybe_tree.as_ref().unwrap();
@@ -49,8 +49,8 @@ pub fn decode(encoded: &mut Bits, maybe_tree: Option<HuffmanTree>) -> Vec<u8> {
 
     while !bits.is_empty() {
         let db = tree.next_decoded(&bits, &tree.root, 0, Bits::new());
-        bits.extract(0, db.bits.len());
-        decoded.push(db.symbol);
+        bits.extract(0, db.1.len());
+        decoded.push(db.0);
     }
 
     decoded
