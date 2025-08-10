@@ -32,7 +32,7 @@ pub struct BytesIterator<'a> {
 
 impl Bits {
     pub fn new() -> Self {
-        println!("NEW");
+        //println!("NEW");
         Self {
             storage: Vec::new(),
             bit_capacity: 0,
@@ -41,8 +41,7 @@ impl Bits {
     }
 
     pub fn push(&mut self, bit: bool) {
-        println!("PUSH: bit=[{}]", bit as u8);
-
+        //println!("PUSH: bit=[{}]", bit as u8);
         /* initialize storage, if needed */
         if self.bit_capacity <= self.bit_length {
             self.storage.push(0);
@@ -57,14 +56,14 @@ impl Bits {
     }
 
     pub fn append(&mut self, other: &Bits) {
-        println!("APPEND: other=[{}]", other.to_string());
+        //println!("APPEND: other=[{}]", other.to_string());
         other.iter().for_each(|bit| {
             self.push(bit);
         });
     }
 
     pub fn iter(&self) -> BitsIterator {
-        println!("ITER");
+        //println!("ITER");
         BitsIterator {
             bits: self,
             bit_index: 0,
@@ -72,7 +71,7 @@ impl Bits {
     }
 
     pub fn bytes_iter(&self) -> BytesIterator {
-        println!("BYTES_ITER");
+        //println!("BYTES_ITER");
         BytesIterator {
             bits: self,
             byte_index: 0,
@@ -84,8 +83,7 @@ impl Bits {
     /// Extract (start, start+count-1) bits and return as a new [Bits].
     ///
     pub fn extract(&mut self, start: usize, count: usize) -> Bits {
-        println!("EXTRACT: start=[{}], end=[{}+{}]", start, start, count);
-
+        //println!("EXTRACT: start=[{}], end=[{}+{}]", start, start, count);
         /* storage for output */
         let mut bits = Bits::new();
 
@@ -188,7 +186,7 @@ impl Bits {
 
         /* done */
         let bit = byte >> bit_index & 1 == 1;
-        println!("READ: SUCCESS: read value=[{}] from read_index=[{}] of byte#{}=[{:08b}]  u8=[{}])", bit as u8, read_index, byte_index, byte.reverse_bits(), byte);
+        //println!("READ: SUCCESS: read value=[{}] from read_index=[{}] of byte#{}=[{:08b}]  u8=[{}])", bit as u8, read_index, byte_index, byte.reverse_bits(), byte);
         bit
     }
 
@@ -233,7 +231,7 @@ impl Bits {
         *byte &= mask;
         *byte |= flag;
 
-        println!("WRITE: SUCCESS: wrote value=[{}] to write_index=[{}] (byte=[{:08b}]  u8=[{}]))", bit as u8, bit_index, byte.reverse_bits(), byte);
+        //println!("WRITE: SUCCESS: wrote value=[{}] to write_index=[{}] (byte=[{:08b}]  u8=[{}]))", bit as u8, bit_index, byte.reverse_bits(), byte);
     }
 }
 
