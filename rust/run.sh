@@ -12,11 +12,11 @@ if [ $? -ne 0 ]; then
   exit $?
 fi
 
-if [ ! -f target/debug/examples/test_program.exe ]; then
+if [ ! -f target/debug/examples/test_program ]; then
     #printf "building...\n"
     (./build.sh) > /dev/null 2>&1
 fi
-if [ ! -f target/debug/examples/test_program.exe ]; then
+if [ ! -f target/debug/examples/test_program ]; then
     printf "ERROR: lib build failed\n"
     exit 1
 fi
