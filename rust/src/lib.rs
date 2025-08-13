@@ -1,49 +1,24 @@
 use crate::bits::Bits;
+use crate::frequency::count_frequencies;
 use crate::tree::*;
-use std::collections::HashMap;
 
 pub mod bits;
 pub mod debug;
 pub mod tree;
+mod frequency;
 
 ///
-/// Count the frequency of each byte in the input [Vec] of [u8], returning
-/// a [Vec] of [TreeNode]s.
+/// Attempt to transform a [Vec] of [u8]s into a [HuffmanTree].
 ///
-/// Note that a [Vec] of [TreeNode]s is not a [HuffmanTree].
-///
-pub fn count_frequencies(message: &Vec<u8>) -> Vec<TreeNode> {
-    let mut map: HashMap<u8, usize> = HashMap::new();
-    let mut vec = vec![];
-
-    message.iter().for_each(|symbol| {
-        let value = if map.contains_key(&symbol) {
-            let temp: &usize = &map.get(&symbol).unwrap().to_owned();
-            temp + 1
-        } else {
-            1
-        };
-
-        map.insert(*symbol, value);
-    });
-
-    map.iter()
-        .for_each(|elem| vec.push(TreeNode::new_leaf(*elem.0, *elem.1)));
-
-    vec
-}
-
-///
-/// Attempt to transform a [Vec] of [TreeNode]s into a [HuffmanTree].
-///
-pub fn frequencies_to_tree(input: Vec<TreeNode>) -> HuffmanTree {
-    HuffmanTree::new(input)
+pub fn treeify(bytes: &Vec<u8>) -> HuffmanTree {
+    let frequencies = count_frequencies(&bytes);
+    HuffmanTree::new(frequencies)
 }
 
 ///
 /// Encode the initial [Vec] of [u8] into [Bits] with the given [HuffmanTree].
 ///
-pub fn encode(bytes: Vec<u8>, tree: &HuffmanTree) -> Bits {
+pub fn encode(bytes: &Vec<u8>, tree: &HuffmanTree) -> Bits {
     let mut the_bits = Bits::new();
 
     bytes.iter().for_each(|c| {
@@ -60,7 +35,7 @@ pub fn encode(bytes: Vec<u8>, tree: &HuffmanTree) -> Bits {
 ///
 /// Decode the given [Bits] into [Vec] of [u8] with the given [HuffmanTree].
 ///
-pub fn decode(encoded: &mut Bits, tree: HuffmanTree) -> Vec<u8> {
+pub fn decode(encoded: &Bits, tree: &HuffmanTree) -> Vec<u8> {
     let mut decoded = Vec::new();
 
     let mut bits = encoded.clone();

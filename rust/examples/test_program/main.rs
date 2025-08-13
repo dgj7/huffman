@@ -1,9 +1,6 @@
 extern crate huffman_coding_lib;
 
-use huffman_coding_lib::count_frequencies;
-use huffman_coding_lib::decode;
-use huffman_coding_lib::encode;
-use huffman_coding_lib::frequencies_to_tree;
+use huffman_coding_lib::{treeify,encode,decode};
 
 ///
 /// Convert an input string into a huffman encoded bit stream, and then back into a string.
@@ -17,10 +14,9 @@ fn main() {
     let bytes = input.as_bytes().to_vec();
 
     /* do the full cycle of huffman encode/decode */
-    let frequencies = count_frequencies(&bytes);
-    let tree = frequencies_to_tree(frequencies);
-    let mut encoded = encode(bytes, &tree);
-    let decoded = decode(&mut encoded, tree);
+    let tree = treeify(&bytes);
+    let encoded = encode(&bytes, &tree);
+    let decoded = decode(&encoded, &tree);
 
     /* translate back, again poorly */
     let translated = String::from_utf8_lossy(&decoded);

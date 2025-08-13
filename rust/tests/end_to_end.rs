@@ -1,16 +1,15 @@
 #[cfg(test)]
 mod test {
-    use huffman_coding_lib::{count_frequencies, decode, encode, frequencies_to_tree};
+    use huffman_coding_lib::{decode, encode, treeify};
 
     #[test]
     fn test_end_to_end_1() {
         let input = String::from("this is a sample input string. its text is being used to test the huffman coding tree.");
         let bytes = input.as_bytes().to_vec();
 
-        let frequencies = count_frequencies(&bytes);
-        let tree = frequencies_to_tree(frequencies);
-        let mut encoded = encode(bytes, &tree);
-        let decoded = decode(&mut encoded, tree);
+        let tree = treeify(&bytes);
+        let encoded = encode(&bytes, &tree);
+        let decoded = decode(&encoded, &tree);
 
         let translated = String::from_utf8_lossy(&decoded);
 

@@ -27,7 +27,13 @@ pub struct BytesIterator<'a> {
     max: usize,
 }
 
+///
+/// Bits implementation.
+///
 impl Bits {
+    ///
+    /// Create a new instance, with no bits.
+    ///
     pub fn new() -> Self {
         Self {
             storage: Vec::new(),
@@ -36,6 +42,9 @@ impl Bits {
         }
     }
 
+    ///
+    /// Push the given bits to the end of the vector.
+    ///
     pub fn push(&mut self, bit: bool) {
         /* initialize storage, if needed */
         if self.bit_capacity <= self.bit_length {
@@ -50,12 +59,17 @@ impl Bits {
         self.write(self.bit_length - 1, bit);
     }
 
+    ///
+    /// Append the given [Bits] to this.
     pub fn append(&mut self, other: &Bits) {
         other.iter().for_each(|bit| {
             self.push(bit);
         });
     }
 
+    ///
+    /// Iterate over bits.
+    ///
     pub fn iter(&self) -> BitsIterator {
         BitsIterator {
             bits: self,
@@ -63,6 +77,9 @@ impl Bits {
         }
     }
 
+    ///
+    /// Iterate over bytes.
+    ///
     pub fn bytes_iter(&self) -> BytesIterator {
         BytesIterator {
             bits: self,
@@ -238,6 +255,10 @@ impl Bits {
         Self::write_helper(&mut byte, bit_index, bit);
     }
 
+    ///
+    /// Helper function for write().
+    ///
+    // todo: attempt to integrate this into the write() method.
     fn write_helper(byte: &mut u8, bit_index: usize, bit: bool) {
         let mask: u8 = !(1 << bit_index);
         let flag: u8 = (bit as u8) << bit_index;
