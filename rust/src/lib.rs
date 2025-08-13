@@ -56,8 +56,7 @@ pub fn decode(encoded: &mut Bits, maybe_tree: Option<HuffmanTree>) -> Vec<u8> {
     let mut decoded = Vec::new();
 
     if maybe_tree.is_none() {
-        // todo: this should panic
-        return decoded;
+        panic!("empty tree!");
     }
     let tree = maybe_tree.as_ref().unwrap();
 
