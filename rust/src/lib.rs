@@ -7,6 +7,12 @@ pub mod debug;
 pub mod translator;
 pub mod tree;
 
+///
+/// Count the frequency of each byte in the input [Vec] of [u8], returning
+/// a [Vec] of [TreeNode]s.
+///
+/// Note that a [Vec] of [TreeNode]s is not a [HuffmanTree].
+///
 pub fn count_frequencies(message: &Vec<u8>) -> Vec<TreeNode> {
     let mut map: HashMap<u8, usize> = HashMap::new();
     let mut vec = vec![];
@@ -28,10 +34,17 @@ pub fn count_frequencies(message: &Vec<u8>) -> Vec<TreeNode> {
     vec
 }
 
+///
+/// Attempt to transform a [Vec] of [TreeNode]s into a [HuffmanTree].
+///
+// todo: stop returning option here
 pub fn frequencies_to_tree(input: Vec<TreeNode>) -> Option<HuffmanTree> {
     HuffmanTree::new(input)
 }
 
+///
+/// Encode the initial [Vec] of [u8] into [Bits] with the given [HuffmanTree].
+///
 pub fn encode(bytes: Vec<u8>, maybe_tree: &Option<HuffmanTree>) -> Bits {
     let mut the_bits = Bits::new();
 
@@ -52,6 +65,9 @@ pub fn encode(bytes: Vec<u8>, maybe_tree: &Option<HuffmanTree>) -> Bits {
     the_bits
 }
 
+///
+/// Decode the given [Bits] into [Vec] of [u8] with the given [HuffmanTree].
+///
 pub fn decode(encoded: &mut Bits, maybe_tree: Option<HuffmanTree>) -> Vec<u8> {
     let mut decoded = Vec::new();
 
