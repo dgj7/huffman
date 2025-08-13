@@ -37,22 +37,15 @@ pub fn count_frequencies(message: &Vec<u8>) -> Vec<TreeNode> {
 ///
 /// Attempt to transform a [Vec] of [TreeNode]s into a [HuffmanTree].
 ///
-// todo: stop returning option here
-pub fn frequencies_to_tree(input: Vec<TreeNode>) -> Option<HuffmanTree> {
+pub fn frequencies_to_tree(input: Vec<TreeNode>) -> HuffmanTree {
     HuffmanTree::new(input)
 }
 
 ///
 /// Encode the initial [Vec] of [u8] into [Bits] with the given [HuffmanTree].
 ///
-pub fn encode(bytes: Vec<u8>, maybe_tree: &Option<HuffmanTree>) -> Bits {
+pub fn encode(bytes: Vec<u8>, tree: &HuffmanTree) -> Bits {
     let mut the_bits = Bits::new();
-
-    if maybe_tree.is_none() {
-        return the_bits;
-    }
-
-    let tree = maybe_tree.as_ref().unwrap();
 
     bytes.iter().for_each(|c| {
         let maybe_symbol_bits = tree.encodings.get(&c).clone();
@@ -68,13 +61,8 @@ pub fn encode(bytes: Vec<u8>, maybe_tree: &Option<HuffmanTree>) -> Bits {
 ///
 /// Decode the given [Bits] into [Vec] of [u8] with the given [HuffmanTree].
 ///
-pub fn decode(encoded: &mut Bits, maybe_tree: Option<HuffmanTree>) -> Vec<u8> {
+pub fn decode(encoded: &mut Bits, tree: HuffmanTree) -> Vec<u8> {
     let mut decoded = Vec::new();
-
-    if maybe_tree.is_none() {
-        panic!("empty tree!");
-    }
-    let tree = maybe_tree.as_ref().unwrap();
 
     let mut bits = encoded.clone();
 

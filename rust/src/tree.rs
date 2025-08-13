@@ -32,12 +32,12 @@ pub struct HuffmanTree {
 }
 
 impl HuffmanTree {
-    pub(crate) fn new(mut frequencies: Vec<TreeNode>) -> Option<HuffmanTree> {
+    pub(crate) fn new(mut frequencies: Vec<TreeNode>) -> HuffmanTree {
         //crate::debug::debug_print(&mut frequencies);
 
         /* presently failing for an empty frequency list */
         if frequencies.len() == 0 {
-            return None;
+            panic!("empty frequencies vector!");
         }
 
         /* merge elements in the frequency list until there is only a single element; that element is the tree's root */
@@ -59,10 +59,10 @@ impl HuffmanTree {
         //crate::debug::debug_print_encodings(&the_encodings);
 
         /* return the new tree */
-        Some(HuffmanTree {
+        HuffmanTree {
             root: the_root,
             encodings: the_encodings,
-        })
+        }
     }
 
     pub(crate) fn next_decoded(
