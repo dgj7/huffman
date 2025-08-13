@@ -10,8 +10,8 @@ mod test {
 
         let bytes = string_to_bytes(&input);
         let frequencies = count_frequencies(&bytes);
-        let tree = frequencies_to_tree(&frequencies);
-        let mut encoded = encode(&frequencies, &tree);
+        let tree = frequencies_to_tree(frequencies);
+        let mut encoded = encode(bytes, &tree);
         let decoded = decode(&mut encoded, tree);
         let translated = bytes_to_string(&decoded);
 

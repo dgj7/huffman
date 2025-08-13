@@ -1,5 +1,4 @@
 use crate::bits::Bits;
-use crate::frequency::*;
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::ops::Deref;
@@ -33,9 +32,7 @@ pub struct HuffmanTree {
 }
 
 impl HuffmanTree {
-    pub(crate) fn new(input: &impl FrequencyProcessor) -> Option<HuffmanTree> {
-        /* get a vector with all the frequencies, represented as leaf nodes */
-        let mut frequencies = input.to_frequencies();
+    pub(crate) fn new(mut frequencies: Vec<TreeNode>) -> Option<HuffmanTree> {
         //crate::debug::debug_print(&mut frequencies);
 
         /* presently failing for an empty frequency list */
