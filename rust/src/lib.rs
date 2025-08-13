@@ -4,7 +4,6 @@ use std::collections::HashMap;
 
 pub mod bits;
 pub mod debug;
-pub mod translator;
 pub mod tree;
 
 ///

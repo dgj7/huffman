@@ -4,7 +4,6 @@ use huffman_coding_lib::count_frequencies;
 use huffman_coding_lib::decode;
 use huffman_coding_lib::encode;
 use huffman_coding_lib::frequencies_to_tree;
-use huffman_coding_lib::translator::{bytes_to_string, string_to_bytes};
 
 ///
 /// Convert an input string into a huffman encoded bit stream, and then back into a string.
@@ -15,7 +14,7 @@ fn main() {
 
     /* deal with the input; this program converts string input into a poorly translated byte array */
     let input = parse(std::env::args());
-    let bytes = string_to_bytes(&input);
+    let bytes = input.as_bytes().to_vec();
 
     /* do the full cycle of huffman encode/decode */
     let frequencies = count_frequencies(&bytes);
@@ -24,7 +23,7 @@ fn main() {
     let decoded = decode(&mut encoded, tree);
 
     /* translate back, again poorly */
-    let translated = bytes_to_string(&decoded);
+    let translated = String::from_utf8_lossy(&decoded);
 
     /* print the output */
     println!("input:   [{}]", input);

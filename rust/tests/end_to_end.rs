@@ -1,19 +1,18 @@
 #[cfg(test)]
 mod test {
-    use huffman_coding_lib::translator::{bytes_to_string, string_to_bytes};
     use huffman_coding_lib::{count_frequencies, decode, encode, frequencies_to_tree};
 
     #[test]
     fn test_end_to_end_1() {
         let input = String::from("this is a sample input string. its text is being used to test the huffman coding tree.");
-        let bytes = string_to_bytes(&input);
+        let bytes = input.as_bytes().to_vec();
 
         let frequencies = count_frequencies(&bytes);
         let tree = frequencies_to_tree(frequencies);
         let mut encoded = encode(bytes, &tree);
         let decoded = decode(&mut encoded, tree);
 
-        let translated = bytes_to_string(&decoded);
+        let translated = String::from_utf8_lossy(&decoded);
 
         assert_eq!("this is a sample input string. its text is being used to test the huffman coding tree.", translated);
         assert_eq!(86, translated.len());
