@@ -70,7 +70,7 @@ impl Bits {
     ///
     /// Iterate over bits.
     ///
-    pub fn iter(&self) -> BitsIterator {
+    pub fn iter(&self) -> BitsIterator<'_> {
         BitsIterator {
             bits: self,
             bit_index: 0,
@@ -80,7 +80,7 @@ impl Bits {
     ///
     /// Iterate over bytes.
     ///
-    pub fn bytes_iter(&self) -> BytesIterator {
+    pub fn bytes_iter(&self) -> BytesIterator<'_> {
         BytesIterator {
             bits: self,
             byte_index: 0,

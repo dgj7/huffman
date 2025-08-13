@@ -23,9 +23,9 @@ pub fn encode(bytes: &[u8], tree: &HuffmanTree) -> Bits {
 
     bytes.iter().for_each(|c| {
         let maybe_symbol_bits = tree.encodings.get(c);
-        if maybe_symbol_bits.is_some() {
-            let symbol_bits = maybe_symbol_bits.unwrap().clone();
-            the_bits.append(&symbol_bits);
+
+        if let Some(symbol_bits) = maybe_symbol_bits {
+            the_bits.append(symbol_bits);
         }
     });
 
