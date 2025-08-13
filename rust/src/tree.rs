@@ -32,6 +32,9 @@ pub struct HuffmanTree {
 }
 
 impl HuffmanTree {
+    ///
+    /// Create a new [HuffmanTree].
+    /// 
     pub(crate) fn new(mut frequencies: Vec<TreeNode>) -> HuffmanTree {
         //crate::debug::debug_print(&mut frequencies);
 
@@ -65,6 +68,10 @@ impl HuffmanTree {
         }
     }
 
+    ///
+    /// Get the next decoded byte.
+    ///
+    #[allow(clippy::only_used_in_recursion)]
     pub(crate) fn next_decoded(
         &self,
         encoded_bits: &Bits,
@@ -83,7 +90,6 @@ impl HuffmanTree {
                 Some(x) => (x, the_bits),
             }
         } else {
-            // todo: unit test this
             panic!("[{}] is not a valid code", &the_bits);
         }
     }
