@@ -109,8 +109,7 @@ impl Bits {
         }
 
         /* iterate over all bits, copying (count) bits for output, and shifting all bits */
-        let mut counter = 0;
-        for current_index in start..self.bit_length {
+        for (counter, current_index) in (start..self.bit_length).enumerate() {
             /* if this is a bit that we need to copy over, grab it */
             if counter < count {
                 let current_bit = self.read(current_index);
@@ -127,9 +126,6 @@ impl Bits {
 
             /* overwrite the current bit with the replacement bit */
             self.write(current_index, replacement_bit);
-
-            /* increment */
-            counter += 1;
         }
 
         /* remove (zero) the last 'count' bits */
@@ -233,7 +229,6 @@ impl Bits {
 
         /* determine and validate the byte index */
         let byte_index = write_index / 8;
-        if byte_index >= self.storage.len() {}
         if byte_index >= self.storage.len() {
             panic!(
                 "ERROR: WRITE: [byte_index({})] >= [byte_capacity({})]",
@@ -249,10 +244,10 @@ impl Bits {
         }
 
         /* load the byte */
-        let mut byte = &mut self.storage[byte_index];
+        let byte = &mut self.storage[byte_index];
 
         /* write data */
-        Self::write_helper(&mut byte, bit_index, bit);
+        Self::write_helper(byte, bit_index, bit);
     }
 
     ///
@@ -304,5 +299,11 @@ impl Display for Bits {
             value.push_str(num.to_string().as_str());
         });
         write!(f, "{}", value)
+    }
+}
+
+impl Default for Bits {
+    fn default() -> Self {
+        Self::new()
     }
 }

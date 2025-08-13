@@ -10,22 +10,22 @@ mod frequency;
 ///
 /// Attempt to transform a [Vec] of [u8]s into a [HuffmanTree].
 ///
-pub fn treeify(bytes: &Vec<u8>) -> HuffmanTree {
-    let frequencies = count_frequencies(&bytes);
+pub fn treeify(bytes: &[u8]) -> HuffmanTree {
+    let frequencies = count_frequencies(bytes);
     HuffmanTree::new(frequencies)
 }
 
 ///
 /// Encode the initial [Vec] of [u8] into [Bits] with the given [HuffmanTree].
 ///
-pub fn encode(bytes: &Vec<u8>, tree: &HuffmanTree) -> Bits {
+pub fn encode(bytes: &[u8], tree: &HuffmanTree) -> Bits {
     let mut the_bits = Bits::new();
 
     bytes.iter().for_each(|c| {
-        let maybe_symbol_bits = tree.encodings.get(&c).clone();
+        let maybe_symbol_bits = tree.encodings.get(c);
         if maybe_symbol_bits.is_some() {
-            let mut symbol_bits = maybe_symbol_bits.unwrap().clone();
-            the_bits.append(&mut symbol_bits);
+            let symbol_bits = maybe_symbol_bits.unwrap().clone();
+            the_bits.append(&symbol_bits);
         }
     });
 

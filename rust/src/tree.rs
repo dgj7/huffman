@@ -36,7 +36,7 @@ impl HuffmanTree {
         //crate::debug::debug_print(&mut frequencies);
 
         /* presently failing for an empty frequency list */
-        if frequencies.len() == 0 {
+        if frequencies.is_empty() {
             panic!("empty frequencies vector!");
         }
 
@@ -125,13 +125,13 @@ impl TreeNode {
     }
 
     pub(crate) fn find_node(&self, direction: bool) -> &Option<Box<TreeNode>> {
-        return if direction == LEFT && self.left.is_some() {
+        if direction == LEFT && self.left.is_some() {
             &self.left
         } else if direction == RIGHT && self.right.is_some() {
             &self.right
         } else {
             &None
-        };
+        }
     }
 }
 
@@ -170,11 +170,11 @@ fn descend(node: &TreeNode, map: &mut HashMap<u8, Bits>, mut bits: Bits, bit: bo
     }
 }
 
-pub(crate) fn sort(vec: &mut Vec<TreeNode>) {
+pub(crate) fn sort(vec: &mut [TreeNode]) {
     vec.sort_by(|left, right| {
         let freq_result = left.frequency.partial_cmp(&right.frequency).unwrap();
 
-        return if freq_result == Ordering::Equal {
+        if freq_result == Ordering::Equal {
             if left.symbol.is_some() && right.symbol.is_some() {
                 left.symbol
                     .unwrap()
@@ -185,6 +185,6 @@ pub(crate) fn sort(vec: &mut Vec<TreeNode>) {
             }
         } else {
             freq_result
-        };
+        }
     });
 }

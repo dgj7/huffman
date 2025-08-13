@@ -3,7 +3,7 @@ use crate::tree::*;
 use std::collections::HashMap;
 
 #[allow(dead_code)]
-pub fn debug_print(vec: &mut Vec<TreeNode>) {
+pub fn debug_print(vec: &mut [TreeNode]) {
     println!("----------------------------------------");
     sort(vec);
     println!("frequencies list has [{}] elements", vec.len());
@@ -28,9 +28,9 @@ pub fn debug_find_all_frequency_pairs(node: &TreeNode, string: &mut String) {
         if !string.is_empty() {
             string.push_str(", ");
         }
-        string.push_str(&*node.frequency.to_string());
-        string.push_str("|");
-        string.push_str(&*symbol);
+        string.push_str(&node.frequency.to_string());
+        string.push('|');
+        string.push_str(&symbol);
         string.push_str("");
     } else {
         if node.left.is_some() {
