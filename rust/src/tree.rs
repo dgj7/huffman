@@ -36,8 +36,6 @@ impl HuffmanTree {
     /// Create a new [HuffmanTree].
     /// 
     pub(crate) fn new(mut frequencies: Vec<TreeNode>) -> HuffmanTree {
-        //crate::debug::debug_print(&mut frequencies);
-
         /* presently failing for an empty frequency list */
         if frequencies.is_empty() {
             panic!("empty frequencies vector!");
@@ -52,14 +50,12 @@ impl HuffmanTree {
             let sum = left.frequency + right.frequency;
             let internal = TreeNode::new_internal(sum, left, right);
             frequencies.push(internal);
-            //crate::debug::debug_print(&mut frequencies);
         }
         let the_root = frequencies[0].clone();
 
         /* descend the tree to gather all codes */
         let mut the_encodings: HashMap<u8, Bits> = HashMap::new();
         descend_tree(&the_root, &mut the_encodings);
-        //crate::debug::debug_print_encodings(&the_encodings);
 
         /* return the new tree */
         HuffmanTree {

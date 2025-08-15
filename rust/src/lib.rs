@@ -3,8 +3,7 @@ use crate::frequency::count_frequencies;
 use crate::tree::*;
 
 pub mod bits;
-pub mod debug;
-pub mod tree;
+mod tree;
 mod frequency;
 
 ///
