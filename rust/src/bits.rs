@@ -27,9 +27,6 @@ pub struct BytesIterator<'a> {
     max: usize,
 }
 
-///
-/// Bits implementation.
-///
 impl Bits {
     ///
     /// Create a new instance, with no bits.
@@ -61,6 +58,7 @@ impl Bits {
 
     ///
     /// Append the given [Bits] to this.
+    ///
     pub fn append(&mut self, other: &Bits) {
         other.iter().for_each(|bit| {
             self.push(bit);
@@ -198,11 +196,7 @@ impl Bits {
         /* determine and validate the byte index */
         let byte_index = read_index / 8;
         if byte_index >= self.storage.len() {
-            panic!(
-                "ERROR: READ: [byte_index({})] >= [byte_capacity({})]",
-                byte_index,
-                self.storage.len()
-            );
+            panic!("ERROR: READ: [byte_index({})] >= [byte_capacity({})]", byte_index, self.storage.len());
         }
 
         /* determine and validate the bit index */
@@ -226,20 +220,13 @@ impl Bits {
     pub(crate) fn write(&mut self, write_index: usize, bit: bool) {
         /* validate that write is within bounds */
         if write_index >= self.bit_capacity {
-            panic!(
-                "ERROR: WRITE: [write_index({})] >= [bit_length({})]",
-                write_index, self.bit_length
-            );
+            panic!("ERROR: WRITE: [write_index({})] >= [bit_length({})]", write_index, self.bit_length);
         }
 
         /* determine and validate the byte index */
         let byte_index = write_index / 8;
         if byte_index >= self.storage.len() {
-            panic!(
-                "ERROR: WRITE: [byte_index({})] >= [byte_capacity({})]",
-                byte_index,
-                self.storage.len()
-            );
+            panic!("ERROR: WRITE: [byte_index({})] >= [byte_capacity({})]", byte_index, self.storage.len());
         }
 
         /* determine and validate the bit index */
@@ -268,6 +255,9 @@ impl Bits {
     }
 }
 
+///
+/// Implement [Iterator] as bits iterator for [Bits].
+///
 impl<'a> Iterator for BitsIterator<'a> {
     type Item = bool;
 
@@ -282,6 +272,9 @@ impl<'a> Iterator for BitsIterator<'a> {
     }
 }
 
+///
+/// Implement [Iterator] as bytes iterator for [Bits].
+///
 impl<'a> Iterator for BytesIterator<'a> {
     type Item = u8;
 
@@ -296,6 +289,9 @@ impl<'a> Iterator for BytesIterator<'a> {
     }
 }
 
+///
+/// Implement [Display] for [Bits].
+///
 impl Display for Bits {
     fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
         let mut value = String::new();
@@ -307,6 +303,9 @@ impl Display for Bits {
     }
 }
 
+///
+/// Implement [Default] (default()) for [Bits].
+///
 impl Default for Bits {
     fn default() -> Self {
         Self::new()

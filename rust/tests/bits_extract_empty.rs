@@ -7,7 +7,13 @@ mod test {
         let mut bits = Bits::new();
 
         /* test push: unnecessary */
+
         /* test append: unnecessary */
+        let appendage = Bits::new();
+        bits.append(&appendage);
+        assert_eq!("", bits.to_string());
+        assert_eq!(0, bits.len());
+        assert_eq!(0, bits.capacity());
 
         /* test bytes iterator */
         let mut byte_iterator = bits.bytes_iter();
