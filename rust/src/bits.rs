@@ -239,14 +239,6 @@ impl Bits {
         let byte = &mut self.storage[byte_index];
 
         /* write data */
-        Self::write_helper(byte, bit_index, bit);
-    }
-
-    ///
-    /// Helper function for write().
-    ///
-    // todo: attempt to integrate this into the write() method.
-    fn write_helper(byte: &mut u8, bit_index: usize, bit: bool) {
         let mask: u8 = !(1 << bit_index);
         let flag: u8 = (bit as u8) << bit_index;
 
