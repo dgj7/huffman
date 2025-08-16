@@ -103,7 +103,7 @@ impl Bits {
         /* panic if state illegal */
         if start >= self.bit_length {
             panic!(
-                "ERROR: EXTRACT: [start({})] >= [bit_length({})]",
+                "ERROR: EXTRACT: start({}) >= bit_length({})",
                 start, self.bit_length
             );
         }
