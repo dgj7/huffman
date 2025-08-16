@@ -108,6 +108,11 @@ impl Bits {
             );
         }
 
+        /* panic if state illegal */
+        if count > self.bit_length {
+            panic!("ERROR: EXTRACT: count({}) > bit_length({})", count, self.bit_length);
+        }
+
         /* iterate over all bits, copying (count) bits for output, and shifting all bits */
         for (counter, current_index) in (start..self.bit_length).enumerate() {
             /* if this is a bit that we need to copy over, grab it */

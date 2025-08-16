@@ -82,7 +82,7 @@ mod test {
 
     #[test]
     #[should_panic(expected="ERROR: EXTRACT: start(0) >= bit_length(0)")]
-    fn test_extract_out_of_range_1() {
+    fn test_extract_start_out_of_range() {
         let mut bits = Bits::new();
 
         /* test extract */
@@ -90,9 +90,8 @@ mod test {
     }
 
     #[test]
-    #[should_panic(expected="attempt to subtract with overflow")]
-    // todo: should catch this error ourselves
-    fn test_extract_out_of_range_2() {
+    #[should_panic(expected="ERROR: EXTRACT: count(7) > bit_length(6)")]
+    fn test_extract_count_out_of_range() {
         let mut bits = Bits::new();
 
         /* test push */
