@@ -1,0 +1,23 @@
+name: go
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup
+      uses: actions/setup-go@v4
+      working-directory: ./go
+      with:
+        go-version: '1.20'
+    - name: Test
+      run: go test -v ./...
+      working-directory: ./go
+    - name: Build
+      run: go build -v ./...
+      working-directory: ./go

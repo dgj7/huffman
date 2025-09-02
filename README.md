@@ -3,11 +3,11 @@
 huffman coding trees, in various languages.  intended to be a personal programming challenge for new langauges learned.
 
 ## Implementations
-* [c++](c++/) ![c++](https://github.com/dgj7/huffman/actions/workflows/cpp.yml/badge.svg) _build requires **cmake**, **g++**, and **build-essential**_
-* [rust](rust/) ![rust](https://github.com/dgj7/huffman/actions/workflows/rust.yml/badge.svg) _build requires **cargo**_
-* [go](go/) - _build requires **go**_
+* ![c++](https://github.com/dgj7/huffman/actions/workflows/cpp.yml/badge.svg) (_[code](c++/)_) _build requires **cmake**, **g++**, and **build-essential**_
+* ![rust](https://github.com/dgj7/huffman/actions/workflows/rust.yml/badge.svg) (_[code](rust/)_) _build requires **cargo**_
+* ![go](https://github.com/dgj7/huffman/actions/workflows/go.yml/badge.svg) (_[code](go/)_) _build requires **go**_
 * [java](java/) - _build requires **maven** and **jdk 1.7**_
-* [c](c/) ![c](https://github.com/dgj7/huffman/actions/workflows/c.yml/badge.svg) _build requires **cmake**, **gcc**, and **build-essential**_
+* ![c](https://github.com/dgj7/huffman/actions/workflows/c.yml/badge.svg) (_[code](c/)_) _build requires **cmake**, **gcc**, and **build-essential**_
 
 ## Usage
 ### Build
