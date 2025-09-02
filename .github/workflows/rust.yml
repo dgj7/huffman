@@ -10,21 +10,13 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  test:
+  test,build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Test
-      run: cargo test
-      working-directory: ./rust
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build
-      run: cargo build --examples --verbose
-      working-directory: ./rust
     - name: Test
       run: cargo test --verbose
+      working-directory: ./rust
+    - name: Build
+      run: cargo build --examples --verbose
       working-directory: ./rust
