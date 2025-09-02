@@ -7,15 +7,15 @@ huffman coding trees, in various languages.  intended to be a personal programmi
 * [rust](rust/) ![rust](https://github.com/dgj7/huffman/actions/workflows/rust.yml/badge.svg) _build requires **cargo**_
 * [go](go/) - _build requires **go**_
 * [java](java/) - _build requires **maven** and **jdk 1.7**_
-* [c](c/) - _build requires **cmake**, **gcc**, and **build-essential**_
+* [c](c/) ![c](https://github.com/dgj7/huffman/actions/workflows/c.yml/badge.svg) _build requires **cmake**, **gcc**, and **build-essential**_
 
 ## Usage
-#### Build
+### Build
 There is a `build-and-run-all.sh` script in the root directory that can be used to run all projects together, to compare outputs.
 
 Each directory has its own `build.sh` and `run.sh` scripts to build and run the individual applications.
 
-#### Run
+### Run
 Each huffman implementation should accept input from the terminal with the `-i` flag, and generate the following output:
 
 ```bash
