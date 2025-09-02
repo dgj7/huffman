@@ -3,8 +3,8 @@
 huffman coding trees, in various languages.  intended to be a personal programming challenge for new langauges learned.
 
 ## Implementations
-* [c++](c++/) - _build requires **cmake**, **g++**, and **build-essential**_
-* [rust](rust/) ![Rust](https://github.com/dgj7/huffman/actions/workflows/rust.yml/badge.svg) _build requires **cargo**_
+* [c++](c++/) ![c++](https://github.com/dgj7/huffman/actions/workflows/cpp.yml/badge.svg) _build requires **cmake**, **g++**, and **build-essential**_
+* [rust](rust/) ![rust](https://github.com/dgj7/huffman/actions/workflows/rust.yml/badge.svg) _build requires **cargo**_
 * [go](go/) - _build requires **go**_
 * [java](java/) - _build requires **maven** and **jdk 1.7**_
 * [c](c/) - _build requires **cmake**, **gcc**, and **build-essential**_
