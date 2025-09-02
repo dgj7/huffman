@@ -19,3 +19,4 @@ jobs:
         cache: maven
     - name: BuildMaven
       run: mvn -B package
+      working-directory: ./java
