@@ -1,6 +1,6 @@
 # huffman
 ## Purpose
-huffman coding trees, in various languages.  intended to be a personal programming challenge for new langauges learned.
+huffman coding trees, in various languages.  intended to be a personal programming challenge for new languages learned.
 
 ## Implementations
 * ![c++](https://github.com/dgj7/huffman/actions/workflows/cpp.yml/badge.svg) (_[code](c++/)_) _build requires **cmake**, **g++**, and **build-essential**_
