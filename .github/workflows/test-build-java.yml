@@ -1,4 +1,4 @@
-name: java
+name: test-build-java
 
 on:
   push:

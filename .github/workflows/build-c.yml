@@ -1,4 +1,4 @@
-name: c
+name: build-c
 
 on:
   push:
