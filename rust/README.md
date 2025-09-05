@@ -1,4 +1,4 @@
-![rust](https://github.com/dgj7/huffman/actions/workflows/test-build-rust.yml/badge.svg)
+![rust](https://github.com/dgj7/huffman/actions/workflows/rust-build.yml/badge.svg)
 # rust huffman
 `rust` implementation of a huffman coding tree.
 

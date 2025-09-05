@@ -1,4 +1,4 @@
-![go](https://github.com/dgj7/huffman/actions/workflows/test-build-go.yml/badge.svg)
+![go](https://github.com/dgj7/huffman/actions/workflows/go-build.yml/badge.svg)
 # go huffman
 `go` implementation of a huffman coding tree.
 

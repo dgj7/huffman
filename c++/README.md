@@ -1,4 +1,4 @@
-![c++](https://github.com/dgj7/huffman/actions/workflows/build-cpp.yml/badge.svg)
+![c++](https://github.com/dgj7/huffman/actions/workflows/cpp-build.yml/badge.svg)
 # c++ huffman
 `c++` implementation of a huffman coding tree.
 

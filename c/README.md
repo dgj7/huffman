@@ -1,4 +1,4 @@
-![c](https://github.com/dgj7/huffman/actions/workflows/build-c.yml/badge.svg)
+![c](https://github.com/dgj7/huffman/actions/workflows/c-build.yml/badge.svg)
 # c huffman
 `c` implementation of a huffman coding tree.
 

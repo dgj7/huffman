@@ -1,4 +1,4 @@
-![java](https://github.com/dgj7/huffman/actions/workflows/test-build-java.yml/badge.svg)
+![java](https://github.com/dgj7/huffman/actions/workflows/java-build.yml/badge.svg)
 # jhtree
 `java` implementation of a huffman coding tree.
 
