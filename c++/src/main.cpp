@@ -1,7 +1,7 @@
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <cstring> // strcmp()
+#include <iostream>		// std::cout
+#include <string>		// std::string
+#include <sstream>		// std::stringstream
+#include <cstring> 		// strcmp()
 
 #include "lib/Huffman.hpp"
 
