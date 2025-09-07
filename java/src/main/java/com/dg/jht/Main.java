@@ -11,7 +11,7 @@ import com.dg.jht.pojo.HuffmanTree;
 import com.dg.jht.util.MessageRepository;
 
 /**
- * Main driver file, for testing only.
+ * Main driver file.
  */
 public class Main
 {
@@ -21,10 +21,6 @@ public class Main
 	
 	/**
 	 * Main program entry point.
-	 * 
-	 * @param args
-	 * @throws HuffmanEncodingException
-	 * @throws HuffmanDecodingException
 	 */
 	public static void main(String []args) throws HuffmanEncodingException, HuffmanDecodingException
 	{
