@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build-Lib
       run: cmake . && make clean && make config=release
-      working-directory: ./c++
+      working-directory: ./cpp
     - name: Build-Main
       run: (cd src ; g++ -o ../bin/huffman main.cpp -L../bin -lhuffman)
       working-directory: ./cpp
