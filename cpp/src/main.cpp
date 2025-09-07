@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	/* print the input */
 	std::cout << "input:   [" << theString << "]" << std::endl;
 
-	// todo: this might need to be moved to a -verbose mode, or something similar
+	// todo: this needs to be moved to a -verbose mode, or something similar
 	//printer.printCodes(tree);
 	
 	std::vector<bool> encoded = encoder.encode(theString,tree);
