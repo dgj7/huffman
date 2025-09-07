@@ -1,9 +1,9 @@
-#include <iostream>		// std::cout
-#include <string>		// std::string
-#include <sstream>		// std::stringstream
-#include <cstring> 		// strcmp()
+#include <iostream>				// std::cout
+#include <string>				// std::string
+#include <sstream>				// std::stringstream
+#include <cstring> 				// strcmp()
 
-#include "lib/Huffman.hpp"
+#include "lib/Huffman.hpp"		// HuffmanTreeBuilder, HuffmanEncoder, HuffmanDecoder, HuffmanTree
 
 std::string b_vec_to_str(std::vector<bool>);
 
