@@ -3,7 +3,7 @@
 `go` implementation of a huffman coding tree.
 
 ## usage
-`build.sh` - uses `go` to clean and build the project; results in a binary in root.
+`build.sh` - uses `go` to clean and build the project; results in a binary in project root.
 
 `run.sh` - launches program, displaying huffman encoding/decoding.
 

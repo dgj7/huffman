@@ -27,7 +27,7 @@
 * [x] ~~setup workflow~~
 * [ ] add unit tests
 * [ ] ease of use: combine tree with encodings
-* [ ] memory efficiency: implement bit vector for returning data
+* [x] memory efficiency: implement bit vector for returning data
 
 ## Java
 * [x] ~~implement~~
