@@ -3,10 +3,10 @@ name: cpp build
 on:
   push:
     paths:
-    - c++/**
+    - cpp/**
   pull_request:
     paths:
-    - c++/**
+    - cpp/**
 
 jobs:
   build:
@@ -18,4 +18,4 @@ jobs:
       working-directory: ./c++
     - name: Build-Main
       run: (cd src ; g++ -o ../bin/huffman main.cpp -L../bin -lhuffman)
-      working-directory: ./c++
+      working-directory: ./cpp
