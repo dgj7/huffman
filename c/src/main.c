@@ -1,8 +1,8 @@
-#include <stdio.h> // printf()
-#include <string.h> // strcpy(), strlen(), strncat()
-#include <stdlib.h> // malloc(), free()
-#include <time.h> // clock_t, CLOCKS_PER_SEC
-#include <stdlib.h> // exit()
+#include <stdio.h> 		// printf()
+#include <string.h> 	// strcpy(), strlen(), strncat()
+#include <stdlib.h> 	// malloc(), free()
+#include <time.h> 		// clock_t, CLOCKS_PER_SEC
+#include <stdlib.h> 	// exit()
 
 #include "lib/huffman.h"
 
