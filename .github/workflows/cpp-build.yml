@@ -2,9 +2,11 @@ name: cpp build
 
 on:
   push:
-    branches: [ "main" ]
+    paths:
+    - c++/**
   pull_request:
-    branches: [ "main" ]
+    paths:
+    - c++/**
 
 jobs:
   build:
