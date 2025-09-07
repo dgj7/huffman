@@ -2,8 +2,7 @@ use std::collections::HashMap;
 use crate::tree::TreeNode;
 
 ///
-/// Count the frequency of each byte in the input [Vec] of [u8], returning
-/// a [Vec] of [TreeNode]s.
+/// Count the frequency of each byte in the input [Vec] of [u8], returning a [Vec] of [TreeNode]s.
 ///
 /// Note that a [Vec] of [TreeNode]s is not a [HuffmanTree].
 ///
