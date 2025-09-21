@@ -7,7 +7,6 @@
 #include "tree.h"
 #include "encoding.h"
 
-__attribute__((keep))
 node_t * create_tree(char * message, int length) {
 	/* gather frequency data, needed to build tree */
 	frequency_t * frequencies = count_frequencies(message, length);
@@ -23,12 +22,10 @@ node_t * create_tree(char * message, int length) {
 	return root;
 }
 
-__attribute__((keep))
 encoding_list_t * create_encodings(node_t * tree) {
 	return make_encodings_helper(tree, tree->tree_size);
 }
 
-__attribute__((keep))
 void free_tree(node_t * tree) {
 	if (tree != NULL) {
 		free_tree(tree->left);
@@ -37,7 +34,6 @@ void free_tree(node_t * tree) {
 	free(tree);
 }
 
-__attribute__((keep))
 void free_encodings(encoding_list_t * encodings) {
 	free_encoding(encodings->head);
 	free(encodings);

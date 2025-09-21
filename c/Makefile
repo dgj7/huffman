@@ -1,6 +1,6 @@
 # compile
 CC = gcc
-CFLAGS = -Wall -g -O0
+CFLAGS = -Wall -g -pedantic
 
 # build vars
 LIBSRCDIR:=src
@@ -40,7 +40,7 @@ $(LIBRARY): $(LIBOBJS)
 # build the demos
 $(DEMOPROGS): $(DEMOSRC)
 	@echo compiling: $@ [examples/$(notdir $(basename $@)).c] ...
-	@$(CC) -o $@ -I $(LIBSRCDIR) examples/$(notdir $(basename $@)).c -L$(BUILDDIR) -l$(LIBNAME) && done!
+	@$(CC) $(CFLAGS) -o $@ -I $(LIBSRCDIR) examples/$(notdir $(basename $@)).c -L$(BUILDDIR) -l$(LIBNAME) && done!
 
 # clean out prior build info
 clean:
