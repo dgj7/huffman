@@ -1,8 +1,11 @@
-CMakeFiles/**.*
-CMakeFiles/*
-Makefile
-CMakeCache.txt
-cmake_install.cmake
 bin/huffman
 bin/libhuffman.a
+
+target/*
 .vscode/*
+
+bin/*
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/**.*
+CMakeFiles/*
