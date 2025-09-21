@@ -2,7 +2,6 @@
 #include <stdio.h> // printf()
 
 #include "frequency.h"
-#include "huffman.h"
 
 const int ERROR_MALLOC_FREQUENCY = 200;
 const int ERROR_MALLOC_FREQUENCIES = 201;

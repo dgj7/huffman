@@ -16,10 +16,12 @@ LIBRARY  :=$(BUILDDIR)/lib$(LIBNAME).a
 TEST     :=$(BUILDDIR)/test.exe
 
 # tasks
-.PHONY: all clean test build print
+.PHONY: all clean test build library examples print
 all: clean test build
 build: $(LIBOBJS) $(LIBRARY) $(DEMOPROGS)
 test: $(TEST)
+library: $(LIBRARY)
+examples: $(DEMOPROGS)
 
 # build test program; make halts of fails
 $(TEST): $(TESTSRC)
