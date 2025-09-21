@@ -5,8 +5,6 @@
 #include <string.h> // strcat()
 
 #include "types.h"
-#include "huffman.h"
-#include "frequency.h"
 #include "tree.h"
 
 const int ERROR_MALLOC_HUFFMAN_T = 300;
