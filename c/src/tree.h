@@ -1,5 +1,6 @@
 #ifndef __TREE__DG__H__
 #define __TREE__DG__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -25,4 +26,5 @@ void debug_print_tree(node_t * root, char * prefix, int level);
 #ifdef __cplusplus
 }
 #endif
+
 #endif

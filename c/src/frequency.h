@@ -1,19 +1,11 @@
 #ifndef __FREQUENCY__DG__H__
 #define __FREQUENCY__DG__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
-typedef struct {
-	long frequency;
-	char symbol;
-} frequency_pair_t;
-
-typedef struct {
-	long count;
-	frequency_pair_t *pairs;
-} frequency_t;
+#include "types.h"
 
 /******************************************************************************
  * INTERNAL API
@@ -30,4 +22,5 @@ int find_matching_index(frequency_pair_t * frequencies, size_t length, char symb
 #ifdef __cplusplus
 }
 #endif
+
 #endif

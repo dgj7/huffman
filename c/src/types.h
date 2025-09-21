@@ -1,6 +1,10 @@
 #ifndef TYPES__DG__H__
 #define TYPES__DG__H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 
 typedef enum { INTERNAL = 98, LEAF = 99 } nodetype_t;
@@ -32,5 +36,19 @@ typedef struct _encoding_t {
 typedef struct {
 	encoding_t * head;
 } encoding_list_t;
+
+typedef struct {
+	long frequency;
+	char symbol;
+} frequency_pair_t;
+
+typedef struct {
+	long count;
+	frequency_pair_t *pairs;
+} frequency_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
