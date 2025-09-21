@@ -4,6 +4,7 @@
 #include <stdbool.h> // bool
 #include <string.h> // strcat()
 
+#include "types.h"
 #include "huffman.h"
 #include "frequency.h"
 #include "tree.h"

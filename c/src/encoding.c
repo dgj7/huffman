@@ -2,6 +2,7 @@
 #include <stdio.h> // printf()
 #include <stdlib.h> // malloc(), exit()
 
+#include "types.h"
 #include "huffman.h"
 #include "encoding.h"
 

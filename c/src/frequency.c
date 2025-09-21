@@ -1,6 +1,7 @@
 #include <stdlib.h> // malloc(), exit()
 #include <stdio.h> // printf()
 
+#include "types.h"
 #include "frequency.h"
 
 const int ERROR_MALLOC_FREQUENCY = 200;

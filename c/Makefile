@@ -5,6 +5,8 @@ CFLAGS = -Wall -g -pedantic
 # build vars
 LIBSRCDIR:=src
 LIBSRC   :=$(shell find src -name "*.c")
+#LIBSRC   :=src/frequency.c src/encoding.c src/tree.c src/huffman.c
+#LIBSRC   :=src/huffman.c src/tree.c src/encoding.c src/frequency.c
 LIBOBJS  :=$(patsubst %.c,target/%.o,$(notdir $(LIBSRC)))
 TESTSRC  :=$(LIBSRC) $(shell find test -name "*.c")
 DEMOSRC  :=$(shell find examples -name "*.c")

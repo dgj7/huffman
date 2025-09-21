@@ -2,6 +2,7 @@
 #include <stdlib.h> // free()
 #include <stdbool.h> // bool
 
+#include "types.h"
 #include "huffman.h"
 #include "frequency.h"
 #include "tree.h"
