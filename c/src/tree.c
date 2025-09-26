@@ -206,10 +206,10 @@ void debug_print_tree(node_t * root, char * prefix, int level) {
 	if (root == NULL) {
 		printf("%sROOT NULL", prefix);
 	} else if (root->nt == INTERNAL) {
-		printf("%s[LVL=%d][SZ=%d] INTERNAL: frequency=[%d]\n", prefix, level, root->tree_size, root->frequency);
+		printf("%s[LVL=%d][SZ=%d] INTERNAL: frequency=[%lu]\n", prefix, level, root->tree_size, root->frequency);
 		debug_print_tree(root->left, prefix, level + 1);
 		debug_print_tree(root->right, prefix, level + 1);
 	} else {
-		printf("%s[LVL=%d][SZ=%d] LEAF: frequency=[%d], symbol=[%c]\n", prefix, level, root->tree_size, root->frequency, root->symbol);
+		printf("%s[LVL=%d][SZ=%d] LEAF: frequency=[%lu], symbol=[%c]\n", prefix, level, root->tree_size, root->frequency, root->symbol);
 	}
 }

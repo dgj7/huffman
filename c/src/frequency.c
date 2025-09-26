@@ -11,7 +11,7 @@ frequency_t * count_frequencies(char *message, size_t length) {
 	/* initialize frequency; panic if we can't get memory */
 	frequency_t * wrapper = malloc(sizeof(frequency_t));
 	if (wrapper == NULL) {
-		printf("ERROR: %d: can't allocate memory for frequency_t");
+		printf("ERROR: %d: can't allocate memory for frequency_t", ERROR_MALLOC_FREQUENCY);
 		exit(ERROR_MALLOC_FREQUENCY);
 	}
 
