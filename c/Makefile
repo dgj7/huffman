@@ -5,8 +5,6 @@ CFLAGS = -Wall -g -pedantic
 # build vars
 LIBSRCDIR:=src
 LIBSRC   :=$(shell find src -name "*.c")
-#LIBSRC   :=src/frequency.c src/encoding.c src/tree.c src/huffman.c
-#LIBSRC   :=src/huffman.c src/tree.c src/encoding.c src/frequency.c
 LIBOBJS  :=$(patsubst %.c,target/%.o,$(notdir $(LIBSRC)))
 TESTSRC  :=$(LIBSRC) $(shell find test -name "*.c")
 DEMOSRC  :=$(shell find examples -name "*.c")
@@ -27,24 +25,24 @@ examples: $(DEMOPROGS)
 
 # build test program; make halts of fails
 $(TEST): $(TESTSRC)
-	@echo -n compiling: $@ [$^] ...
+	@echo -n [TEST]: compiling: $@ [$^] ...
 	@$(CC) $(CFLAGS) -o $@ $^ -I $(LIBSRCDIR) && echo done!
 	@$(TEST)
 
 # build obj files
 $(LIBOBJS): $(LIBSRC)
-	@echo -n compiling: $@ ...
-	@$(CC) $(CFLAGS) -c $< -o $@ && echo done!
+	@echo -n [LIBOJB_]: compiling: $@ [src/$(notdir $(basename $@)).c] ...
+	@$(CC) $(CFLAGS) -c src/$(notdir $(basename $@)).c -o $@ && echo done!
 
 # build the library
 $(LIBRARY): $(LIBOBJS)
-	@echo -n compiling: $@ [$^] ...
+	@echo -n [LIBRARY]: compiling: $@ [$^] ...
 	@ar rcs $@ $^ && echo done!
 
 # build the demos
 $(DEMOPROGS): $(DEMOSRC)
-	@echo compiling: $@ [examples/$(notdir $(basename $@)).c] ...
-	@$(CC) $(CFLAGS) -o $@ -I $(LIBSRCDIR) examples/$(notdir $(basename $@)).c -L$(BUILDDIR) -l$(LIBNAME) && done!
+	@echo -n [DEMO___]: compiling: $@ [examples/$(notdir $(basename $@)).c] ...
+	@$(CC) $(CFLAGS) -o $@ -I $(LIBSRCDIR) examples/$(notdir $(basename $@)).c -L$(BUILDDIR) -l$(LIBNAME) && echo done!
 
 # clean out prior build info
 clean:
