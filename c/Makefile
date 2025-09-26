@@ -20,8 +20,6 @@ TEST     :=$(BUILDDIR)/test.exe
 all: clean test build
 build: $(LIBOBJS) $(LIBRARY) $(DEMOPROGS)
 test: $(TEST)
-library: $(LIBRARY)
-examples: $(DEMOPROGS)
 
 # build test program; make halts of fails
 $(TEST): $(TESTSRC)
