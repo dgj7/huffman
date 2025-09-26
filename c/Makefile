@@ -25,7 +25,7 @@ examples: $(DEMOPROGS)
 
 # build test program; make halts of fails
 $(TEST): $(TESTSRC)
-	@echo -n [TEST]: compiling: $@ [$^] ...
+	@echo -n [TEST___]: compiling: $@ [$^] ...
 	@$(CC) $(CFLAGS) -o $@ $^ -I $(LIBSRCDIR) && echo done!
 	@$(TEST)
 
