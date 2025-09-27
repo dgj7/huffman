@@ -20,6 +20,7 @@ void bubble_sort(node_t * list, long length);
 int compare(const void *_left, const void *_right);
 int tree_size(node_t * root);
 void debug_print_tree(node_t * root, char * prefix, int level);
+int leaf_count(node_t * root);
 
 
 #ifdef __cplusplus

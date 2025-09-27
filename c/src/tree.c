@@ -202,6 +202,23 @@ int tree_size(node_t * root) {
 	return left_size + right_size + 1;
 }
 
+int leaf_count(node_t * root)
+{
+	if (root == NULL)
+	{
+		return 0;
+	}
+
+	if (root->nt == LEAF)
+	{
+		return 1;
+	}
+
+	int left = leaf_count(root->left);
+	int right = leaf_count(root->right);
+	return left + right;
+}
+
 void debug_print_tree(node_t * root, char * prefix, int level) {
 	if (root == NULL) {
 		printf("%sROOT NULL", prefix);
