@@ -7,8 +7,6 @@ extern "C" {
 
 #include <stdbool.h> // bool
 
-#define EXPORT __attribute__((__visibility__("default")))
-
 typedef enum { INTERNAL = 98, LEAF = 99 } nodetype_t;
 typedef enum { LEFT = false, RIGHT = true } tree_dir_t;
 
@@ -41,10 +39,10 @@ typedef struct {
 /******************************************************************************
  * PUBLIC LIBRARY API
  *****************************************************************************/
-EXPORT node_t * create_tree(char * message, int length);
-EXPORT encoding_list_t * create_encodings(node_t * tree);
-EXPORT void free_tree(node_t * tree);
-EXPORT void free_encodings(encoding_list_t * list);
+node_t * create_tree(char * message, int length);
+encoding_list_t * create_encodings(node_t * tree);
+void free_tree(node_t * tree);
+void free_encodings(encoding_list_t * list);
 
 /******************************************************************************
  * SUPPORT FUNCTIONS
