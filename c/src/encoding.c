@@ -70,29 +70,29 @@ void make_encodings_helper_recursive(node_t * node, encoding_list_t * list, bool
 		} else {
 
 			/* find the last element in the list */
-			encoding_t * next = list->head;
-			while (next->next != NULL) {
-				next = next->next;
+			encoding_t * previous = list->head;
+			while (previous->next != NULL) {
+				previous = previous->next;
 			}
 
 			/* expect `next` is null here */
-			if (next->next != NULL) {
+			if (previous->next != NULL) {
 				printf("ERROR: %d: miscount to end of list", ERROR_MISCOUNT);
 				exit(ERROR_MISCOUNT);
 			}
 
 			/* allocate memory for the next new element */
-			next->next = malloc(sizeof(encoding_t));
-			if (next->next == NULL) {
+			previous->next = malloc(sizeof(encoding_t));
+			if (previous->next == NULL) {
 				printf("ERROR: %d: can't allocate memory for encoding_t->next", ERROR_MALLOC_ENCODING_NEXT);
 				exit(ERROR_MALLOC_ENCODING_NEXT);
 			}
 
 			/* zero out pointer, for gcc */
-			next->next->next = NULL;
+			previous->next->next = NULL;
 
 			/* populate the next element */
-			populate_encoding(next->next, node, bits, index_bits+1);
+			populate_encoding(previous->next, node, bits, index_bits+1);
 		}
 	}
 
