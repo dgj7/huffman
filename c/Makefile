@@ -2,13 +2,17 @@
 CC = gcc
 CFLAGS = -Wall -g -pedantic
 
-# build vars
+# vars: source
 LIBSRCDIR:=src
 LIBSRC   :=$(shell find src -name "*.c")
-LIBOBJS  :=$(patsubst %.c,target/%.o,$(notdir $(LIBSRC)))
 TESTSRC  :=$(LIBSRC) $(shell find test -name "*.c")
 DEMOSRC  :=$(shell find examples -name "*.c")
+
+# vars: intermediary
 DEMONAMES:=$(notdir $(basename $(DEMOSRC)))
+
+# vars: build
+LIBOBJS  :=$(patsubst %.c,target/%.o,$(notdir $(LIBSRC)))
 DEMOPROGS:=$(patsubst %,target/%.exe,$(DEMONAMES))
 BUILDDIR :=target
 LIBNAME  :=huffman
@@ -55,14 +59,14 @@ clean:
 
 # print task to debug
 print:
-	@echo BUILDDIR:  $(BUILDDIR)
 	@echo LIBSRCDIR: $(LIBSRCDIR)
-	@echo LIBNAME:   $(LIBNAME)
-	@echo LIBRARY:   $(LIBRARY)
 	@echo LIBSRC:    $(LIBSRC)
-	@echo LIBOBJS:   $(LIBOBJS)
+	@echo TESTSRC:   $(TESTSRC)
 	@echo DEMOSRC:   $(DEMOSRC)
 	@echo DEMONAMES: $(DEMONAMES)
+	@echo LIBOBJS:   $(LIBOBJS)
 	@echo DEMOPROGS: $(DEMOPROGS)
+	@echo BUILDDIR:  $(BUILDDIR)
+	@echo LIBNAME:   $(LIBNAME)
+	@echo LIBRARY:   $(LIBRARY)
 	@echo TEST:      $(TEST)
-	@echo TESTSRC:   $(TESTSRC)
