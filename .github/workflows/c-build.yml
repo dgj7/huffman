@@ -13,9 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Build-Lib
-      run: cmake . && make clean && make config=release
-      working-directory: ./c
-    - name: Build-Main
-      run: (cd src ; gcc -o ../bin/huffman main.c -L../bin -l:libhuffman.a)
+    - name: Clean-Test-Build
+      run: make clean test build
       working-directory: ./c

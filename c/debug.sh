@@ -12,8 +12,8 @@
 # more info: https://web.eecs.umich.edu/~sugih/pointers/gdbQS.html
 ###############################################################################
 
-if [ ! -f bin/huffman ]; then
+if [ ! -f target/ex1.exe ]; then
     ./build.sh
 fi
 
-gdb -ex 'break encode' --args bin/huffman -i "this is a sample input string. its text is being used to test the huffman coding tree."
+gdb -ex 'break encode' --args target/ex1.exe -i "this is a sample input string. its text is being used to test the huffman coding tree."
