@@ -19,14 +19,23 @@ const int COMPARE_LESS = -1;
 const int COMPARE_EQUAL = 0;
 const int COMPARE_GREATER = 1;
 
-node_t * to_tree(frequency_t * frequency) {
+static node_t * to_list(frequency_pair_t * pairs, long length);
+static node_t * copy_node(node_t * source);
+static node_t * merge_nodes(node_t * left, node_t * right);
+static void bubble_sort(node_t * list, long length);
+static int compare(const void *_left, const void *_right);
+//static void debug_print_tree(node_t * root, char * prefix, int level);
+
+node_t * to_tree(frequency_t * frequency)
+{
 	/* create an initial list of nodes, and sort it */
 	node_t * list = to_list(frequency->pairs, frequency->count);
 	long list_size = frequency->count;
 	bubble_sort(list, list_size);
 
 	/* shrink the list until it has only one element remaining */
-	while (list_size > 1) {
+	while (list_size > 1)
+	{
 		/* merge the first and second elements of the list */
 		node_t * left = &list[0];
 		node_t * right = &list[1];
@@ -34,13 +43,15 @@ node_t * to_tree(frequency_t * frequency) {
 
 		/* update the list with one fewer elements */
 		node_t * temp_list = malloc((list_size - 1) * sizeof(node_t));
-		if (temp_list == NULL) {
+		if (temp_list == NULL)
+		{
 			printf("ERROR: %d: can't allocate memory for list resize", ERROR_MALLOC_LIST_RESIZE);
 			exit(ERROR_MALLOC_LIST_RESIZE);
 		}
 
 		/* swap lists */
-		for (int c = 0; c < list_size -2; c++) {
+		for (int c = 0; c < list_size -2; c++)
+		{
 			temp_list[c] = list[c+2];
 		}
 		free(list);
@@ -70,14 +81,17 @@ node_t * to_tree(frequency_t * frequency) {
 	return &list[0];
 }
 
-node_t * to_list(frequency_pair_t * pairs, long length) {
+static node_t * to_list(frequency_pair_t * pairs, long length)
+{
 	node_t * list = malloc(length * sizeof(node_t));
-	if (list == NULL) {
+	if (list == NULL)
+	{
 		printf("ERROR: %d: can't allocate memory for list", ERROR_MALLOC_LIST_CREATE);
 		exit(ERROR_MALLOC_LIST_CREATE);
 	}
 
-	for (int c = 0; c < length; c++) {
+	for (int c = 0; c < length; c++)
+	{
 		frequency_pair_t * pair = &pairs[c];
 		node_t node = (node_t) { .frequency = pair->frequency, .symbol = pair->symbol, .nt = LEAF, .tree_size = 1 };
 		list[c] = node;
@@ -87,16 +101,19 @@ node_t * to_list(frequency_pair_t * pairs, long length) {
 	return list;
 }
 
-node_t * merge_nodes(node_t * left, node_t * right) {
+static node_t * merge_nodes(node_t * left, node_t * right)
+{
 	/* check for invalid states */
-	if (left == NULL || right == NULL) {
+	if (left == NULL || right == NULL)
+	{
 		printf("ERROR: %d: invalid node state: NULL", ERROR_INVALID_NODE_STATE);
 		exit(ERROR_INVALID_NODE_STATE);
 	}
 
 	/* allocate memory for the newly merged node */
 	node_t * parent = malloc(sizeof(node_t));
-	if (parent == NULL) {
+	if (parent == NULL)
+	{
 		printf("ERROR: %d: can't allocate memory for node_t", ERROR_MALLOC_NODE_T);
 		exit(ERROR_MALLOC_NODE_T);
 	}
@@ -113,15 +130,18 @@ node_t * merge_nodes(node_t * left, node_t * right) {
 	return parent;
 }
 
-node_t * copy_node(node_t * source) {
+static node_t * copy_node(node_t * source)
+{
 	/* no work to do if incoming node is NULL */
-	if (source == NULL) {
+	if (source == NULL)
+	{
 		return NULL;
 	}
 
 	/* allocate memory */
 	node_t * result = malloc(sizeof(node_t));
-	if (result == NULL) {
+	if (result == NULL)
+	{
 		printf("ERROR: %d: can't allocate memory for node_t copy", ERROR_MALLOC_NODE_T_COPY);
 		exit(ERROR_MALLOC_NODE_T_COPY);
 	}
@@ -140,16 +160,20 @@ node_t * copy_node(node_t * source) {
 	return result;
 }
 
-void bubble_sort(node_t * list, long length) {
-	for (int i = 0; i < length - 1; i++) {
-		for (int j = 0; j < length - i - 1; j++) {
+static void bubble_sort(node_t * list, long length)
+{
+	for (int i = 0; i < length - 1; i++)
+	{
+		for (int j = 0; j < length - i - 1; j++)
+		{
 			const int LEFT_IDX = j;
 			const int RIGHT_IDX = j+1;
 			//printf("bubble_sort(): length=[%d], i=[%d], j=[%d], left_idx=[%d], right_idx=[%d]\n", length, i, j, LEFT_IDX, RIGHT_IDX);
 			const node_t left = list[LEFT_IDX];
 			const node_t right = list[RIGHT_IDX];
 
-			if (compare(&left, &right) == COMPARE_GREATER) {
+			if (compare(&left, &right) == COMPARE_GREATER)
+			{
 				//printf("\tbubble_sort(): swapping: left=[%s|%d|%c], right=[%s|%d|%c]\n", left.nt == INTERNAL ? "INTERNAL" : "LEAF", left.frequency, left.symbol, right.nt == INTERNAL ? "INTERNAL" : "LEAF", right.frequency, right.symbol);
 				list[LEFT_IDX] = right;
 				list[RIGHT_IDX] = left;
@@ -174,7 +198,8 @@ void bubble_sort(node_t * list, long length) {
  * see also: https://www.gnu.org/software/libc/manual/html_node/Comparison-Functions.html
  * see also: https://github.com/dgj7/huffman/blob/main/.docs/algorithm.md
  */
-int compare(const void *_left, const void *_right) {
+static int compare(const void *_left, const void *_right)
+{
 	const node_t left = *((node_t *) _left);
 	const node_t right = *((node_t *) _right);
 
@@ -182,21 +207,28 @@ int compare(const void *_left, const void *_right) {
 	int compare_symbol = (left.symbol == right.symbol ? COMPARE_EQUAL : (left.symbol < right.symbol ? COMPARE_LESS : COMPARE_GREATER));
 	bool both_leaves = left.nt == LEAF && right.nt == LEAF;
 
-	if (compare_freq == COMPARE_EQUAL) {
-		if (both_leaves) {
+	if (compare_freq == COMPARE_EQUAL)
+	{
+		if (both_leaves)
+		{
 			return compare_symbol;
-		} else {
+		}
+		else
+		{
 			int left_size = tree_size((node_t *)_left);
 			int right_size = tree_size((node_t *)_right);
 
 			return left_size == right_size ? COMPARE_EQUAL : (left_size < right_size ? COMPARE_LESS : COMPARE_GREATER);
 		}
-	} else {
+	}
+	else
+	{
 		return compare_freq;
 	}
 }
 
-int tree_size(node_t * root) {
+int tree_size(node_t * root)
+{
 	int left_size = root->left == NULL ? 0 : tree_size(root->left);
 	int right_size = root->right == NULL ? 0 : tree_size(root->right);
 	return left_size + right_size + 1;
@@ -219,14 +251,22 @@ int leaf_count(node_t * root)
 	return left + right;
 }
 
-void debug_print_tree(node_t * root, char * prefix, int level) {
-	if (root == NULL) {
+/*
+static void debug_print_tree(node_t * root, char * prefix, int level)
+{
+	if (root == NULL)
+	{
 		printf("%sROOT NULL", prefix);
-	} else if (root->nt == INTERNAL) {
+	} 
+	else if (root->nt == INTERNAL)
+	{
 		printf("%s[LVL=%d][SZ=%d] INTERNAL: frequency=[%lu]\n", prefix, level, root->tree_size, root->frequency);
 		debug_print_tree(root->left, prefix, level + 1);
 		debug_print_tree(root->right, prefix, level + 1);
-	} else {
+	}
+	else
+	{
 		printf("%s[LVL=%d][SZ=%d] LEAF: frequency=[%lu], symbol=[%c]\n", prefix, level, root->tree_size, root->frequency, root->symbol);
 	}
 }
+*/

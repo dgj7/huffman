@@ -1,11 +1,12 @@
-#ifndef __HUFFMAN__DG__H__
-#define __HUFFMAN__DG__H__
+#ifndef HUFFMAN__DG__H__
+#define HUFFMAN__DG__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
 #include <stdbool.h> // bool
+
 
 typedef enum { INTERNAL = 98, LEAF = 99 } nodetype_t;
 typedef enum { LEFT = false, RIGHT = true } tree_dir_t;
@@ -36,18 +37,10 @@ typedef struct {
 	encoding_t * head;
 } encoding_list_t;
 
-/******************************************************************************
- * PUBLIC LIBRARY API
- *****************************************************************************/
 node_t * create_tree(char * message, int length);
 encoding_list_t * create_encodings(node_t * tree);
 void free_tree(node_t * tree);
 void free_encodings(encoding_list_t * list);
-
-/******************************************************************************
- * SUPPORT FUNCTIONS
- *****************************************************************************/
-void free_encoding(encoding_t * encoding);
 
 
 #ifdef __cplusplus

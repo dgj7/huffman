@@ -1,5 +1,6 @@
-#ifndef __FREQUENCY__DG__H__
-#define __FREQUENCY__DG__H__
+#ifndef FREQUENCY__DG__H__
+#define FREQUENCY__DG__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -15,19 +16,11 @@ typedef struct {
 	frequency_pair_t *pairs;
 } frequency_t;
 
-/******************************************************************************
- * INTERNAL API
- *****************************************************************************/
-frequency_t * count_frequencies(char *message, size_t length);// todo: this method should return a pointer (dynamically allocated)
-
-/******************************************************************************
- * SUPPORT FUNCTIONS
- *****************************************************************************/
-size_t unique_characters(char *message, size_t length);
-int find_matching_index(frequency_pair_t * frequencies, size_t length, char symbol);
+frequency_t * count_frequencies(char *message, size_t length);
 
 
 #ifdef __cplusplus
 }
 #endif
+
 #endif

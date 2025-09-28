@@ -1,29 +1,20 @@
-#ifndef __TREE__DG__H__
-#define __TREE__DG__H__
+#ifndef TREE__DG__H__
+#define TREE__DG__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-/******************************************************************************
- * INTERNAL API
- *****************************************************************************/
 node_t * to_tree(frequency_t * frequency);
 
-/******************************************************************************
- * SUPPORT FUNCTIONS
- *****************************************************************************/
-node_t * to_list(frequency_pair_t * pairs, long length);
-node_t * copy_node(node_t * source);
-node_t * merge_nodes(node_t * left, node_t * right);
-void bubble_sort(node_t * list, long length);
-int compare(const void *_left, const void *_right);
+/* functions exposed for unit tests */
 int tree_size(node_t * root);
-void debug_print_tree(node_t * root, char * prefix, int level);
 int leaf_count(node_t * root);
 
 
 #ifdef __cplusplus
 }
 #endif
+
 #endif
