@@ -25,6 +25,9 @@ encoding_list_t * make_encodings_helper(node_t * tree, int length) {
 		exit(ERROR_MALLOC_ENCODING_LIST);
 	}
 
+	/* zero out pointer, for gcc */
+	list->head = NULL;
+
 	/* create temporary, copyable array of bits to pass */
 	bool bits[256];
 
@@ -59,9 +62,13 @@ void make_encodings_helper_recursive(node_t * node, encoding_list_t * list, bool
 				exit(ERROR_MALLOC_ENCODING_ROOT);
 			}
 
+			/* zero out pointer, for gcc */
+			list->head->next = NULL;
+
 			/* populate the root element */
 			populate_encoding(list->head, node, bits, index_bits+1);
 		} else {
+
 			/* find the last element in the list */
 			encoding_t * next = list->head;
 			while (next->next != NULL) {
@@ -80,6 +87,9 @@ void make_encodings_helper_recursive(node_t * node, encoding_list_t * list, bool
 				printf("ERROR: %d: can't allocate memory for encoding_t->next", ERROR_MALLOC_ENCODING_NEXT);
 				exit(ERROR_MALLOC_ENCODING_NEXT);
 			}
+
+			/* zero out pointer, for gcc */
+			next->next->next = NULL;
 
 			/* populate the next element */
 			populate_encoding(next->next, node, bits, index_bits+1);
