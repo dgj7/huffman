@@ -26,11 +26,10 @@ struct encoded_message_t {
 	int length;
 };
 
-struct encoded_message_t * encode(char * message, struct encoding_list_t * list);
-char * printable_encoded_message(struct encoded_message_t * em);
-char * decode(struct encoded_message_t * encoded, struct node_t * tree, int msg_len);
-
-struct encoding_t * find_encoding_by_symbol(struct encoding_list_t * list, char symbol_key);
+static struct encoded_message_t * encode(char * message, struct encoding_list_t * list);
+static char * printable_encoded_message(struct encoded_message_t * em);
+static char * decode(struct encoded_message_t * encoded, struct node_t * tree, int msg_len);
+static struct encoding_t * find_encoding_by_symbol(struct encoding_list_t * list, char symbol_key);
 
 int main(int argc, char **argv) {
 	clock_t start = clock();
@@ -82,7 +81,7 @@ int main(int argc, char **argv) {
 	return 0;
 }
 
-struct encoded_message_t * encode(char * message, struct encoding_list_t * list) {
+static struct encoded_message_t * encode(char * message, struct encoding_list_t * list) {
 	/* determine the length of the outgoing encoded bit array */
 	int out_len = 0;
 	for (int msg_idx = 0; msg_idx < strlen(message); msg_idx++) {
@@ -123,7 +122,7 @@ struct encoded_message_t * encode(char * message, struct encoding_list_t * list)
 	return em;
 }
 
-char * printable_encoded_message(struct encoded_message_t * em) {
+static char * printable_encoded_message(struct encoded_message_t * em) {
 	/* allocate memory for output string */
 	char * output = malloc(em->length * sizeof(char));
 	if (output == NULL) {
@@ -140,7 +139,7 @@ char * printable_encoded_message(struct encoded_message_t * em) {
 	return output;
 }
 
-char * decode(struct encoded_message_t * encoded, struct node_t * tree, int msg_len) {
+static char * decode(struct encoded_message_t * encoded, struct node_t * tree, int msg_len) {
 	/* store current output string index */
 	int out_str_idx = 0;
 
@@ -184,7 +183,7 @@ char * decode(struct encoded_message_t * encoded, struct node_t * tree, int msg_
 	return output;
 }
 
-struct encoding_t * find_encoding_by_symbol(struct encoding_list_t * list, char symbol_key) {
+static struct encoding_t * find_encoding_by_symbol(struct encoding_list_t * list, char symbol_key) {
 	/* loop over to find match */
 	struct encoding_t * encoding = list->head;
 	while (encoding->next != NULL) {
