@@ -8,9 +8,8 @@ extern "C" {
 
 node_t * to_tree(frequency_t * frequency);
 
-/* functions exposed for unit tests */
-int tree_size(node_t * root);
-int leaf_count(node_t * root);
+int tree_size(node_t * root);       // exposed for unit tests
+int leaf_count(node_t * root);      // exposed for unit tests
 
 
 #ifdef __cplusplus

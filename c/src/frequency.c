@@ -1,5 +1,5 @@
-#include <stdlib.h> // malloc(), exit()
-#include <stdio.h> // printf()
+#include <stdlib.h>		// malloc(), exit()
+#include <stdio.h>		// printf()
 
 #include "frequency.h"
 #include "huffman.h"
@@ -48,13 +48,6 @@ frequency_t * count_frequencies(char *message, size_t length)
 
 	/* update structure */
 	wrapper->count = used;
-
-	/* debug only */
-	//printf("frequency_t.count=[%d]\n", wrapper.count);
-	//for (int d = 0; d < used; d++)
-	//{
-	//	printf("\tfrequency_t[%d]: .symbol=[%c], .frequency=[%d]\n", d, wrapper.pairs[d].symbol, wrapper.pairs[d].frequency);
-	//}
 
 	/* done */
 	return wrapper;

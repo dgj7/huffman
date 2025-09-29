@@ -1,6 +1,6 @@
-#include <stdbool.h> // bool
-#include <stdio.h> // printf()
-#include <stdlib.h> // malloc(), exit()
+#include <stdbool.h>	// bool
+#include <stdio.h>		// printf()
+#include <stdlib.h>		// malloc(), exit()
 
 #include "huffman.h"
 #include "encoding.h"
@@ -14,7 +14,6 @@ const int ERROR_MALLOC_ENCODING_LIST = 405;
 
 static void make_encodings_helper_recursive(node_t * node, encoding_list_t * list, bool bits[], bool next, short index);
 static void populate_encoding(encoding_t * encoding, node_t * node, bool bits[], int length);
-//static void debug_print_encodings(encoding_t * encodings);
 
 encoding_list_t * make_encodings_helper(node_t * tree, int length)
 {
@@ -41,9 +40,6 @@ encoding_list_t * make_encodings_helper(node_t * tree, int length)
 	/* call for both child nodes */
 	make_encodings_helper_recursive(tree->left, list, bits, LEFT, 0);
 	make_encodings_helper_recursive(tree->right, list, bits, RIGHT, 0);
-
-	/* debug only */
-	//debug_print_encodings(list->head);
 
 	/* done */
 	return list;
@@ -145,20 +141,3 @@ static void populate_encoding(encoding_t * encoding, node_t * node, bool bits[],
 		encoding->bitvec->bits[c] = bits[c];
 	}
 }
-
-/*
-static void debug_print_encodings(encoding_t * encodings)
-{
-	if (encodings != NULL)
-	{
-		printf("[%c]->[", encodings->symbol);
-		for (int c = 0; c < encodings->bitvec->length; c++)
-		{
-			char bit = encodings->bitvec->bits[c] ? '1' : '0';
-			printf("%c", bit);
-		}
-		printf("]\n");
-		debug_print_encodings(encodings->next);
-	}
-}
-*/
