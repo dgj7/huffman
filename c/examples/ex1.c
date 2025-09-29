@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
 
 				/* create huffman-related data structures */
 				node_t * tree = create_tree(message, length);
-				encoding_list_t * encodings = create_encodings(tree);
+				encoding_list_t * encodings = extract_encodings(tree);
 
 				/* do transformations with the huffman data */
 				encoded_message_t * encoded = encode(message, encodings);

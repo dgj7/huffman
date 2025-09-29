@@ -38,7 +38,7 @@ typedef struct {
 } encoding_list_t;
 
 node_t * create_tree(char * message, int length);
-encoding_list_t * create_encodings(node_t * tree);
+encoding_list_t * extract_encodings(node_t * tree);
 void free_tree(node_t * tree);
 void free_encodings(encoding_list_t * list);
 
@@ -46,4 +46,5 @@ void free_encodings(encoding_list_t * list);
 #ifdef __cplusplus
 }
 #endif
+
 #endif
