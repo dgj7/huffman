@@ -119,9 +119,6 @@ struct encoded_message_t * encode(char * message, struct encoding_list_t * list)
 		}
 	}
 
-	/* debug only */
-	//printf("out_len=[%d], sizeof(bool)=[%d], out_len * sizeof(bool)=[%d]\n", out_len, sizeof(bool), out_len * sizeof(bool));
-
 	/* todo */
 	return em;
 }
