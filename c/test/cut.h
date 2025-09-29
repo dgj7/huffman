@@ -11,41 +11,41 @@ extern "C" {
 /**
  * A single run of a single test.
  */
-typedef struct {
+struct cut_run_t {
     char * name;
     int total_successful;
     int total_failed;
-} cut_run_t;
+};
 
 /**
  * Definition of a test, with the test function to be called.
  */
-typedef struct {
+struct cut_test_t {
     char * name;
-    void (*test)(cut_run_t *);
-} cut_test_t;
+    void (*test)(struct cut_run_t *);
+};
 
 /**
  * Configuration of cut test summary print.
  */
-typedef struct {
+struct cut_config_t {
     bool print_summary;
-} cut_config_t;
+};
 
 /**
  * Register a unit test function to be run by cut.
  */
-void register_test(void (*f)(cut_run_t *), char * name);
+const void register_test(const void (*f)(struct cut_run_t *), const char * name);
 
 /**
  * Run all unit tests registered with cut.
  */
-int run_tests(cut_config_t * config);
+const int run_tests(const struct cut_config_t * config);
 
 /**
  * Assert a state within a unit test registered with cut.
  */
-void assert_true(bool assertion, cut_run_t * run);
+const void assert_true(const bool assertion, struct cut_run_t * run);
 
 /* end: interpret as c */
 #ifdef __cplusplus

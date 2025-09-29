@@ -5,7 +5,7 @@
 
 int main() {
     /* configure cut */
-    cut_config_t config = {.print_summary = true};
+    struct cut_config_t config = {.print_summary = true};
 
     /* register tests */
     register_test(short_string, "short_string");

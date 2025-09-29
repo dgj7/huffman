@@ -7,7 +7,7 @@
 #include "huffman.h"
 #include "tree.h"
 
-void short_string(cut_run_t * run)
+void short_string(struct cut_run_t * run)
 {
     struct node_t * tree = create_tree("f", 1);
 

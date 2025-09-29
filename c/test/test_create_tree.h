@@ -3,6 +3,6 @@
 
 #include "cut.h"
 
-void short_string(cut_run_t * run);
+void short_string(struct cut_run_t * run);
 
 #endif
