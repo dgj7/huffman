@@ -5,12 +5,12 @@
 #include "huffman.h"
 #include "encoding.h"
 
-const int ERROR_MALLOC_BITVEC = 400;
-const int ERROR_MALLOC_BIT_ARRAY = 401;
-const int ERROR_MALLOC_ENCODING_ROOT = 402;
-const int ERROR_MISCOUNT = 403;
-const int ERROR_MALLOC_ENCODING_NEXT = 404;
-const int ERROR_MALLOC_ENCODING_LIST = 405;
+static const int ERROR_MALLOC_BITVEC = 400;
+static const int ERROR_MALLOC_BIT_ARRAY = 401;
+static const int ERROR_MALLOC_ENCODING_ROOT = 402;
+static const int ERROR_MISCOUNT = 403;
+static const int ERROR_MALLOC_ENCODING_NEXT = 404;
+static const int ERROR_MALLOC_ENCODING_LIST = 405;
 
 static void make_encodings_helper_recursive(node_t * node, encoding_list_t * list, bool bits[], bool next, short index);
 static void populate_encoding(encoding_t * encoding, node_t * node, bool bits[], int length);

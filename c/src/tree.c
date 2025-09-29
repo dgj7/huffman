@@ -8,16 +8,15 @@
 #include "frequency.h"
 #include "tree.h"
 
-const int ERROR_MALLOC_HUFFMAN_T = 300;
-const int ERROR_MALLOC_LIST_CREATE = 301;
-const int ERROR_MALLOC_LIST_RESIZE = 302;
-const int ERROR_MALLOC_NODE_T = 303;
-const int ERROR_MALLOC_NODE_T_COPY = 304;
-const int ERROR_INVALID_NODE_STATE = 305;
+static const int ERROR_MALLOC_LIST_CREATE = 300;
+static const int ERROR_MALLOC_LIST_RESIZE = 301;
+static const int ERROR_MALLOC_NODE_T = 302;
+static const int ERROR_MALLOC_NODE_T_COPY = 303;
+static const int ERROR_INVALID_NODE_STATE = 304;
 
-const int COMPARE_LESS = -1;
-const int COMPARE_EQUAL = 0;
-const int COMPARE_GREATER = 1;
+static const int COMPARE_LESS = -1;
+static const int COMPARE_EQUAL = 0;
+static const int COMPARE_GREATER = 1;
 
 static node_t * to_list(frequency_pair_t * pairs, long length);
 static node_t * copy_node(node_t * source);

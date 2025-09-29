@@ -4,8 +4,8 @@
 #include "frequency.h"
 #include "huffman.h"
 
-const int ERROR_MALLOC_FREQUENCY = 200;
-const int ERROR_MALLOC_FREQUENCIES = 201;
+static const int ERROR_MALLOC_FREQUENCY = 200;
+static const int ERROR_MALLOC_FREQUENCIES = 201;
 
 static size_t unique_characters(char *message, size_t length);
 static int find_matching_index(frequency_pair_t * frequencies, size_t length, char symbol);
