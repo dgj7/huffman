@@ -6,17 +6,17 @@ extern "C" {
 #endif
 
 
-typedef struct {
+struct frequency_pair_t {
 	long frequency;
 	char symbol;
-} frequency_pair_t;
+};
 
-typedef struct {
+struct frequency_t {
 	long count;
-	frequency_pair_t *pairs;
-} frequency_t;
+	struct frequency_pair_t *pairs;
+};
 
-frequency_t * count_frequencies(char *message, size_t length);
+struct frequency_t * count_frequencies(char *message, size_t length);
 
 
 #ifdef __cplusplus

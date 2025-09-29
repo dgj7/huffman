@@ -8,12 +8,12 @@ static const int ERROR_MALLOC_FREQUENCY = 200;
 static const int ERROR_MALLOC_FREQUENCIES = 201;
 
 static size_t unique_characters(char *message, size_t length);
-static int find_matching_index(frequency_pair_t * frequencies, size_t length, char symbol);
+static int find_matching_index(struct frequency_pair_t * frequencies, size_t length, char symbol);
 
-frequency_t * count_frequencies(char *message, size_t length)
+struct frequency_t * count_frequencies(char *message, size_t length)
 {
 	/* initialize frequency; panic if we can't get memory */
-	frequency_t * wrapper = malloc(sizeof(frequency_t));
+	struct frequency_t * wrapper = malloc(sizeof(struct frequency_t));
 	if (wrapper == NULL)
 	{
 		printf("ERROR: %d: can't allocate memory for frequency_t", ERROR_MALLOC_FREQUENCY);
@@ -22,7 +22,7 @@ frequency_t * count_frequencies(char *message, size_t length)
 
 	/* initialize the frequency array; panic if we can't get memory */
 	size_t uniques = unique_characters(message, length);
-	wrapper->pairs = malloc(uniques * sizeof(frequency_pair_t));
+	wrapper->pairs = malloc(uniques * sizeof(struct frequency_pair_t));
 	int used = 0;
 	if (wrapper->pairs == NULL)
 	{
@@ -41,7 +41,7 @@ frequency_t * count_frequencies(char *message, size_t length)
 		}
 		else
 		{
-			wrapper->pairs[used] = (frequency_pair_t) { .symbol = symbol, .frequency = 1 };
+			wrapper->pairs[used] = (struct frequency_pair_t) { .symbol = symbol, .frequency = 1 };
 			used++;
 		}
 	}
@@ -82,7 +82,7 @@ static size_t unique_characters(char *message, size_t length)
 	return 0;
 }
 
-static int find_matching_index(frequency_pair_t *frequencies, size_t length, char symbol)
+static int find_matching_index(struct frequency_pair_t *frequencies, size_t length, char symbol)
 {
 	for (int c = 0; c < length; c++)
 	{

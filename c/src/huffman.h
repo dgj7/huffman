@@ -8,39 +8,37 @@ extern "C" {
 #include <stdbool.h> // bool
 
 
-typedef enum { INTERNAL = 98, LEAF = 99 } nodetype_t;
-typedef enum { LEFT = false, RIGHT = true } tree_dir_t;
+enum nodetype_t { INTERNAL = 98, LEAF = 99 };
+enum tree_dir_t { LEFT = false, RIGHT = true };
 
-typedef struct _node_t node_t;
-typedef struct _node_t {
+struct node_t {
 	long frequency;
 	char symbol;
-	nodetype_t nt;
-	node_t *left;
-	node_t *right;
+	enum nodetype_t nt;
+	struct node_t *left;
+	struct node_t *right;
 	short tree_size;
-} node_t;
+};
 
-typedef struct {
+struct bitvec_t {
 	short length;
 	bool * bits;
-} bitvec_t;
+};
 
-typedef struct _encoding_t encoding_t;
-typedef struct _encoding_t {
-	bitvec_t * bitvec;
+struct encoding_t {
+	struct bitvec_t * bitvec;
 	char symbol;
-	encoding_t * next;
-} encoding_t;
+	struct encoding_t * next;
+};
 
-typedef struct {
-	encoding_t * head;
-} encoding_list_t;
+struct encoding_list_t {
+	struct encoding_t * head;
+};
 
-node_t * create_tree(char * message, int length);
-encoding_list_t * extract_encodings(node_t * tree);
-void free_tree(node_t * tree);
-void free_encodings(encoding_list_t * list);
+struct node_t * create_tree(char * message, int length);
+struct encoding_list_t * extract_encodings(struct node_t * tree);
+void free_tree(struct node_t * tree);
+void free_encodings(struct encoding_list_t * list);
 
 
 #ifdef __cplusplus

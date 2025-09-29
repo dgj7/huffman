@@ -6,10 +6,10 @@ extern "C" {
 #endif
 
 
-node_t * to_tree(frequency_t * frequency);
+struct node_t * to_tree(struct frequency_t * frequency);
 
-int tree_size(node_t * root);       // exposed for unit tests
-int leaf_count(node_t * root);      // exposed for unit tests
+int tree_size(struct node_t * root);       // exposed for unit tests
+int leaf_count(struct node_t * root);      // exposed for unit tests
 
 
 #ifdef __cplusplus

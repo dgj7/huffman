@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 
-encoding_list_t * make_encodings_helper(node_t * tree, int length);
+struct encoding_list_t * make_encodings_helper(struct node_t * tree, int length);
 
 
 #ifdef __cplusplus

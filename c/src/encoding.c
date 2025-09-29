@@ -12,10 +12,10 @@ static const int ERROR_MISCOUNT = 403;
 static const int ERROR_MALLOC_ENCODING_NEXT = 404;
 static const int ERROR_MALLOC_ENCODING_LIST = 405;
 
-static void make_encodings_helper_recursive(node_t * node, encoding_list_t * list, bool bits[], bool next, short index);
-static void populate_encoding(encoding_t * encoding, node_t * node, bool bits[], int length);
+static void make_encodings_helper_recursive(struct node_t * node, struct encoding_list_t * list, bool bits[], bool next, short index);
+static void populate_encoding(struct encoding_t * encoding, struct node_t * node, bool bits[], int length);
 
-encoding_list_t * make_encodings_helper(node_t * tree, int length)
+struct encoding_list_t * make_encodings_helper(struct node_t * tree, int length)
 {
 	/* handle bad input */
 	if (tree == NULL)
@@ -24,7 +24,7 @@ encoding_list_t * make_encodings_helper(node_t * tree, int length)
 	}
 
 	/* allocate memory */
-	encoding_list_t * list = malloc(sizeof(encoding_list_t));
+	struct encoding_list_t * list = malloc(sizeof(struct encoding_list_t));
 	if (list == NULL)
 	{
 		printf("ERROR: %d: can't allocate memory for encoding_list_t\n", ERROR_MALLOC_ENCODING_LIST);
@@ -45,7 +45,7 @@ encoding_list_t * make_encodings_helper(node_t * tree, int length)
 	return list;
 }
 
-static void make_encodings_helper_recursive(node_t * node, encoding_list_t * list, bool bits[], bool next, short index_bits)
+static void make_encodings_helper_recursive(struct node_t * node, struct encoding_list_t * list, bool bits[], bool next, short index_bits)
 {
 	/* sc if this node is null; this'll happen if the previous call handled a leaf node */
 	if (node == NULL)
@@ -63,7 +63,7 @@ static void make_encodings_helper_recursive(node_t * node, encoding_list_t * lis
 		if (list->head == NULL)
 		{
 			/* allocate memory for root */
-			list->head = malloc(sizeof(encoding_t));
+			list->head = malloc(sizeof(struct encoding_t));
 			if (list->head == NULL)
 			{
 				printf("ERROR: %d: can't allocate memory for encoding_t root\n", ERROR_MALLOC_ENCODING_ROOT);
@@ -79,7 +79,7 @@ static void make_encodings_helper_recursive(node_t * node, encoding_list_t * lis
 		else
 		{
 			/* find the last element in the list */
-			encoding_t * previous = list->head;
+			struct encoding_t * previous = list->head;
 			while (previous->next != NULL)
 			{
 				previous = previous->next;
@@ -93,7 +93,7 @@ static void make_encodings_helper_recursive(node_t * node, encoding_list_t * lis
 			}
 
 			/* allocate memory for the next new element */
-			previous->next = malloc(sizeof(encoding_t));
+			previous->next = malloc(sizeof(struct encoding_t));
 			if (previous->next == NULL)
 			{
 				printf("ERROR: %d: can't allocate memory for encoding_t->next", ERROR_MALLOC_ENCODING_NEXT);
@@ -113,13 +113,13 @@ static void make_encodings_helper_recursive(node_t * node, encoding_list_t * lis
 	make_encodings_helper_recursive(node->right, list, bits, RIGHT, index_bits + 1);
 }
 
-static void populate_encoding(encoding_t * encoding, node_t * node, bool bits[], int length_bits)
+static void populate_encoding(struct encoding_t * encoding, struct node_t * node, bool bits[], int length_bits)
 {
 	/* write the symbol */
 	encoding->symbol = node->symbol;
 
 	/* get memory for the bit vector struct */
-	encoding->bitvec = malloc(sizeof(bitvec_t));
+	encoding->bitvec = malloc(sizeof(struct bitvec_t));
 	if (encoding->bitvec == NULL)
 	{
 		printf("ERROR: %d: can't allocate memory for bitvec_t", ERROR_MALLOC_BITVEC);

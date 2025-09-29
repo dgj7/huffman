@@ -18,16 +18,16 @@ static const int COMPARE_LESS = -1;
 static const int COMPARE_EQUAL = 0;
 static const int COMPARE_GREATER = 1;
 
-static node_t * to_list(frequency_pair_t * pairs, long length);
-static node_t * copy_node(node_t * source);
-static node_t * merge_nodes(node_t * left, node_t * right);
-static void bubble_sort(node_t * list, long length);
+static struct node_t * to_list(struct frequency_pair_t * pairs, long length);
+static struct node_t * copy_node(struct node_t * source);
+static struct node_t * merge_nodes(struct node_t * left, struct node_t * right);
+static void bubble_sort(struct node_t * list, long length);
 static int compare(const void *_left, const void *_right);
 
-node_t * to_tree(frequency_t * frequency)
+struct node_t * to_tree(struct frequency_t * frequency)
 {
 	/* create an initial list of nodes, and sort it */
-	node_t * list = to_list(frequency->pairs, frequency->count);
+	struct node_t * list = to_list(frequency->pairs, frequency->count);
 	long list_size = frequency->count;
 	bubble_sort(list, list_size);
 
@@ -35,12 +35,12 @@ node_t * to_tree(frequency_t * frequency)
 	while (list_size > 1)
 	{
 		/* merge the first and second elements of the list */
-		node_t * left = &list[0];
-		node_t * right = &list[1];
-		node_t * merged = merge_nodes(left, right);
+		struct node_t * left = &list[0];
+		struct node_t * right = &list[1];
+		struct node_t * merged = merge_nodes(left, right);
 
 		/* update the list with one fewer elements */
-		node_t * temp_list = malloc((list_size - 1) * sizeof(node_t));
+		struct node_t * temp_list = malloc((list_size - 1) * sizeof(struct node_t));
 		if (temp_list == NULL)
 		{
 			printf("ERROR: %d: can't allocate memory for list resize", ERROR_MALLOC_LIST_RESIZE);
@@ -68,9 +68,9 @@ node_t * to_tree(frequency_t * frequency)
 	return &list[0];
 }
 
-static node_t * to_list(frequency_pair_t * pairs, long length)
+static struct node_t * to_list(struct frequency_pair_t * pairs, long length)
 {
-	node_t * list = malloc(length * sizeof(node_t));
+	struct node_t * list = malloc(length * sizeof(struct node_t));
 	if (list == NULL)
 	{
 		printf("ERROR: %d: can't allocate memory for list", ERROR_MALLOC_LIST_CREATE);
@@ -79,15 +79,15 @@ static node_t * to_list(frequency_pair_t * pairs, long length)
 
 	for (int c = 0; c < length; c++)
 	{
-		frequency_pair_t * pair = &pairs[c];
-		node_t node = (node_t) { .frequency = pair->frequency, .symbol = pair->symbol, .nt = LEAF, .tree_size = 1 };
+		struct frequency_pair_t * pair = &pairs[c];
+		struct node_t node = (struct node_t) { .frequency = pair->frequency, .symbol = pair->symbol, .nt = LEAF, .tree_size = 1 };
 		list[c] = node;
 	}
 
 	return list;
 }
 
-static node_t * merge_nodes(node_t * left, node_t * right)
+static struct node_t * merge_nodes(struct node_t * left, struct node_t * right)
 {
 	/* check for invalid states */
 	if (left == NULL || right == NULL)
@@ -97,7 +97,7 @@ static node_t * merge_nodes(node_t * left, node_t * right)
 	}
 
 	/* allocate memory for the newly merged node */
-	node_t * parent = malloc(sizeof(node_t));
+	struct node_t * parent = malloc(sizeof(struct node_t));
 	if (parent == NULL)
 	{
 		printf("ERROR: %d: can't allocate memory for node_t", ERROR_MALLOC_NODE_T);
@@ -116,7 +116,7 @@ static node_t * merge_nodes(node_t * left, node_t * right)
 	return parent;
 }
 
-static node_t * copy_node(node_t * source)
+static struct node_t * copy_node(struct node_t * source)
 {
 	/* no work to do if incoming node is NULL */
 	if (source == NULL)
@@ -125,7 +125,7 @@ static node_t * copy_node(node_t * source)
 	}
 
 	/* allocate memory */
-	node_t * result = malloc(sizeof(node_t));
+	struct node_t * result = malloc(sizeof(struct node_t));
 	if (result == NULL)
 	{
 		printf("ERROR: %d: can't allocate memory for node_t copy", ERROR_MALLOC_NODE_T_COPY);
@@ -146,7 +146,7 @@ static node_t * copy_node(node_t * source)
 	return result;
 }
 
-static void bubble_sort(node_t * list, long length)
+static void bubble_sort(struct node_t * list, long length)
 {
 	for (int i = 0; i < length - 1; i++)
 	{
@@ -154,8 +154,8 @@ static void bubble_sort(node_t * list, long length)
 		{
 			const int LEFT_IDX = j;
 			const int RIGHT_IDX = j+1;
-			const node_t left = list[LEFT_IDX];
-			const node_t right = list[RIGHT_IDX];
+			const struct node_t left = list[LEFT_IDX];
+			const struct node_t right = list[RIGHT_IDX];
 
 			if (compare(&left, &right) == COMPARE_GREATER)
 			{
@@ -184,8 +184,8 @@ static void bubble_sort(node_t * list, long length)
  */
 static int compare(const void *_left, const void *_right)
 {
-	const node_t left = *((node_t *) _left);
-	const node_t right = *((node_t *) _right);
+	const struct node_t left = *((struct node_t *) _left);
+	const struct node_t right = *((struct node_t *) _right);
 
 	int compare_freq = (left.frequency == right.frequency ? COMPARE_EQUAL : (left.frequency < right.frequency ? COMPARE_LESS : COMPARE_GREATER));
 	int compare_symbol = (left.symbol == right.symbol ? COMPARE_EQUAL : (left.symbol < right.symbol ? COMPARE_LESS : COMPARE_GREATER));
@@ -199,8 +199,8 @@ static int compare(const void *_left, const void *_right)
 		}
 		else
 		{
-			int left_size = tree_size((node_t *)_left);
-			int right_size = tree_size((node_t *)_right);
+			int left_size = tree_size((struct node_t *)_left);
+			int right_size = tree_size((struct node_t *)_right);
 
 			return left_size == right_size ? COMPARE_EQUAL : (left_size < right_size ? COMPARE_LESS : COMPARE_GREATER);
 		}
@@ -211,14 +211,14 @@ static int compare(const void *_left, const void *_right)
 	}
 }
 
-int tree_size(node_t * root)
+int tree_size(struct node_t * root)
 {
 	int left_size = root->left == NULL ? 0 : tree_size(root->left);
 	int right_size = root->right == NULL ? 0 : tree_size(root->right);
 	return left_size + right_size + 1;
 }
 
-int leaf_count(node_t * root)
+int leaf_count(struct node_t * root)
 {
 	if (root == NULL)
 	{
