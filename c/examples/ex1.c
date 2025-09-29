@@ -6,19 +6,19 @@
 
 #include "huffman.h"		// huffman library
 
-const int IDX_ARG = 1;
-const int IDX_MESSAGE = 2;
+static const int IDX_ARG = 1;
+static const int IDX_MESSAGE = 2;
 
-const int ERROR_READ = 1;
-const int ERROR_UNKNOWN_ARG = 2;
-const int ERROR_UNKNOWN_ARG_COUNT = 3;
-const int ERROR_NO_SYMBOL_MATCH = 4;
-const int ERROR_MALLOC_BITS = 5;
-const int ERROR_MALLOC_ENCODED_MESSAGE_T = 6;
-const int ERROR_MALLOC_PRINTABLE_MESSAGE = 7;
-const int ERROR_MALLOC_DECODED_STRING = 8;
-const int ERROR_INTERNAL_RIGHT_NODE_NULL = 9;
-const int ERROR_INTERNAL_LEFT_NODE_NULL = 10;
+static const int ERROR_READ = 1;
+static const int ERROR_UNKNOWN_ARG = 2;
+static const int ERROR_UNKNOWN_ARG_COUNT = 3;
+static const int ERROR_NO_SYMBOL_MATCH = 4;
+static const int ERROR_MALLOC_BITS = 5;
+static const int ERROR_MALLOC_ENCODED_MESSAGE_T = 6;
+static const int ERROR_MALLOC_PRINTABLE_MESSAGE = 7;
+static const int ERROR_MALLOC_DECODED_STRING = 8;
+static const int ERROR_INTERNAL_RIGHT_NODE_NULL = 9;
+static const int ERROR_INTERNAL_LEFT_NODE_NULL = 10;
 
 
 struct encoded_message_t {
@@ -31,7 +31,11 @@ static char * printable_encoded_message(struct encoded_message_t * em);
 static char * decode(struct encoded_message_t * encoded, struct node_t * tree, int msg_len);
 static struct encoding_t * find_encoding_by_symbol(struct encoding_list_t * list, char symbol_key);
 
-int main(int argc, char **argv) {
+int
+main(
+	int argc
+	,char **argv
+){
 	clock_t start = clock();
 
 	if (argc == 3) {
@@ -81,7 +85,12 @@ int main(int argc, char **argv) {
 	return 0;
 }
 
-static struct encoded_message_t * encode(char * message, struct encoding_list_t * list) {
+static
+struct encoded_message_t *
+encode(
+	char * message
+	,struct encoding_list_t * list
+){
 	/* determine the length of the outgoing encoded bit array */
 	int out_len = 0;
 	for (int msg_idx = 0; msg_idx < strlen(message); msg_idx++) {
@@ -122,7 +131,11 @@ static struct encoded_message_t * encode(char * message, struct encoding_list_t 
 	return em;
 }
 
-static char * printable_encoded_message(struct encoded_message_t * em) {
+static
+char *
+printable_encoded_message(
+	struct encoded_message_t * em
+){
 	/* allocate memory for output string */
 	char * output = malloc(em->length * sizeof(char));
 	if (output == NULL) {
@@ -139,7 +152,13 @@ static char * printable_encoded_message(struct encoded_message_t * em) {
 	return output;
 }
 
-static char * decode(struct encoded_message_t * encoded, struct node_t * tree, int msg_len) {
+static
+char *
+decode(
+	struct encoded_message_t * encoded
+	,struct node_t * tree
+	,int msg_len
+){
 	/* store current output string index */
 	int out_str_idx = 0;
 
@@ -183,7 +202,12 @@ static char * decode(struct encoded_message_t * encoded, struct node_t * tree, i
 	return output;
 }
 
-static struct encoding_t * find_encoding_by_symbol(struct encoding_list_t * list, char symbol_key) {
+static
+struct encoding_t *
+find_encoding_by_symbol(
+	struct encoding_list_t * list
+	,char symbol_key
+){
 	/* loop over to find match */
 	struct encoding_t * encoding = list->head;
 	while (encoding->next != NULL) {

@@ -24,8 +24,10 @@ static struct node_t * merge_nodes(struct node_t * left, struct node_t * right);
 static void bubble_sort(struct node_t * list, long length);
 static int compare(const void *_left, const void *_right);
 
-struct node_t * to_tree(struct frequency_t * frequency)
-{
+struct node_t *
+to_tree(
+	struct frequency_t * frequency
+){
 	/* create an initial list of nodes, and sort it */
 	struct node_t * list = to_list(frequency->pairs, frequency->count);
 	long list_size = frequency->count;
@@ -68,8 +70,12 @@ struct node_t * to_tree(struct frequency_t * frequency)
 	return &list[0];
 }
 
-static struct node_t * to_list(struct frequency_pair_t * pairs, long length)
-{
+static
+struct node_t *
+to_list(
+	struct frequency_pair_t * pairs
+	,long length
+){
 	struct node_t * list = malloc(length * sizeof(struct node_t));
 	if (list == NULL)
 	{
@@ -87,8 +93,12 @@ static struct node_t * to_list(struct frequency_pair_t * pairs, long length)
 	return list;
 }
 
-static struct node_t * merge_nodes(struct node_t * left, struct node_t * right)
-{
+static
+struct node_t *
+merge_nodes(
+	struct node_t * left
+	,struct node_t * right
+){
 	/* check for invalid states */
 	if (left == NULL || right == NULL)
 	{
@@ -116,8 +126,11 @@ static struct node_t * merge_nodes(struct node_t * left, struct node_t * right)
 	return parent;
 }
 
-static struct node_t * copy_node(struct node_t * source)
-{
+static
+struct node_t *
+copy_node(
+	struct node_t * source
+){
 	/* no work to do if incoming node is NULL */
 	if (source == NULL)
 	{
@@ -146,8 +159,12 @@ static struct node_t * copy_node(struct node_t * source)
 	return result;
 }
 
-static void bubble_sort(struct node_t * list, long length)
-{
+static
+void
+bubble_sort(
+	struct node_t * list
+	,long length
+){
 	for (int i = 0; i < length - 1; i++)
 	{
 		for (int j = 0; j < length - i - 1; j++)
@@ -182,8 +199,12 @@ static void bubble_sort(struct node_t * list, long length)
  * see also: https://www.gnu.org/software/libc/manual/html_node/Comparison-Functions.html
  * see also: https://github.com/dgj7/huffman/blob/main/.docs/algorithm.md
  */
-static int compare(const void *_left, const void *_right)
-{
+static
+int
+compare(
+	const void *_left
+	,const void *_right
+){
 	const struct node_t left = *((struct node_t *) _left);
 	const struct node_t right = *((struct node_t *) _right);
 
@@ -211,15 +232,19 @@ static int compare(const void *_left, const void *_right)
 	}
 }
 
-int tree_size(struct node_t * root)
-{
+int
+tree_size(
+	struct node_t * root
+){
 	int left_size = root->left == NULL ? 0 : tree_size(root->left);
 	int right_size = root->right == NULL ? 0 : tree_size(root->right);
 	return left_size + right_size + 1;
 }
 
-int leaf_count(struct node_t * root)
-{
+int
+leaf_count(
+	struct node_t * root
+){
 	if (root == NULL)
 	{
 		return 0;

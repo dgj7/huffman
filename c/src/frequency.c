@@ -10,8 +10,12 @@ static const int ERROR_MALLOC_FREQUENCIES = 201;
 static size_t unique_characters(char *message, size_t length);
 static int find_matching_index(struct frequency_pair_t * frequencies, size_t length, char symbol);
 
-struct frequency_t * count_frequencies(char *message, size_t length)
-{
+struct
+frequency_t *
+count_frequencies(
+	char *message
+	,size_t length
+){
 	/* initialize frequency; panic if we can't get memory */
 	struct frequency_t * wrapper = malloc(sizeof(struct frequency_t));
 	if (wrapper == NULL)
@@ -53,8 +57,12 @@ struct frequency_t * count_frequencies(char *message, size_t length)
 	return wrapper;
 }
 
-static size_t unique_characters(char *message, size_t length)
-{
+static
+size_t
+unique_characters(
+	char *message
+	,size_t length
+){
 	if (message)
 	{
 		size_t count = 0;
@@ -82,8 +90,13 @@ static size_t unique_characters(char *message, size_t length)
 	return 0;
 }
 
-static int find_matching_index(struct frequency_pair_t *frequencies, size_t length, char symbol)
-{
+static
+int
+find_matching_index(
+	struct frequency_pair_t *frequencies
+	,size_t length
+	,char symbol
+){
 	for (int c = 0; c < length; c++)
 	{
 		char potential = frequencies[c].symbol;

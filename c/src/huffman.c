@@ -9,8 +9,11 @@
 
 static void free_encoding(struct encoding_t * encoding);
 
-struct node_t * create_tree(char * message, int length)
-{
+struct node_t *
+create_tree(
+	char * message
+	,int length
+){
 	/* gather frequency data, needed to build tree */
 	struct frequency_t * frequencies = count_frequencies(message, length);
 
@@ -25,12 +28,17 @@ struct node_t * create_tree(char * message, int length)
 	return root;
 }
 
-struct encoding_list_t * extract_encodings(struct node_t * tree)
-{
+struct encoding_list_t *
+extract_encodings(
+	struct node_t * tree
+){
 	return make_encodings_helper(tree, tree->tree_size);
 }
 
-void free_tree(struct node_t * tree)
+void
+free_tree(
+	struct node_t * tree
+)
 {
 	if (tree != NULL) {
 		free_tree(tree->left);
@@ -39,14 +47,19 @@ void free_tree(struct node_t * tree)
 	free(tree);
 }
 
-void free_encodings(struct encoding_list_t * encodings)
-{
+void
+free_encodings(
+	struct encoding_list_t * encodings
+){
 	free_encoding(encodings->head);
 	free(encodings);
 }
 
-static void free_encoding(struct encoding_t * encoding)
-{
+static
+void
+free_encoding(
+	struct encoding_t * encoding
+){
 	if (encoding->next != NULL) {
 		free_encoding(encoding->next);
 	}

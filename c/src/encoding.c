@@ -15,8 +15,11 @@ static const int ERROR_MALLOC_ENCODING_LIST = 405;
 static void make_encodings_helper_recursive(struct node_t * node, struct encoding_list_t * list, bool bits[], bool next, short index);
 static void populate_encoding(struct encoding_t * encoding, struct node_t * node, bool bits[], int length);
 
-struct encoding_list_t * make_encodings_helper(struct node_t * tree, int length)
-{
+struct encoding_list_t *
+make_encodings_helper(
+	struct node_t * tree
+	,int length
+){
 	/* handle bad input */
 	if (tree == NULL)
 	{
@@ -45,8 +48,15 @@ struct encoding_list_t * make_encodings_helper(struct node_t * tree, int length)
 	return list;
 }
 
-static void make_encodings_helper_recursive(struct node_t * node, struct encoding_list_t * list, bool bits[], bool next, short index_bits)
-{
+static
+void
+make_encodings_helper_recursive(
+	struct node_t * node
+	,struct encoding_list_t * list
+	,bool bits[]
+	,bool next
+	,short index_bits
+){
 	/* sc if this node is null; this'll happen if the previous call handled a leaf node */
 	if (node == NULL)
 	{
@@ -113,8 +123,14 @@ static void make_encodings_helper_recursive(struct node_t * node, struct encodin
 	make_encodings_helper_recursive(node->right, list, bits, RIGHT, index_bits + 1);
 }
 
-static void populate_encoding(struct encoding_t * encoding, struct node_t * node, bool bits[], int length_bits)
-{
+static
+void
+populate_encoding(
+	struct encoding_t * encoding
+	,struct node_t * node
+	,bool bits[]
+	,int length_bits
+){
 	/* write the symbol */
 	encoding->symbol = node->symbol;
 
