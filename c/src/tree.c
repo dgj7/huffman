@@ -18,18 +18,18 @@ static const int COMPARE_LESS = -1;
 static const int COMPARE_EQUAL = 0;
 static const int COMPARE_GREATER = 1;
 
-static struct node_t * to_list(struct frequency_pair_t * pairs, long length);
-static struct node_t * copy_node(struct node_t * source);
-static struct node_t * merge_nodes(struct node_t * left, struct node_t * right);
-static void bubble_sort(struct node_t * list, long length);
-static int compare(const void *_left, const void *_right);
+static const struct node_t * const to_list(const struct frequency_pair_t * const pairs, const long length);
+static struct node_t * const copy_node(const struct node_t * const source);
+static const struct node_t * const merge_nodes(const struct node_t * const left, const struct node_t * const right);
+static const void bubble_sort(struct node_t * const list, const long length);
+static const int compare(const void * const _left, const void * const _right);
 
-struct node_t *
+const struct node_t * const
 to_tree(
-	struct frequency_t * frequency
+	const struct frequency_t * const frequency
 ){
 	/* create an initial list of nodes, and sort it */
-	struct node_t * list = to_list(frequency->pairs, frequency->count);
+	struct node_t * list = (struct node_t *) to_list(frequency->pairs, frequency->count);
 	long list_size = frequency->count;
 	bubble_sort(list, list_size);
 
@@ -39,7 +39,7 @@ to_tree(
 		/* merge the first and second elements of the list */
 		struct node_t * left = &list[0];
 		struct node_t * right = &list[1];
-		struct node_t * merged = merge_nodes(left, right);
+		const struct node_t * merged = merge_nodes(left, right);
 
 		/* update the list with one fewer elements */
 		struct node_t * temp_list = malloc((list_size - 1) * sizeof(struct node_t));
@@ -71,10 +71,10 @@ to_tree(
 }
 
 static
-struct node_t *
+const struct node_t * const
 to_list(
-	struct frequency_pair_t * pairs
-	,long length
+	const struct frequency_pair_t * const pairs
+	,const long length
 ){
 	struct node_t * list = malloc(length * sizeof(struct node_t));
 	if (list == NULL)
@@ -85,7 +85,7 @@ to_list(
 
 	for (int c = 0; c < length; c++)
 	{
-		struct frequency_pair_t * pair = &pairs[c];
+		const struct frequency_pair_t * pair = &pairs[c];
 		struct node_t node = (struct node_t) { .frequency = pair->frequency, .symbol = pair->symbol, .nt = LEAF, .tree_size = 1 };
 		list[c] = node;
 	}
@@ -94,10 +94,10 @@ to_list(
 }
 
 static
-struct node_t *
+const struct node_t * const
 merge_nodes(
-	struct node_t * left
-	,struct node_t * right
+	const struct node_t * const left
+	,const struct node_t * const right
 ){
 	/* check for invalid states */
 	if (left == NULL || right == NULL)
@@ -127,9 +127,9 @@ merge_nodes(
 }
 
 static
-struct node_t *
+struct node_t * const
 copy_node(
-	struct node_t * source
+	const struct node_t * const source
 ){
 	/* no work to do if incoming node is NULL */
 	if (source == NULL)
@@ -160,10 +160,10 @@ copy_node(
 }
 
 static
-void
+const void
 bubble_sort(
-	struct node_t * list
-	,long length
+	struct node_t * const list
+	,const long length
 ){
 	for (int i = 0; i < length - 1; i++)
 	{
@@ -200,17 +200,17 @@ bubble_sort(
  * see also: https://github.com/dgj7/huffman/blob/main/.docs/algorithm.md
  */
 static
-int
+const int
 compare(
-	const void *_left
-	,const void *_right
+	const void * const _left
+	,const void * const _right
 ){
 	const struct node_t left = *((struct node_t *) _left);
 	const struct node_t right = *((struct node_t *) _right);
 
-	int compare_freq = (left.frequency == right.frequency ? COMPARE_EQUAL : (left.frequency < right.frequency ? COMPARE_LESS : COMPARE_GREATER));
-	int compare_symbol = (left.symbol == right.symbol ? COMPARE_EQUAL : (left.symbol < right.symbol ? COMPARE_LESS : COMPARE_GREATER));
-	bool both_leaves = left.nt == LEAF && right.nt == LEAF;
+	const int compare_freq = (left.frequency == right.frequency ? COMPARE_EQUAL : (left.frequency < right.frequency ? COMPARE_LESS : COMPARE_GREATER));
+	const int compare_symbol = (left.symbol == right.symbol ? COMPARE_EQUAL : (left.symbol < right.symbol ? COMPARE_LESS : COMPARE_GREATER));
+	const bool both_leaves = left.nt == LEAF && right.nt == LEAF;
 
 	if (compare_freq == COMPARE_EQUAL)
 	{
@@ -220,8 +220,8 @@ compare(
 		}
 		else
 		{
-			int left_size = tree_size((struct node_t *)_left);
-			int right_size = tree_size((struct node_t *)_right);
+			const int left_size = tree_size((struct node_t *)_left);
+			const int right_size = tree_size((struct node_t *)_right);
 
 			return left_size == right_size ? COMPARE_EQUAL : (left_size < right_size ? COMPARE_LESS : COMPARE_GREATER);
 		}
@@ -232,18 +232,18 @@ compare(
 	}
 }
 
-int
+const int
 tree_size(
-	struct node_t * root
+	const struct node_t * const root
 ){
-	int left_size = root->left == NULL ? 0 : tree_size(root->left);
-	int right_size = root->right == NULL ? 0 : tree_size(root->right);
+	const int left_size = root->left == NULL ? 0 : tree_size(root->left);
+	const int right_size = root->right == NULL ? 0 : tree_size(root->right);
 	return left_size + right_size + 1;
 }
 
-int
+const int
 leaf_count(
-	struct node_t * root
+	const struct node_t * const root
 ){
 	if (root == NULL)
 	{
@@ -255,7 +255,7 @@ leaf_count(
 		return 1;
 	}
 
-	int left = leaf_count(root->left);
-	int right = leaf_count(root->right);
+	const int left = leaf_count(root->left);
+	const int right = leaf_count(root->right);
 	return left + right;
 }

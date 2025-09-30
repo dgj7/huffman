@@ -12,13 +12,13 @@ static const int ERROR_MISCOUNT = 403;
 static const int ERROR_MALLOC_ENCODING_NEXT = 404;
 static const int ERROR_MALLOC_ENCODING_LIST = 405;
 
-static void make_encodings_helper_recursive(struct node_t * node, struct encoding_list_t * list, bool bits[], bool next, short index);
-static void populate_encoding(struct encoding_t * encoding, struct node_t * node, bool bits[], int length);
+static const void make_encodings_helper_recursive(const struct node_t * const node, struct encoding_list_t * const list, bool bits[], const bool next, const short index);
+static const void populate_encoding(struct encoding_t * const encoding, const struct node_t * const node, const bool bits[], const int length);
 
-struct encoding_list_t *
+const struct encoding_list_t * const
 make_encodings_helper(
-	struct node_t * tree
-	,int length
+	const struct node_t * const tree
+	,const int length
 ){
 	/* handle bad input */
 	if (tree == NULL)
@@ -27,7 +27,7 @@ make_encodings_helper(
 	}
 
 	/* allocate memory */
-	struct encoding_list_t * list = malloc(sizeof(struct encoding_list_t));
+	struct encoding_list_t * const list = malloc(sizeof(struct encoding_list_t));
 	if (list == NULL)
 	{
 		printf("ERROR: %d: can't allocate memory for encoding_list_t\n", ERROR_MALLOC_ENCODING_LIST);
@@ -49,13 +49,13 @@ make_encodings_helper(
 }
 
 static
-void
+const void
 make_encodings_helper_recursive(
-	struct node_t * node
-	,struct encoding_list_t * list
+	const struct node_t * const node
+	,struct encoding_list_t * const list
 	,bool bits[]
-	,bool next
-	,short index_bits
+	,const bool next
+	,const short index_bits
 ){
 	/* sc if this node is null; this'll happen if the previous call handled a leaf node */
 	if (node == NULL)
@@ -124,12 +124,12 @@ make_encodings_helper_recursive(
 }
 
 static
-void
+const void
 populate_encoding(
-	struct encoding_t * encoding
-	,struct node_t * node
-	,bool bits[]
-	,int length_bits
+	struct encoding_t * const encoding
+	,const struct node_t * const node
+	,const bool bits[]
+	,const int length_bits
 ){
 	/* write the symbol */
 	encoding->symbol = node->symbol;

@@ -16,7 +16,7 @@ struct frequency_t {
 	struct frequency_pair_t *pairs;
 };
 
-struct frequency_t * count_frequencies(char *message, size_t length);
+const struct frequency_t * const count_frequencies(const char * const message, const size_t length);
 
 
 #ifdef __cplusplus

@@ -7,17 +7,16 @@
 static const int ERROR_MALLOC_FREQUENCY = 200;
 static const int ERROR_MALLOC_FREQUENCIES = 201;
 
-static size_t unique_characters(char *message, size_t length);
-static int find_matching_index(struct frequency_pair_t * frequencies, size_t length, char symbol);
+static const size_t unique_characters(const char * const message, const size_t length);
+static const int find_matching_index(const struct frequency_pair_t * const frequencies, const size_t length, const char symbol);
 
-struct
-frequency_t *
+const struct frequency_t * const
 count_frequencies(
-	char *message
-	,size_t length
+	const char * const message
+	,const size_t length
 ){
 	/* initialize frequency; panic if we can't get memory */
-	struct frequency_t * wrapper = malloc(sizeof(struct frequency_t));
+	struct frequency_t * const wrapper = malloc(sizeof(struct frequency_t));
 	if (wrapper == NULL)
 	{
 		printf("ERROR: %d: can't allocate memory for frequency_t", ERROR_MALLOC_FREQUENCY);
@@ -25,7 +24,7 @@ count_frequencies(
 	}
 
 	/* initialize the frequency array; panic if we can't get memory */
-	size_t uniques = unique_characters(message, length);
+	const size_t uniques = unique_characters(message, length);
 	wrapper->pairs = malloc(uniques * sizeof(struct frequency_pair_t));
 	int used = 0;
 	if (wrapper->pairs == NULL)
@@ -37,8 +36,8 @@ count_frequencies(
 	/* count characters */
 	for (int c = 0; c < length; c++)
 	{
-		char symbol = message[c];
-		int index = find_matching_index(wrapper->pairs, used, symbol);
+		const char symbol = message[c];
+		const int index = find_matching_index(wrapper->pairs, used, symbol);
 		if (index >= 0)
 		{
 			wrapper->pairs[index].frequency = wrapper->pairs[index].frequency + 1;
@@ -58,10 +57,10 @@ count_frequencies(
 }
 
 static
-size_t
+const size_t
 unique_characters(
-	char *message
-	,size_t length
+	const char * const message
+	,const size_t length
 ){
 	if (message)
 	{
@@ -71,8 +70,8 @@ unique_characters(
 			short flag = 0;
 			for (size_t j = 0; j < i; j++)
 			{
-				char left = message[i];
-				char right = message[j];
+				const char left = message[i];
+				const char right = message[j];
 				if (left == right)
 				{
 					flag = 1;
@@ -91,15 +90,15 @@ unique_characters(
 }
 
 static
-int
+const int
 find_matching_index(
-	struct frequency_pair_t *frequencies
-	,size_t length
-	,char symbol
+	const struct frequency_pair_t * const frequencies
+	,const size_t length
+	,const char symbol
 ){
 	for (int c = 0; c < length; c++)
 	{
-		char potential = frequencies[c].symbol;
+		const char potential = frequencies[c].symbol;
 		if (potential == symbol)
 		{
 			return c;

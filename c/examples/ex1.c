@@ -26,34 +26,34 @@ struct encoded_message_t {
 	int length;
 };
 
-static struct encoded_message_t * encode(char * message, struct encoding_list_t * list);
-static char * printable_encoded_message(struct encoded_message_t * em);
-static char * decode(struct encoded_message_t * encoded, struct node_t * tree, int msg_len);
-static struct encoding_t * find_encoding_by_symbol(struct encoding_list_t * list, char symbol_key);
+static const struct encoded_message_t * const encode(const char * const message, const struct encoding_list_t * const list);
+static const char * const printable_encoded_message(const struct encoded_message_t * const em);
+static const char * const decode(const struct encoded_message_t * const encoded, const struct node_t * const tree, const int msg_len);
+static const struct encoding_t * const find_encoding_by_symbol(const struct encoding_list_t * const list, const char symbol_key);
 
-int
+const int
 main(
-	int argc
-	,char **argv
+	const int argc
+	,const char ** const argv
 ){
-	clock_t start = clock();
+	const clock_t start = clock();
 
 	if (argc == 3) {
 		if (strcmp(argv[IDX_ARG], "-i") == 0) {
-			size_t length = strlen(argv[IDX_MESSAGE]);
-			char *message = malloc(length);
+			const size_t length = strlen(argv[IDX_MESSAGE]);
+			const char * const message = malloc(length);
 			if (message) {
 				/* copy the message into somewhere it's usable */
-				strcpy(message, argv[IDX_MESSAGE]);
+				strcpy((char*)message, argv[IDX_MESSAGE]);
 
 				/* create huffman-related data structures */
-				struct node_t * tree = create_tree(message, length);
-				struct encoding_list_t * encodings = extract_encodings(tree);
+				const struct node_t * const tree = create_tree(message, length);
+				const struct encoding_list_t * const encodings = extract_encodings(tree);
 
 				/* do transformations with the huffman data */
-				struct encoded_message_t * encoded = encode(message, encodings);
-				char *printable = printable_encoded_message(encoded);
-				char *decoded = decode(encoded, tree, length);
+				const struct encoded_message_t * const encoded = encode(message, encodings);
+				const char * const printable = printable_encoded_message(encoded);
+				const char * const decoded = decode(encoded, tree, length);
 
 				/* print results */
 				printf("input:   [%s]\n", message);
@@ -77,8 +77,8 @@ main(
 	}
 
 	/* declare success, print profiling info */
-	clock_t elapsed = clock() - start;
-	double ms = (((double)elapsed)/CLOCKS_PER_SEC)/1000;
+	const clock_t elapsed = clock() - start;
+	const double ms = (((double)elapsed)/CLOCKS_PER_SEC)/1000;
 	printf("done. (%.0lf ms)\n", ms);
 
 	/* done */
@@ -86,21 +86,21 @@ main(
 }
 
 static
-struct encoded_message_t *
+const struct encoded_message_t * const
 encode(
-	char * message
-	,struct encoding_list_t * list
+	const char * const message
+	,const struct encoding_list_t * const list
 ){
 	/* determine the length of the outgoing encoded bit array */
 	int out_len = 0;
 	for (int msg_idx = 0; msg_idx < strlen(message); msg_idx++) {
-		char symbol_key = message[msg_idx];
-		struct encoding_t * encoding = find_encoding_by_symbol(list, symbol_key);
+		const char symbol_key = message[msg_idx];
+		const struct encoding_t * const encoding = find_encoding_by_symbol(list, symbol_key);
 		out_len = out_len + encoding->bitvec->length;
 	}
 
 	/* allocate memory for encoded message struct */
-	struct encoded_message_t * em = malloc(sizeof(struct encoded_message_t));
+	struct encoded_message_t * const em = malloc(sizeof(struct encoded_message_t));
 	if (em == NULL) {
 		printf("ERROR: %d: can't allocate memory for encoded_message_t", ERROR_MALLOC_ENCODED_MESSAGE_T);
 		exit(ERROR_MALLOC_ENCODED_MESSAGE_T);
@@ -119,8 +119,8 @@ encode(
 	/* find and append the matching bits to the output array */
 	int out_idx = 0;
 	for (int msg_idx = 0; msg_idx < strlen(message); msg_idx++) {
-		char symbol_key = message[msg_idx];
-		struct encoding_t * encoding = find_encoding_by_symbol(list, symbol_key);
+		const char symbol_key = message[msg_idx];
+		const struct encoding_t * const encoding = find_encoding_by_symbol(list, symbol_key);
 		for (int bit_idx = 0; bit_idx < encoding->bitvec->length; bit_idx++) {
 			em->bits[out_idx] = encoding->bitvec->bits[bit_idx] ? true : false;
 			out_idx++;
@@ -132,12 +132,12 @@ encode(
 }
 
 static
-char *
+const char * const
 printable_encoded_message(
-	struct encoded_message_t * em
+	const struct encoded_message_t * const em
 ){
 	/* allocate memory for output string */
-	char * output = malloc(em->length * sizeof(char));
+	char * const output = malloc(em->length * sizeof(char));
 	if (output == NULL) {
 		printf("ERROR: %d: can't allocate memory for printable encoded message", ERROR_MALLOC_PRINTABLE_MESSAGE);
 		exit(ERROR_MALLOC_PRINTABLE_MESSAGE);
@@ -153,34 +153,34 @@ printable_encoded_message(
 }
 
 static
-char *
+const char * const
 decode(
-	struct encoded_message_t * encoded
-	,struct node_t * tree
-	,int msg_len
+	const struct encoded_message_t * const encoded
+	,const struct node_t * const tree
+	,const int msg_len
 ){
 	/* store current output string index */
 	int out_str_idx = 0;
 
 	/* allocate memory for the output string */
-	char * output = malloc(msg_len * sizeof(char));
+	char * const output = malloc(msg_len * sizeof(char));
 	if (output == NULL) {
 		printf("ERROR: %d: can't allocate memory for decoded string\n", ERROR_MALLOC_DECODED_STRING);
 		exit(ERROR_MALLOC_DECODED_STRING);
 	}
 
 	/* loop over bits */
-	struct node_t * node = tree;
+	struct node_t * node = (struct node_t *) tree;
 	for (int bit_idx = 0; bit_idx < encoded->length; bit_idx++) {
 		/* if it's a leaf node, we can grab the symbol and put it on the output string */
 		if (node->nt == LEAF) {
 			output[out_str_idx] = node->symbol;
 			out_str_idx++;
-			node = tree;
+			node = (struct node_t *) tree;
 		}
 
 		/* get the current bit */
-		bool bit = encoded->bits[bit_idx];
+		const bool bit = encoded->bits[bit_idx];
 
 		/* use the current bit to reassign the node pointer */
 		if (bit) {
@@ -203,13 +203,13 @@ decode(
 }
 
 static
-struct encoding_t *
+const struct encoding_t * const
 find_encoding_by_symbol(
-	struct encoding_list_t * list
-	,char symbol_key
+	const struct encoding_list_t * const list
+	,const char symbol_key
 ){
 	/* loop over to find match */
-	struct encoding_t * encoding = list->head;
+	const struct encoding_t * encoding = list->head;
 	while (encoding->next != NULL) {
 		if (encoding->symbol == symbol_key) {
 			break;

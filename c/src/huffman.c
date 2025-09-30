@@ -7,63 +7,63 @@
 #include "tree.h"
 #include "encoding.h"
 
-static void free_encoding(struct encoding_t * encoding);
+static const void free_encoding(const struct encoding_t * const encoding);
 
-struct node_t *
+const struct node_t * const
 create_tree(
-	char * message
-	,int length
+	const char * const message
+	,const int length
 ){
 	/* gather frequency data, needed to build tree */
-	struct frequency_t * frequencies = count_frequencies(message, length);
+	const struct frequency_t * const frequencies = count_frequencies(message, length);
 
 	/* build the tree */
-	struct node_t * root = to_tree(frequencies);
+	const struct node_t * const root = to_tree(frequencies);
 
 	/* free temporary memory */
 	free(frequencies->pairs);
-	free(frequencies);
+	free((void*)frequencies);
 
 	/* done */
 	return root;
 }
 
-struct encoding_list_t *
+const struct encoding_list_t * const
 extract_encodings(
-	struct node_t * tree
+	const struct node_t * const tree
 ){
 	return make_encodings_helper(tree, tree->tree_size);
 }
 
-void
+const void
 free_tree(
-	struct node_t * tree
+	const struct node_t * const tree
 )
 {
 	if (tree != NULL) {
 		free_tree(tree->left);
 		free_tree(tree->right);
 	}
-	free(tree);
+	free((void*)tree);
 }
 
-void
+const void
 free_encodings(
-	struct encoding_list_t * encodings
+	const struct encoding_list_t * const encodings
 ){
 	free_encoding(encodings->head);
-	free(encodings);
+	free((void*)encodings);
 }
 
 static
-void
+const void
 free_encoding(
-	struct encoding_t * encoding
+	const struct encoding_t * const encoding
 ){
 	if (encoding->next != NULL) {
 		free_encoding(encoding->next);
 	}
 	free(encoding->bitvec->bits);
 	free(encoding->bitvec);
-	free(encoding);
+	free((void*)encoding);
 }
