@@ -6,7 +6,7 @@ std::vector<bool>
 HuffmanEncoder::encode(
 	std::string input,
 	HuffmanTree tree
-) {
+) const {
 	std::vector<bool> bits;
 
     for(size_t c = 0; c < input.size(); c++)
@@ -29,7 +29,7 @@ std::vector<bool>
 HuffmanEncoder::getCode(
 	uint8_t code,
 	HuffmanTree tree
-) {
+) const {
 	bool path[65535];	// max size of wide char
 	std::vector<bool> retval;
 
@@ -48,7 +48,7 @@ HuffmanEncoder::getCodeHelper(
 	bool path[],
 	uint64_t pathLen,
 	std::vector<bool> &ret
-) {
+) const {
 	if(node == NULL)
 		return;
 

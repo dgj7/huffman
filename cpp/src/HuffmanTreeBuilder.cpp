@@ -95,7 +95,7 @@ HuffmanTreeBuilder::sort_list(
 void
 HuffmanTreeBuilder::debug_print(
     std::list<HuffmanTree> &trees
-) {
+) const {
     std::cout << "----------" << std::endl;
     for (std::list<HuffmanTree>::iterator it=trees.begin(); it != trees.end(); ++it) {
         HuffmanTree element = *it;
@@ -113,7 +113,7 @@ HuffmanTreeBuilder::debug_print(
 std::string
 HuffmanTreeBuilder::debug_find_all_frequency_pairs(
     HuffmanNode *node
-) {
+) const {
     if (node->_left != NULL && node->_right != NULL) {
         std::ostringstream ss;
         ss << debug_find_all_frequency_pairs(node->_left) << ", " << debug_find_all_frequency_pairs(node->_right);
