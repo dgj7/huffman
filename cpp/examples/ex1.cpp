@@ -3,7 +3,7 @@
 #include <sstream>				// std::stringstream
 #include <cstring> 				// strcmp()
 
-#include "lib/Huffman.hpp"		// HuffmanTreeBuilder, HuffmanEncoder, HuffmanDecoder, HuffmanTree
+#include "Huffman.hpp"		// HuffmanTreeBuilder, HuffmanEncoder, HuffmanDecoder, HuffmanTree
 
 std::string b_vec_to_str(std::vector<bool>);
 
