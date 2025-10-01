@@ -85,7 +85,6 @@ void HuffmanTreeBuilder::sort_list(std::list<HuffmanTree> &trees) {
 
 void HuffmanTreeBuilder::debug_print(std::list<HuffmanTree> &trees) {
     std::cout << "----------" << std::endl;
-    std::list<HuffmanTree>::iterator iter = trees.begin();
     for (std::list<HuffmanTree>::iterator it=trees.begin(); it != trees.end(); ++it) {
         HuffmanTree element = *it;
         if (element._root->_left == NULL && element._root->_right == NULL) {
