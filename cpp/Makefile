@@ -5,7 +5,8 @@ CFLAGS = -Wall -g -pedantic
 # vars: source
 LIBSRCDIR:=src
 LIBSRC   :=$(shell find src -name "*.cpp")
-#TESTSRC  :=$(LIBSRC) $(shell find test -name "*.cpp")
+TESTSRC  :=$(LIBSRC) $(shell find test -name "*.cpp")
+TESTSRC  +=$(shell find test -name "*.c")
 DEMOSRC  :=$(shell find examples -name "*.cpp")
 
 # vars: intermediary
@@ -17,21 +18,19 @@ DEMOPROGS:=$(patsubst %,target/%.exe,$(DEMONAMES))
 BUILDDIR :=target
 LIBNAME  :=huffman
 LIBRARY  :=$(BUILDDIR)/lib$(LIBNAME).a
-#TEST     :=$(BUILDDIR)/test.exe
+TEST     :=$(BUILDDIR)/test.exe
 
 # tasks
 .PHONY: all clean test build print
-all: clean build
-#all: clean test build
+all: clean test build
 build: $(LIBOBJS) $(LIBRARY) $(DEMOPROGS)
-#build: $(LIBOBJS) $(LIBRARY) $(DEMOPROGS)
-#test: $(TEST)
+test: $(TEST)
 
 # build test program; make halts of fails
-#$(TEST): $(TESTSRC)
-#	@echo -n [TEST___]: compiling: $@ [$^] ...
-#	@$(CC) $(CFLAGS) -o $@ $^ -I $(LIBSRCDIR) && echo done!
-#	@$(TEST)
+$(TEST): $(TESTSRC)
+	@echo -n [TEST___]: compiling: $@ [$^] ...
+	@$(CC) $(CFLAGS) -o $@ $^ -I $(LIBSRCDIR) && echo done!
+	@$(TEST)
 
 # build obj files
 $(LIBOBJS): $(LIBSRC)
