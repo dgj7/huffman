@@ -4,28 +4,35 @@
 
 #include "cut.h"
 
-#define CUT_VERSION "0.0.9"
+#define CUT_VERSION "0.0.11"
 #define MAX_TESTS 1000
 
 struct cut_test_t tests[MAX_TESTS];
 static int cutTestIndex = 0;
 
+const static int ERROR_MALLOC_TEST_NAME = 101;
+
 /**
  * Register a test with cut; this is necessary for the test to be run by the framework.
  */
-const
-void
+const void
 register_test(
     const void (*f)(struct cut_run_t *)
-    ,const char * name
+    ,const char * const name
 ){
     /* create a test instance; this will be stored internally */
     struct cut_test_t test;
 
-    /* set fields in the test */
+    /* set test function */
     test.test = f;
-    test.name = malloc(sizeof(char) * strlen(name));                                    // todo: handle malloc() failure
-    strcpy(test.name, name);
+
+    /* set test name */
+    test.name = malloc(sizeof(char) * strlen(name));
+    if (test.name == NULL) {
+        printf("ERROR: %d: failed to allocate memory for test name\n", ERROR_MALLOC_TEST_NAME);
+        exit(1);
+    }
+    strcpy((char*)test.name, name);
 
     /* store the test */
     tests[cutTestIndex] = test;
@@ -37,10 +44,9 @@ register_test(
 /**
  * Run all tests registered with cut.
  */
-const
-int
+const int
 run_tests(
-    const struct cut_config_t * config
+    const struct cut_config_t * const config
 ){
     /* storage for the number of failed tests; initially, zero */
     int failed = 0;
@@ -61,7 +67,7 @@ run_tests(
 
         /* copy the test name over */
         run.name = malloc(sizeof(strlen(test.name)));
-        strcpy(run.name, test.name);
+        strcpy((char*)run.name, test.name);
 
         /* run the test instance */
         (*test.test)(&run);
@@ -94,11 +100,10 @@ run_tests(
 /**
  * Assert that the given value is true.
  */
-const
-void
+const void
 assert_true(
     const bool assertion
-    ,struct cut_run_t * run
+    ,struct cut_run_t * const run
 ){
     if (assertion)
     {
