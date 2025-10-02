@@ -1,7 +1,8 @@
 #include "Huffman.hpp"
 
-HuffmanTree::HuffmanTree(uint8_t data, uint64_t freq)
-{	// leaf trees
+HuffmanTree::HuffmanTree(
+	uint8_t data, uint64_t freq
+) {	// leaf trees
 	_root = new HuffmanNode();
 	_root->_nodeType = leaf;
 	_root->_data = data;
@@ -10,8 +11,11 @@ HuffmanTree::HuffmanTree(uint8_t data, uint64_t freq)
 	_root->_right = NULL;
 }
 
-HuffmanTree::HuffmanTree(HuffmanTree leftTree, HuffmanTree rightTree)
-{	// combine trees
+HuffmanTree::HuffmanTree(
+	HuffmanTree leftTree,
+	HuffmanTree rightTree
+) {
+	// combine trees
 	_root = new HuffmanNode();
 
 	_root->_freq = leftTree.getFrequency() + rightTree.getFrequency();
@@ -26,8 +30,9 @@ HuffmanTree::HuffmanTree()
 	_root = NULL;
 }
 
-HuffmanTree::HuffmanTree(const HuffmanTree &copyFrom)
-{   // copy constructor
+HuffmanTree::HuffmanTree(
+	const HuffmanTree &copyFrom
+) {   // copy constructor
     copyTree(_root, copyFrom._root);
 	original = copyFrom.getOriginal();
 }
@@ -37,8 +42,10 @@ HuffmanTree::~HuffmanTree()
 	killTree(_root);
 }
 
-void HuffmanTree::killTree(HuffmanNode *&node)
-{
+void
+HuffmanTree::killTree(
+	HuffmanNode *&node
+) {
     if(node == NULL) return;
 
 	if(node->_left != NULL)
@@ -60,13 +67,16 @@ void HuffmanTree::killTree(HuffmanNode *&node)
 	}
 }
 
-uint64_t HuffmanTree::getFrequency() const
+uint64_t
+HuffmanTree::getFrequency() const
 {
 	return _root->_freq;
 }
 
-HuffmanTree &HuffmanTree::operator=(const HuffmanTree &copyFrom)
-{
+HuffmanTree &
+HuffmanTree::operator=(
+	const HuffmanTree &copyFrom
+) {
 	if(this != &copyFrom)
 	{
 		killTree(_root);
@@ -76,8 +86,11 @@ HuffmanTree &HuffmanTree::operator=(const HuffmanTree &copyFrom)
 	return *this;
 }
 
-bool operator<(HuffmanTree left, HuffmanTree right)
-{
+bool
+operator<(
+	HuffmanTree left,
+	HuffmanTree right
+) {
 	uint64_t l = left.getFrequency();
 	uint64_t r = right.getFrequency();
 
@@ -95,12 +108,16 @@ bool operator<(HuffmanTree left, HuffmanTree right)
 	}
 }
 
-uint64_t HuffmanTree::size() const {
+uint64_t
+HuffmanTree::size() const {
 	return this->_root->size();
 }
 
-void HuffmanTree::copyTree(HuffmanNode *&copyTo, HuffmanNode *copyFrom)
-{
+void
+HuffmanTree::copyTree(
+	HuffmanNode *&copyTo,
+	HuffmanNode *copyFrom
+) {
 	if(copyFrom == NULL)
 	{
 		copyTo = NULL;
@@ -117,12 +134,15 @@ void HuffmanTree::copyTree(HuffmanNode *&copyTo, HuffmanNode *copyFrom)
 	}
 }
 
-std::string HuffmanTree::getOriginal() const
+std::string
+HuffmanTree::getOriginal() const
 {
 	return original;
 }
 
-void HuffmanTree::setOriginal(std::string input)
-{
+void
+HuffmanTree::setOriginal(
+	std::string input
+) {
 	original = input;
 }

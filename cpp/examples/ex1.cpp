@@ -2,8 +2,9 @@
 #include <string>				// std::string
 #include <sstream>				// std::stringstream
 #include <cstring> 				// strcmp()
+#include <cstddef>				// size_t
 
-#include "lib/Huffman.hpp"		// HuffmanTreeBuilder, HuffmanEncoder, HuffmanDecoder, HuffmanTree
+#include "Huffman.hpp"		// HuffmanTreeBuilder, HuffmanEncoder, HuffmanDecoder, HuffmanTree
 
 std::string b_vec_to_str(std::vector<bool>);
 
@@ -38,7 +39,7 @@ int main(int argc, char **argv)
 std::string b_vec_to_str(std::vector<bool> input)
 {
 	std::stringstream ss;
-	for (int c = 0; c < input.size(); c++) {
+	for (size_t c = 0; c < input.size(); c++) {
 		bool current = input.at(c);
 		ss << current;
 	}

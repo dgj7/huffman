@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ ! -f bin/huffman ]; then
+if [ ! -f target/ex1.exe ]; then
     ./build.sh
 fi
 
-./bin/huffman -i "this is a sample input string. its text is being used to test the huffman coding tree."
+./target/ex1.exe -i "this is a sample input string. its text is being used to test the huffman coding tree."
 
