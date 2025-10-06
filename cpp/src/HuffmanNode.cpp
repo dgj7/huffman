@@ -6,7 +6,8 @@ HuffmanNode::HuffmanNode(  )
 	_right = NULL;
 }
 
-uint64_t HuffmanNode::size() const {
+uint64_t
+HuffmanNode::size() const {
 	uint64_t left = 0;
 	if (this->_left != NULL) {
 		left = this->_left->size();

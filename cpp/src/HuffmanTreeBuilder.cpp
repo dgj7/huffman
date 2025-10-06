@@ -13,8 +13,10 @@ HuffmanTreeBuilder::~HuffmanTreeBuilder()
 	//
 }
 
-HuffmanTree HuffmanTreeBuilder::build(std::string input)
-{
+HuffmanTree
+HuffmanTreeBuilder::build(
+    std::string input
+) {
 	std::map<uint8_t,uint64_t> frequencies;
     for(size_t c = 0; c < input.size(); c++)
     {
@@ -33,8 +35,10 @@ HuffmanTree HuffmanTreeBuilder::build(std::string input)
 	return tree;
 }
 
-HuffmanTree HuffmanTreeBuilder::build(std::map<uint8_t,uint64_t> frequencies)
-{
+HuffmanTree
+HuffmanTreeBuilder::build(
+    std::map<uint8_t,uint64_t> frequencies
+) {
 	std::list<HuffmanTree> treeList;
     std::map<uint8_t,uint64_t>::iterator it = frequencies.begin(  );
 
@@ -49,8 +53,10 @@ HuffmanTree HuffmanTreeBuilder::build(std::map<uint8_t,uint64_t> frequencies)
     return build(treeList);
 }
 
-HuffmanTree HuffmanTreeBuilder::build(std::list<HuffmanTree> trees)
-{
+HuffmanTree
+HuffmanTreeBuilder::build(
+    std::list<HuffmanTree> trees
+) {
 	sort_list(trees);
     HuffmanTree tr;
 
@@ -78,14 +84,19 @@ HuffmanTree HuffmanTreeBuilder::build(std::list<HuffmanTree> trees)
     return tr;
 }
 
-void HuffmanTreeBuilder::sort_list(std::list<HuffmanTree> &trees) {
+void
+HuffmanTreeBuilder::sort_list(
+    std::list<HuffmanTree> &trees
+) {
     trees.sort();
     //debug_print(trees);
 }
 
-void HuffmanTreeBuilder::debug_print(std::list<HuffmanTree> &trees) {
+void
+HuffmanTreeBuilder::debug_print(
+    std::list<HuffmanTree> &trees
+) const {
     std::cout << "----------" << std::endl;
-    std::list<HuffmanTree>::iterator iter = trees.begin();
     for (std::list<HuffmanTree>::iterator it=trees.begin(); it != trees.end(); ++it) {
         HuffmanTree element = *it;
         if (element._root->_left == NULL && element._root->_right == NULL) {
@@ -99,7 +110,10 @@ void HuffmanTreeBuilder::debug_print(std::list<HuffmanTree> &trees) {
     std::cout << "----------" << std::endl;
 }
 
-std::string HuffmanTreeBuilder::debug_find_all_frequency_pairs(HuffmanNode *node) {
+std::string
+HuffmanTreeBuilder::debug_find_all_frequency_pairs(
+    HuffmanNode *node
+) const {
     if (node->_left != NULL && node->_right != NULL) {
         std::ostringstream ss;
         ss << debug_find_all_frequency_pairs(node->_left) << ", " << debug_find_all_frequency_pairs(node->_right);

@@ -2,8 +2,11 @@
 
 #include <bitset>
 
-std::string HuffmanDecoder::decode(std::vector<bool> bitStream, HuffmanTree tree)
-{
+std::string
+HuffmanDecoder::decode(
+    std::vector<bool> bitStream,
+    HuffmanTree tree
+) const {
 	std::string ret = "";
 
     std::vector<bool> bitStreamWithoutPadding;
@@ -44,8 +47,12 @@ std::string HuffmanDecoder::decode(std::vector<bool> bitStream, HuffmanTree tree
     return ret;
 }
 
-bool HuffmanDecoder::getSymbol(std::vector<bool> bitStream, uint8_t &symbol, HuffmanTree tree)
-{
+bool
+HuffmanDecoder::getSymbol(
+    std::vector<bool> bitStream,
+    uint8_t &symbol,
+    HuffmanTree tree
+) const {
     HuffmanNode *currentNode = tree._root;
 
     if(bitStream.size() < 1)
