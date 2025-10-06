@@ -14,5 +14,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Clean-Build
-      run: make clean build
+      run: make clean test build
       working-directory: ./cpp
