@@ -61,7 +61,7 @@ namespace huffman {
                 uint8_t &symbol,
                 HuffmanTree tree
             ) {
-                HuffmanNode *currentNode = tree._root;
+                Node *currentNode = tree._root;
 
                 if(bitStream.size() < 1)
                     return false;

@@ -4,7 +4,7 @@ namespace huffman {
 	HuffmanTree::HuffmanTree(
 		uint8_t data, uint64_t freq
 	) {	// leaf trees
-		_root = new HuffmanNode();
+		_root = new Node();
 		_root->_nodeType = leaf;
 		_root->_data = data;
 		_root->_freq = freq;
@@ -17,7 +17,7 @@ namespace huffman {
 		HuffmanTree rightTree
 	) {
 		// combine trees
-		_root = new HuffmanNode();
+		_root = new Node();
 
 		_root->_freq = leftTree.getFrequency() + rightTree.getFrequency();
 		_root->_nodeType = internal;
@@ -44,7 +44,7 @@ namespace huffman {
 
 	void
 	HuffmanTree::killTree(
-		HuffmanNode *&node
+		Node *&node
 	) {
 		if(node == NULL) return;
 
@@ -114,8 +114,8 @@ namespace huffman {
 
 	void
 	HuffmanTree::copyTree(
-		HuffmanNode *&copyTo,
-		HuffmanNode *copyFrom
+		Node *&copyTo,
+		Node *copyFrom
 	) {
 		if(copyFrom == NULL)
 		{
@@ -123,7 +123,7 @@ namespace huffman {
 		}
 		else
 		{
-			copyTo = new HuffmanNode();
+			copyTo = new Node();
 			copyTo->_freq = copyFrom->_freq;
 			copyTo->_data = copyFrom->_data;
 			copyTo->_nodeType = copyFrom->_nodeType;

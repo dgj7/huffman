@@ -14,17 +14,17 @@ namespace huffman {
 		internal
 	};
 
-	class HuffmanNode
+	class Node
 	{
 	public:
-		HuffmanNode();
+		Node();
 
 		uint64_t size() const;
 	public:
 		uint8_t _data;
 		uint64_t _freq;
-		HuffmanNode *_left;
-		HuffmanNode *_right;
+		Node *_left;
+		Node *_right;
 		NodeType _nodeType;
 	};
 
@@ -42,10 +42,10 @@ namespace huffman {
 		HuffmanTree &operator=(const HuffmanTree &);					// assignment
 		uint64_t size() const;											// number of elements in the tree
 	public:
-		HuffmanNode *_root;
+		Node *_root;
 	private:
-		void killTree(HuffmanNode *&);
-		void copyTree(HuffmanNode *&copyTo, HuffmanNode *copyFrom);		// copy one node to another
+		void killTree(Node *&);
+		void copyTree(Node *&copyTo, Node *copyFrom);		// copy one node to another
 	};
 
 

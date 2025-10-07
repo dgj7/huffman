@@ -1,14 +1,14 @@
 #include "Huffman.hpp"
 
 namespace huffman {
-	HuffmanNode::HuffmanNode(  )
+	Node::Node(  )
 	{
 		_left = NULL;
 		_right = NULL;
 	}
 
 	uint64_t
-	HuffmanNode::size() const {
+	Node::size() const {
 		uint64_t left = 0;
 		if (this->_left != NULL) {
 			left = this->_left->size();

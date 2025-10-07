@@ -6,7 +6,7 @@ namespace huffman {
 	namespace encoder {
 		namespace {
 			std::vector<bool> getCode(uint8_t, HuffmanTree);
-			void getCodeHelper(uint8_t, HuffmanNode *, HuffmanNode *, bool, bool path[], uint64_t, std::vector<bool> &);
+			void getCodeHelper(uint8_t, Node *, Node *, bool, bool path[], uint64_t, std::vector<bool> &);
 		}
 
 		std::vector<bool>
@@ -50,8 +50,8 @@ namespace huffman {
 			void
 			getCodeHelper(
 				uint8_t code,
-				HuffmanNode *node,
-				HuffmanNode *root,
+				Node *node,
+				Node *root,
 				bool preDirection,
 				bool path[],
 				uint64_t pathLen,
