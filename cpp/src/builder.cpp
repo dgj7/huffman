@@ -5,7 +5,7 @@
 
 namespace huffman {
     namespace builder {
-        HuffmanTree
+        Tree
         build(
             std::string input
         ) {
@@ -22,21 +22,21 @@ namespace huffman {
                 }
             }
 
-            HuffmanTree tree = build(frequencies);
+            Tree tree = build(frequencies);
             return tree;
         }
 
-        HuffmanTree
+        Tree
         build(
             std::map<uint8_t,uint64_t> frequencies
         ) {
-            std::list<HuffmanTree> treeList;
+            std::list<Tree> treeList;
             std::map<uint8_t,uint64_t>::iterator it = frequencies.begin(  );
 
 
             while(it != frequencies.end())
             {
-                HuffmanTree tempTree( it->first, it->second );
+                Tree tempTree( it->first, it->second );
                 treeList.push_back( tempTree );
                 it++;
             }
@@ -44,20 +44,20 @@ namespace huffman {
             return build(treeList);
         }
 
-        HuffmanTree
+        Tree
         build(
-            std::list<HuffmanTree> trees
+            std::list<Tree> trees
         ) {
             trees.sort();
-            HuffmanTree tr;
+            Tree tr;
 
             while(trees.size() > 1)
             {
-                std::list<HuffmanTree>::iterator firstIter = trees.begin();
-                std::list<HuffmanTree>::iterator secondIter = trees.begin();
+                std::list<Tree>::iterator firstIter = trees.begin();
+                std::list<Tree>::iterator secondIter = trees.begin();
                 secondIter++;
 
-                HuffmanTree newTree((*firstIter),(*secondIter));
+                Tree newTree((*firstIter),(*secondIter));
 
                 trees.erase(firstIter);
                 trees.erase(secondIter);
@@ -67,8 +67,8 @@ namespace huffman {
 
                 if(trees.size() == 1)
                 {
-                    std::list<HuffmanTree>::iterator thirdIter = trees.begin();
-                    tr = HuffmanTree(*thirdIter);
+                    std::list<Tree>::iterator thirdIter = trees.begin();
+                    tr = Tree(*thirdIter);
                 }
             }
 

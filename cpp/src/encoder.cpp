@@ -5,14 +5,14 @@
 namespace huffman {
 	namespace encoder {
 		namespace {
-			std::vector<bool> getCode(uint8_t, HuffmanTree);
+			std::vector<bool> getCode(uint8_t, Tree);
 			void getCodeHelper(uint8_t, Node *, Node *, bool, bool path[], uint64_t, std::vector<bool> &);
 		}
 
 		std::vector<bool>
 		encode(
 			std::string input,
-			HuffmanTree tree
+			Tree tree
 		) {
 			std::vector<bool> bits;
 
@@ -36,7 +36,7 @@ namespace huffman {
 			std::vector<bool>
 			getCode(
 				uint8_t code,
-				HuffmanTree tree
+				Tree tree
 			) {
 				bool path[65535];	// max size of wide char
 				std::vector<bool> retval;

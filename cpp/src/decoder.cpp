@@ -5,14 +5,14 @@
 namespace huffman {
     namespace decoder {
         namespace {
-            bool getSymbol(std::vector<bool>, uint8_t &, HuffmanTree);
+            bool getSymbol(std::vector<bool>, uint8_t &, Tree);
         }
 
 
         std::string
         decode(
             std::vector<bool> bitStream,
-            HuffmanTree tree
+            Tree tree
         ) {
             std::string ret = "";
 
@@ -59,7 +59,7 @@ namespace huffman {
             getSymbol(
                 std::vector<bool> bitStream,
                 uint8_t &symbol,
-                HuffmanTree tree
+                Tree tree
             ) {
                 Node *currentNode = tree._root;
 

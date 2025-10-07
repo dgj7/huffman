@@ -1,7 +1,7 @@
 #include "Huffman.hpp"
 
 namespace huffman {
-	HuffmanTree::HuffmanTree(
+	Tree::Tree(
 		uint8_t data, uint64_t freq
 	) {	// leaf trees
 		_root = new Node();
@@ -12,9 +12,9 @@ namespace huffman {
 		_root->_right = NULL;
 	}
 
-	HuffmanTree::HuffmanTree(
-		HuffmanTree leftTree,
-		HuffmanTree rightTree
+	Tree::Tree(
+		Tree leftTree,
+		Tree rightTree
 	) {
 		// combine trees
 		_root = new Node();
@@ -26,24 +26,24 @@ namespace huffman {
 		copyTree(_root->_right, rightTree._root);
 	}
 
-	HuffmanTree::HuffmanTree()
+	Tree::Tree()
 	{// unparameterized constructor ensures compatibility with std::list<T>
 		_root = NULL;
 	}
 
-	HuffmanTree::HuffmanTree(
-		const HuffmanTree &copyFrom
+	Tree::Tree(
+		const Tree &copyFrom
 	) {   // copy constructor
 		copyTree(_root, copyFrom._root);
 	}
 
-	HuffmanTree::~HuffmanTree()
+	Tree::~Tree()
 	{
 		killTree(_root);
 	}
 
 	void
-	HuffmanTree::killTree(
+	Tree::killTree(
 		Node *&node
 	) {
 		if(node == NULL) return;
@@ -68,14 +68,14 @@ namespace huffman {
 	}
 
 	uint64_t
-	HuffmanTree::getFrequency() const
+	Tree::getFrequency() const
 	{
 		return _root->_freq;
 	}
 
-	HuffmanTree &
-	HuffmanTree::operator=(
-		const HuffmanTree &copyFrom
+	Tree &
+	Tree::operator=(
+		const Tree &copyFrom
 	) {
 		if(this != &copyFrom)
 		{
@@ -87,8 +87,8 @@ namespace huffman {
 
 	bool
 	operator<(
-		HuffmanTree left,
-		HuffmanTree right
+		Tree left,
+		Tree right
 	) {
 		uint64_t l = left.getFrequency();
 		uint64_t r = right.getFrequency();
@@ -108,12 +108,12 @@ namespace huffman {
 	}
 
 	uint64_t
-	HuffmanTree::size() const {
+	Tree::size() const {
 		return this->_root->size();
 	}
 
 	void
-	HuffmanTree::copyTree(
+	Tree::copyTree(
 		Node *&copyTo,
 		Node *copyFrom
 	) {

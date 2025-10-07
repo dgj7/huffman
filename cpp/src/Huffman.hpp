@@ -28,18 +28,18 @@ namespace huffman {
 		NodeType _nodeType;
 	};
 
-	class HuffmanTree
+	class Tree
 	{
-	friend bool operator<(HuffmanTree, HuffmanTree);
+	friend bool operator<(Tree, Tree);
 	public:
-		HuffmanTree(uint8_t data, uint64_t freq);						// tree with one node
-		HuffmanTree(HuffmanTree, HuffmanTree);							// combining internal trees
-		HuffmanTree();													// no args constructor
-		HuffmanTree(const HuffmanTree &);								// copy constructor
-		virtual ~HuffmanTree();
+		Tree(uint8_t data, uint64_t freq);						// tree with one node
+		Tree(Tree, Tree);							// combining internal trees
+		Tree();													// no args constructor
+		Tree(const Tree &);								// copy constructor
+		virtual ~Tree();
 		
 		uint64_t getFrequency() const;									// read frequency
-		HuffmanTree &operator=(const HuffmanTree &);					// assignment
+		Tree &operator=(const Tree &);					// assignment
 		uint64_t size() const;											// number of elements in the tree
 	public:
 		Node *_root;
@@ -50,19 +50,19 @@ namespace huffman {
 
 
 	namespace builder {
-		HuffmanTree build(std::string);									// build from frequencies in a string
-		HuffmanTree build(std::map<uint8_t,uint64_t>);					// build from given frequency set
-		HuffmanTree build(std::list<HuffmanTree>);						// build from a list of smaller trees
+		Tree build(std::string);									// build from frequencies in a string
+		Tree build(std::map<uint8_t,uint64_t>);					// build from given frequency set
+		Tree build(std::list<Tree>);						// build from a list of smaller trees
 	}
 
 
 	namespace encoder {
-		std::vector<bool> encode(std::string, HuffmanTree);
+		std::vector<bool> encode(std::string, Tree);
 	}
 
 
 	namespace decoder {
-		std::string decode(std::vector<bool>, HuffmanTree);
+		std::string decode(std::vector<bool>, Tree);
 	}
 }
 

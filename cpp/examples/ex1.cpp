@@ -12,14 +12,14 @@ int main(int argc, char **argv)
 {
 	/* parse command line args, and set input if correct */
 	//std::copy(argv, argv + argc, std::ostream_iterator<char *>(std::cout, "\n")); // requires <algorithm> and <iterator>
-	
+
 	std::string theString;
 	if (argc == 3 && strcmp(argv[1], "-i") == 0) {
 		theString = argv[2];
 	}
 
 	/* create variables */
-	huffman::HuffmanTree tree = huffman::builder::build(theString);
+	huffman::Tree tree = huffman::builder::build(theString);
 
 	/* print the input */
 	std::cout << "input:   [" << theString << "]" << std::endl;
