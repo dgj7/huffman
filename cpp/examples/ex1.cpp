@@ -18,10 +18,10 @@ int main(int argc, char **argv)
 	}
 
 	/* create variables */
-	HuffmanTreeBuilder builder;
-	HuffmanEncoder encoder;
-	HuffmanDecoder decoder;
-	HuffmanTree tree = builder.build(theString);
+	huffman::HuffmanTreeBuilder builder;
+	huffman::HuffmanEncoder encoder;
+	huffman::HuffmanDecoder decoder;
+	huffman::HuffmanTree tree = builder.build(theString);
 
 	/* print the input */
 	std::cout << "input:   [" << theString << "]" << std::endl;
