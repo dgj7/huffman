@@ -4,7 +4,7 @@
 #include <cstring> 				// strcmp()
 #include <cstddef>				// size_t
 
-#include "Huffman.hpp"		// HuffmanTreeBuilder, HuffmanEncoder, HuffmanDecoder, HuffmanTree
+#include "Huffman.hpp"
 
 std::string b_vec_to_str(std::vector<bool>);
 
@@ -18,21 +18,15 @@ int main(int argc, char **argv)
 	}
 
 	/* create variables */
-	huffman::HuffmanTreeBuilder builder;
-	huffman::HuffmanEncoder encoder;
-	huffman::HuffmanDecoder decoder;
-	huffman::HuffmanTree tree = builder.build(theString);
+	huffman::HuffmanTree tree = huffman::builder::build(theString);
 
 	/* print the input */
 	std::cout << "input:   [" << theString << "]" << std::endl;
-
-	// todo: this needs to be moved to a -verbose mode, or something similar
-	//printer.printCodes(tree);
 	
-	std::vector<bool> encoded = encoder.encode(theString,tree);
+	std::vector<bool> encoded = huffman::encoder::encode(theString,tree);
 	std::cout << "encoded: [" << b_vec_to_str(encoded) << "]" << std::endl;
 	
-	std::string decoded = decoder.decode(encoded,tree);
+	std::string decoded = huffman::decoder::decode(encoded,tree);
 	std::cout << "decoded: [" << decoded << "]" << std::endl;
 }
 

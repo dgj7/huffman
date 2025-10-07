@@ -48,36 +48,25 @@ namespace huffman {
 		void copyTree(HuffmanNode *&copyTo, HuffmanNode *copyFrom);		// copy one node to another
 	};
 
-	class HuffmanTreeBuilder
-	{
-	public:
-		HuffmanTreeBuilder();
-		virtual ~HuffmanTreeBuilder();
 
+	namespace builder {
 		HuffmanTree build(std::string);									// build from frequencies in a string
 		HuffmanTree build(std::map<uint8_t,uint64_t>);					// build from given frequency set
 		HuffmanTree build(std::list<HuffmanTree>);						// build from a list of smaller trees
-	private:
-		void sort_list(std::list<HuffmanTree> &);
-		void debug_print(std::list<HuffmanTree> &) const;
-		std::string debug_find_all_frequency_pairs(HuffmanNode *) const;
-	};
+	}
 
-	class HuffmanEncoder
-	{
-	public:
-		std::vector<bool> getCode(uint8_t, HuffmanTree) const;
-		std::vector<bool> encode(std::string, HuffmanTree) const;
-	private:
-		void getCodeHelper(uint8_t, HuffmanNode *, HuffmanNode *, bool, bool path[], uint64_t, std::vector<bool> &) const;
-	};
 
-	class HuffmanDecoder
-	{
-	public:
-		bool getSymbol(std::vector<bool>, uint8_t &, HuffmanTree) const;
-		std::string decode(std::vector<bool>, HuffmanTree) const;
-	};
+	namespace encoder {
+		std::vector<bool> getCode(uint8_t, HuffmanTree);
+		std::vector<bool> encode(std::string, HuffmanTree);
+		void getCodeHelper(uint8_t, HuffmanNode *, HuffmanNode *, bool, bool path[], uint64_t, std::vector<bool> &);
+	}
+
+
+	namespace decoder {
+		bool getSymbol(std::vector<bool>, uint8_t &, HuffmanTree);
+		std::string decode(std::vector<bool>, HuffmanTree);
+	}
 }
 
 #endif
