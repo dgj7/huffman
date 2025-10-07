@@ -40,15 +40,11 @@ public:
 	uint64_t getFrequency() const;									// read frequency
 	HuffmanTree &operator=(const HuffmanTree &);					// assignment
 	uint64_t size() const;											// number of elements in the tree
-	void setOriginal(std::string);
-	std::string getOriginal() const;
 public:
 	HuffmanNode *_root;
 private:
 	void killTree(HuffmanNode *&);
 	void copyTree(HuffmanNode *&copyTo, HuffmanNode *copyFrom);		// copy one node to another
-	
-	std::string original;
 };
 
 class HuffmanTreeBuilder

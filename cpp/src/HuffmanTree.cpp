@@ -34,7 +34,6 @@ HuffmanTree::HuffmanTree(
 	const HuffmanTree &copyFrom
 ) {   // copy constructor
     copyTree(_root, copyFrom._root);
-	original = copyFrom.getOriginal();
 }
 
 HuffmanTree::~HuffmanTree()
@@ -81,7 +80,6 @@ HuffmanTree::operator=(
 	{
 		killTree(_root);
 		copyTree(_root, copyFrom._root);
-		original = copyFrom.getOriginal();
 	}
 	return *this;
 }
@@ -132,17 +130,4 @@ HuffmanTree::copyTree(
 		copyTree(copyTo->_left, copyFrom->_left);
 		copyTree(copyTo->_right, copyFrom->_right);
 	}
-}
-
-std::string
-HuffmanTree::getOriginal() const
-{
-	return original;
-}
-
-void
-HuffmanTree::setOriginal(
-	std::string input
-) {
-	original = input;
 }

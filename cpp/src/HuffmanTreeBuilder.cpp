@@ -31,7 +31,6 @@ HuffmanTreeBuilder::build(
     }
 
     HuffmanTree tree = build(frequencies);
-	tree.setOriginal(input);
 	return tree;
 }
 
