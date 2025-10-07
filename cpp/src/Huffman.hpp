@@ -57,14 +57,11 @@ namespace huffman {
 
 
 	namespace encoder {
-		std::vector<bool> getCode(uint8_t, HuffmanTree);
 		std::vector<bool> encode(std::string, HuffmanTree);
-		void getCodeHelper(uint8_t, HuffmanNode *, HuffmanNode *, bool, bool path[], uint64_t, std::vector<bool> &);
 	}
 
 
 	namespace decoder {
-		bool getSymbol(std::vector<bool>, uint8_t &, HuffmanTree);
 		std::string decode(std::vector<bool>, HuffmanTree);
 	}
 }

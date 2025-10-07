@@ -12,6 +12,7 @@ int main(int argc, char **argv)
 {
 	/* parse command line args, and set input if correct */
 	//std::copy(argv, argv + argc, std::ostream_iterator<char *>(std::cout, "\n")); // requires <algorithm> and <iterator>
+	
 	std::string theString;
 	if (argc == 3 && strcmp(argv[1], "-i") == 0) {
 		theString = argv[2];

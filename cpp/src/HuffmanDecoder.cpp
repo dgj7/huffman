@@ -4,6 +4,11 @@
 
 namespace huffman {
     namespace decoder {
+        namespace {
+            bool getSymbol(std::vector<bool>, uint8_t &, HuffmanTree);
+        }
+
+
         std::string
         decode(
             std::vector<bool> bitStream,
@@ -48,57 +53,59 @@ namespace huffman {
 
             return ret;
         }
+        
+        namespace {
+            bool
+            getSymbol(
+                std::vector<bool> bitStream,
+                uint8_t &symbol,
+                HuffmanTree tree
+            ) {
+                HuffmanNode *currentNode = tree._root;
 
-        bool
-        getSymbol(
-            std::vector<bool> bitStream,
-            uint8_t &symbol,
-            HuffmanTree tree
-        ) {
-            HuffmanNode *currentNode = tree._root;
+                if(bitStream.size() < 1)
+                    return false;
 
-            if(bitStream.size() < 1)
-                return false;
-
-            for(size_t c = 0; c < bitStream.size(); c++)
-            {
-                // if value is 0, go left
-                if(bitStream[c] == 0)
+                for(size_t c = 0; c < bitStream.size(); c++)
                 {
-                    if(currentNode->_left != NULL)
+                    // if value is 0, go left
+                    if(bitStream[c] == 0)
                     {
-                        currentNode = currentNode->_left;
+                        if(currentNode->_left != NULL)
+                        {
+                            currentNode = currentNode->_left;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else if(bitStream[c] == 1)
+                    {
+                        if(currentNode->_right != NULL)
+                        {
+                            currentNode = currentNode->_right;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                     else
                     {
                         return false;
                     }
                 }
-                else if(bitStream[c] == 1)
+
+                if(currentNode->_nodeType == leaf)
                 {
-                    if(currentNode->_right != NULL)
-                    {
-                        currentNode = currentNode->_right;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    symbol = currentNode->_data;
+                    return true;
                 }
                 else
                 {
                     return false;
                 }
-            }
-
-            if(currentNode->_nodeType == leaf)
-            {
-                symbol = currentNode->_data;
-                return true;
-            }
-            else
-            {
-                return false;
             }
         }
     }
