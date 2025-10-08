@@ -1,6 +1,6 @@
 # compile
-CC = g++
-CFLAGS = -Wall -g -pedantic
+CC       := g++
+CFLAGS   := -Wall -g -pedantic
 
 # vars: source
 LIBSRCDIR:=src
@@ -30,6 +30,7 @@ test: $(TEST)
 $(TEST): $(TESTSRC)
 	@echo -n [TEST___]: compiling: $@ [$^] ...
 	@$(CC) $(CFLAGS) -o $@ $^ -I $(LIBSRCDIR) && echo done!
+	@echo -n "[TEST___]: "
 	@$(TEST)
 
 # build obj files
@@ -49,13 +50,13 @@ $(DEMOPROGS): $(DEMOSRC)
 
 # clean out prior build info
 clean:
-	@echo -n cleaning ...
+	@echo -n [CLEAN__]: deleting binaries ...
 	@rm -rf $(LIBRARY)
 	@rm -rf $(TEST)
 	@rm -rf $(LIBOBJS)
 	@rm -rf $(DEMOPROGS)
 	@echo done!
-	@echo -n creating target directory ...
+	@echo -n [CLEAN__]: creating target directory ...
 	@mkdir -p target && echo done!
 
 # print task to debug
