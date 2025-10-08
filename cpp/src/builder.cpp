@@ -3,8 +3,17 @@
 #include <iostream>
 #include <sstream>
 
+/**
+ * Huffman coding tree.
+ */
 namespace huffman {
+    /**
+     * Builder utility.
+     */
     namespace builder {
+        /**
+         * Builder method, from input string.
+         */
         Tree
         build(
             std::string input
@@ -26,6 +35,9 @@ namespace huffman {
             return tree;
         }
 
+        /**
+         * Builder method, from input frequencies map.
+         */
         Tree
         build(
             std::map<uint8_t,uint64_t> frequencies
@@ -44,6 +56,9 @@ namespace huffman {
             return build(treeList);
         }
 
+        /**
+         * Builder method, from input tree list.
+         */
         Tree
         build(
             std::list<Tree> trees

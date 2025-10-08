@@ -2,13 +2,24 @@
 
 #include <bitset>
 
+/**
+ * Huffman coding tree.
+ */
 namespace huffman {
+    /**
+     * Decoder utility.
+     */
     namespace decoder {
+        /**
+         * Anonymous helpers.
+         */
         namespace {
             bool getSymbol(std::vector<bool>, uint8_t &, Tree);
         }
 
-
+        /**
+         * Decode a stream of bits.
+         */
         std::string
         decode(
             std::vector<bool> bitStream,
@@ -54,7 +65,13 @@ namespace huffman {
             return ret;
         }
         
+        /**
+         * Anonymous helpers.
+         */
         namespace {
+            /**
+             * Get a symbol from the given bit stream.
+             */
             bool
             getSymbol(
                 std::vector<bool> bitStream,

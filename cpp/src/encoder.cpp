@@ -2,13 +2,25 @@
 
 #include <bitset>
 
+/**
+ * Huffman coding tree.
+ */
 namespace huffman {
+	/**
+	 * Encoder utility.
+	 */
 	namespace encoder {
+		/**
+		 * Anonymous helpers.
+		 */
 		namespace {
 			std::vector<bool> getCode(uint8_t, Tree);
 			void getCodeHelper(uint8_t, Node *, Node *, bool, bool path[], uint64_t, std::vector<bool> &);
 		}
 
+		/**
+		 * Encodethe given string with the given tree.
+		 */
 		std::vector<bool>
 		encode(
 			std::string input,
@@ -32,7 +44,13 @@ namespace huffman {
 			return bits;
 		}
 
+		/**
+		 * Anonymous helpers.
+		 */
 		namespace {
+			/**
+			 * Get the bit vector for the given code and tree.
+			 */
 			std::vector<bool>
 			getCode(
 				uint8_t code,
@@ -47,6 +65,9 @@ namespace huffman {
 				return retval;
 			}
 
+			/**
+			 * Helper for getting the bit vector for the given code and tree.
+			 */
 			void
 			getCodeHelper(
 				uint8_t code,

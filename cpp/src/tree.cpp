@@ -1,6 +1,12 @@
 #include "huffman.hpp"
 
+/**
+ * Huffman coding tree.
+ */
 namespace huffman {
+	/**
+	 * Tree constructor, from single byte and frequency.
+	 */
 	Tree::Tree(
 		uint8_t data, uint64_t freq
 	) {	// leaf trees
@@ -12,6 +18,9 @@ namespace huffman {
 		_root->_right = NULL;
 	}
 
+	/**
+	 * Tree constructor, from two child trees.
+	 */
 	Tree::Tree(
 		Tree leftTree,
 		Tree rightTree
@@ -26,22 +35,34 @@ namespace huffman {
 		copyTree(_root->_right, rightTree._root);
 	}
 
+	/**
+	 * Tree constructor, unparameterized for compatability with std::list.
+	 */
 	Tree::Tree()
-	{// unparameterized constructor ensures compatibility with std::list<T>
+	{
 		_root = NULL;
 	}
 
+	/**
+	 * Tree copy constructor.
+	 */
 	Tree::Tree(
 		const Tree &copyFrom
 	) {   // copy constructor
 		copyTree(_root, copyFrom._root);
 	}
 
+	/**
+	 * Tree destructor.
+	 */
 	Tree::~Tree()
 	{
 		killTree(_root);
 	}
 
+	/**
+	 * helper/private method to delete a tree and free it's memory.
+	 */
 	void
 	Tree::killTree(
 		Node *&node
@@ -67,12 +88,18 @@ namespace huffman {
 		}
 	}
 
+	/**
+	 * frequency accessor.
+	 */
 	uint64_t
 	Tree::getFrequency() const
 	{
 		return _root->_freq;
 	}
 
+	/**
+	 * Assignment operator overloaded.
+	 */
 	Tree &
 	Tree::operator=(
 		const Tree &copyFrom
@@ -85,6 +112,9 @@ namespace huffman {
 		return *this;
 	}
 
+	/**
+	 * Less-than operator overloaded.
+	 */
 	bool
 	operator<(
 		Tree left,
@@ -107,11 +137,17 @@ namespace huffman {
 		}
 	}
 
+	/**
+	 * Size accessor.
+	 */
 	uint64_t
 	Tree::size() const {
 		return this->_root->size();
 	}
 
+	/**
+	 * Tree copy helper method.
+	 */
 	void
 	Tree::copyTree(
 		Node *&copyTo,

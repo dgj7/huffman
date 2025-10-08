@@ -1,12 +1,21 @@
 #include "huffman.hpp"
 
+/**
+ * Huffman coding tree.
+ */
 namespace huffman {
+	/**
+	 * Node unparameterized constructor.
+	 */
 	Node::Node(  )
 	{
 		_left = NULL;
 		_right = NULL;
 	}
 
+	/**
+	 * Node size accessor.
+	 */
 	uint64_t
 	Node::size() const {
 		uint64_t left = 0;

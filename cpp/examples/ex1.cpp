@@ -8,6 +8,9 @@
 
 std::string b_vec_to_str(std::vector<bool>);
 
+/**
+ * Read a string from terminal and print it's encoded bit interpretation.
+ */
 int main(int argc, char **argv)
 {
 	/* parse command line args, and set input if correct */
@@ -31,6 +34,9 @@ int main(int argc, char **argv)
 	std::cout << "decoded: [" << decoded << "]" << std::endl;
 }
 
+/**
+ * Convert a bit vector to a string.
+ */
 std::string b_vec_to_str(std::vector<bool> input)
 {
 	std::stringstream ss;
