@@ -8,7 +8,8 @@ namespace huffman {
 	 * Tree constructor, from single byte and frequency.
 	 */
 	Tree::Tree(
-		uint8_t data, uint64_t freq
+		const uint8_t data,
+		const uint64_t freq
 	) {	// leaf trees
 		_root = new Node();
 		_root->_nodeType = leaf;

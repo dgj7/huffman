@@ -14,17 +14,17 @@ namespace huffman {
 		 * Anonymous helpers.
 		 */
 		namespace {
-			std::vector<bool> getCode(uint8_t, Tree);
+			std::vector<bool> getCode(uint8_t, const Tree &);
 			void getCodeHelper(uint8_t, Node *, Node *, bool, bool path[], uint64_t, std::vector<bool> &);
 		}
 
 		/**
-		 * Encodethe given string with the given tree.
+		 * Encode the given string with the given tree.
 		 */
 		std::vector<bool>
 		encode(
 			std::string input,
-			Tree tree
+			const Tree & tree
 		) {
 			std::vector<bool> bits;
 
@@ -54,7 +54,7 @@ namespace huffman {
 			std::vector<bool>
 			getCode(
 				uint8_t code,
-				Tree tree
+				const Tree & tree
 			) {
 				bool path[65535];	// max size of wide char
 				std::vector<bool> retval;

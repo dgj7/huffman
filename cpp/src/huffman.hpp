@@ -50,7 +50,7 @@ namespace huffman {
 	{
 	friend bool operator<(Tree, Tree);
 	public:
-		Tree(uint8_t data, uint64_t freq);				// tree with one node
+		Tree(const uint8_t data, const uint64_t freq);	// tree with one node
 		Tree(Tree, Tree);								// combining internal trees
 		Tree();											// no args constructor
 		Tree(const Tree &);								// copy constructor
@@ -70,23 +70,23 @@ namespace huffman {
 	 * Builder utility.
 	 */
 	namespace builder {
-		Tree build(std::string);						// build from frequencies in a string
-		Tree build(std::map<uint8_t,uint64_t>);			// build from given frequency set
-		Tree build(std::list<Tree>);					// build from a list of smaller trees
+		const Tree * build(std::string);						// build from frequencies in a string
+		const Tree * build(std::map<uint8_t,uint64_t>);			// build from given frequency set
+		const Tree * build(std::list<Tree> &);					// build from a list of smaller trees
 	}
 
 	/**
 	 * Encoder utility.
 	 */
 	namespace encoder {
-		std::vector<bool> encode(std::string, Tree);
+		std::vector<bool> encode(std::string, const Tree &);
 	}
 
 	/**
 	 * Decoder utility.
 	 */
 	namespace decoder {
-		std::string decode(std::vector<bool>, Tree);
+		std::string decode(std::vector<bool>, const Tree &);
 	}
 }
 

@@ -14,7 +14,7 @@ namespace huffman {
          * Anonymous helpers.
          */
         namespace {
-            bool getSymbol(std::vector<bool>, uint8_t &, Tree);
+            bool getSymbol(std::vector<bool>, uint8_t &, const Tree &);
         }
 
         /**
@@ -23,12 +23,12 @@ namespace huffman {
         std::string
         decode(
             std::vector<bool> bitStream,
-            Tree tree
+            const Tree & tree
         ) {
             std::string ret = "";
 
             std::vector<bool> bitStreamWithoutPadding;
-            for(size_t x = 3; x < bitStream.size(); x++)
+            for(size_t x = 0; x < bitStream.size(); x++)
                 bitStreamWithoutPadding.push_back(bitStream[x]);
 
             // algorithm:
@@ -76,7 +76,7 @@ namespace huffman {
             getSymbol(
                 std::vector<bool> bitStream,
                 uint8_t &symbol,
-                Tree tree
+                const Tree & tree
             ) {
                 Node *currentNode = tree._root;
 

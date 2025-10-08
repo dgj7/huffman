@@ -22,15 +22,15 @@ int main(int argc, char **argv)
 	}
 
 	/* create variables */
-	huffman::Tree tree = huffman::builder::build(theString);
+	const huffman::Tree * tree = huffman::builder::build(theString);
 
 	/* print the input */
 	std::cout << "input:   [" << theString << "]" << std::endl;
 	
-	std::vector<bool> encoded = huffman::encoder::encode(theString,tree);
+	std::vector<bool> encoded = huffman::encoder::encode(theString, *tree);
 	std::cout << "encoded: [" << b_vec_to_str(encoded) << "]" << std::endl;
 	
-	std::string decoded = huffman::decoder::decode(encoded,tree);
+	std::string decoded = huffman::decoder::decode(encoded, *tree);
 	std::cout << "decoded: [" << decoded << "]" << std::endl;
 }
 

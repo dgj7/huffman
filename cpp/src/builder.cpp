@@ -14,7 +14,7 @@ namespace huffman {
         /**
          * Builder method, from input string.
          */
-        Tree
+        const Tree *
         build(
             std::string input
         ) {
@@ -31,14 +31,13 @@ namespace huffman {
                 }
             }
 
-            Tree tree = build(frequencies);
-            return tree;
+            return build(frequencies);
         }
 
         /**
          * Builder method, from input frequencies map.
          */
-        Tree
+        const Tree *
         build(
             std::map<uint8_t,uint64_t> frequencies
         ) {
@@ -59,12 +58,11 @@ namespace huffman {
         /**
          * Builder method, from input tree list.
          */
-        Tree
+        const Tree *
         build(
-            std::list<Tree> trees
+            std::list<Tree> & trees
         ) {
             trees.sort();
-            Tree tr;
 
             while(trees.size() > 1)
             {
@@ -79,15 +77,10 @@ namespace huffman {
 
                 trees.push_back(newTree);
                 trees.sort();
-
-                if(trees.size() == 1)
-                {
-                    std::list<Tree>::iterator thirdIter = trees.begin();
-                    tr = Tree(*thirdIter);
-                }
             }
 
-            return tr;
+            std::list<Tree>::iterator thirdIter = trees.begin();
+            return new Tree(*thirdIter);
         }
     }
 }
