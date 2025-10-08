@@ -4,7 +4,7 @@
 #include <cstring> 				// strcmp()
 #include <cstddef>				// size_t
 
-#include "Huffman.hpp"
+#include "huffman.hpp"
 
 std::string b_vec_to_str(std::vector<bool>);
 

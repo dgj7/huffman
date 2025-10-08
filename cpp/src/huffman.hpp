@@ -1,5 +1,5 @@
-#ifndef __HUFFMAN__TREE__H__
-#define __HUFFMAN__TREE__H__
+#ifndef HUFFMAN__TREE__H__
+#define HUFFMAN__TREE__H__
 
 #include <string>
 #include <map>

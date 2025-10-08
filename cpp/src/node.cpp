@@ -1,4 +1,4 @@
-#include "Huffman.hpp"
+#include "huffman.hpp"
 
 namespace huffman {
 	Node::Node(  )
