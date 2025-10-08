@@ -48,10 +48,10 @@ namespace huffman {
 	 */
 	class Tree
 	{
-	friend bool operator<(Tree, Tree);
+	friend bool operator<(const Tree &, const Tree &);
 	public:
 		Tree(const uint8_t data, const uint64_t freq);	// tree with one node
-		Tree(Tree, Tree);								// combining internal trees
+		Tree(const Tree &, const Tree &);				// combining internal trees
 		Tree();											// no args constructor
 		Tree(const Tree &);								// copy constructor
 		virtual ~Tree();

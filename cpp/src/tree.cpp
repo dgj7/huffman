@@ -23,8 +23,8 @@ namespace huffman {
 	 * Tree constructor, from two child trees.
 	 */
 	Tree::Tree(
-		Tree leftTree,
-		Tree rightTree
+		const Tree & leftTree,
+		const Tree & rightTree
 	) {
 		// combine trees
 		_root = new Node();
@@ -118,8 +118,8 @@ namespace huffman {
 	 */
 	bool
 	operator<(
-		Tree left,
-		Tree right
+		const Tree & left,
+		const Tree & right
 	) {
 		uint64_t l = left.getFrequency();
 		uint64_t r = right.getFrequency();
