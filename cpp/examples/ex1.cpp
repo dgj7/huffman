@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 	/* parse command line args, and set input if correct */
 	//std::copy(argv, argv + argc, std::ostream_iterator<char *>(std::cout, "\n")); // requires <algorithm> and <iterator>
 
+	/* grab arg */
 	std::string theString;
 	if (argc == 3 && strcmp(argv[1], "-i") == 0) {
 		theString = argv[2];
@@ -26,10 +27,8 @@ int main(int argc, char **argv)
 
 	/* print the input */
 	std::cout << "input:   [" << theString << "]" << std::endl;
-	
 	std::vector<bool> encoded = huffman::encoder::encode(theString, *tree);
 	std::cout << "encoded: [" << b_vec_to_str(encoded) << "]" << std::endl;
-	
 	std::string decoded = huffman::decoder::decode(encoded, *tree);
 	std::cout << "decoded: [" << decoded << "]" << std::endl;
 }

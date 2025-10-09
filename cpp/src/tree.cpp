@@ -10,7 +10,7 @@ namespace huffman {
 	Tree::Tree(
 		const uint8_t data,
 		const uint64_t freq
-	) {	// leaf trees
+	) {
 		_root = new Node();
 		_root->_nodeType = leaf;
 		_root->_data = data;
@@ -26,7 +26,6 @@ namespace huffman {
 		const Tree & leftTree,
 		const Tree & rightTree
 	) {
-		// combine trees
 		_root = new Node();
 
 		_root->_freq = leftTree.getFrequency() + rightTree.getFrequency();

@@ -72,7 +72,7 @@ namespace huffman {
 	namespace builder {
 		const Tree * build(std::string);						// build from frequencies in a string
 		const Tree * build(std::map<uint8_t,uint64_t>);			// build from given frequency set
-		const Tree * build(std::list<Tree> &);					// build from a list of smaller trees
+		const Tree * build(std::list<Tree*> &);					// build from a list of smaller trees
 	}
 
 	/**

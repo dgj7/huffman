@@ -12,6 +12,13 @@ namespace huffman {
      */
     namespace builder {
         /**
+         * Anonymous helpers.
+         */
+        namespace {
+            bool compare(const Tree *left, const Tree *right);
+        }
+
+        /**
          * Builder method, from input string.
          */
         const Tree *
@@ -41,13 +48,13 @@ namespace huffman {
         build(
             std::map<uint8_t,uint64_t> frequencies
         ) {
-            std::list<Tree> treeList;
+            std::list<Tree*> treeList;
             std::map<uint8_t,uint64_t>::iterator it = frequencies.begin(  );
 
 
             while(it != frequencies.end())
             {
-                Tree tempTree( it->first, it->second );
+                Tree * tempTree = new Tree( it->first, it->second );
                 treeList.push_back( tempTree );
                 it++;
             }
@@ -60,27 +67,43 @@ namespace huffman {
          */
         const Tree *
         build(
-            std::list<Tree> & trees
+            std::list<Tree*> & trees
         ) {
-            trees.sort();
+            trees.sort(compare);
 
             while(trees.size() > 1)
             {
-                std::list<Tree>::iterator firstIter = trees.begin();
-                std::list<Tree>::iterator secondIter = trees.begin();
+                std::list<Tree*>::iterator firstIter = trees.begin();
+                std::list<Tree*>::iterator secondIter = trees.begin();
                 secondIter++;
 
-                Tree newTree((*firstIter),(*secondIter));
+                Tree * first = *firstIter;
+                Tree * second = *secondIter;
+
+                Tree * newTree = new Tree(*first,*second);
 
                 trees.erase(firstIter);
                 trees.erase(secondIter);
 
                 trees.push_back(newTree);
-                trees.sort();
+                trees.sort(compare);
             }
 
-            std::list<Tree>::iterator thirdIter = trees.begin();
-            return new Tree(*thirdIter);
+            std::list<Tree*>::iterator thirdIter = trees.begin();
+            return new Tree(*(*thirdIter));
+        }
+
+        /**
+         * Anonymous helpers.
+         */
+        namespace {
+            /**
+             * Compare two tree pointers, via operator <.
+             */
+            bool compare(const Tree *left, const Tree *right)
+            {
+                return (*left) < (*right);
+            }
         }
     }
 }
