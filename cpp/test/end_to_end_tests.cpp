@@ -11,6 +11,30 @@
 void scenario0(struct cut_run_t *run)
 {
     /* create the input string */
+    std::string input = "a";
+
+    /* create and verify the tree */
+    const huffman::Tree * tree = huffman::builder::build(input);
+    assert_equals(1, tree->size(), run);
+
+    /* encode and verify */
+    // todo: this is wrong
+    std::vector<bool> encoded = huffman::encoder::encode(input, *tree);
+    assert_equals(0, encoded.size(), run);
+    std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
+    assert_equals(0, stringified.length(), run);
+    assert_true("" == stringified, run);
+
+    /* decode and verify */
+    // todo: this is wrong
+    std::string decoded = huffman::decoder::decode(encoded, *tree);
+    assert_equals(0, decoded.length(), run);
+    assert_true("" == decoded, run);
+}
+
+void scenario1(struct cut_run_t *run)
+{
+    /* create the input string */
     std::string input = "abbccc";
 
     /* create and verify the tree */
@@ -22,7 +46,6 @@ void scenario0(struct cut_run_t *run)
     assert_equals(9, encoded.size(), run);
     std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
     assert_equals(9, stringified.length(), run);
-    std::cout << stringified << std::endl;
     assert_true("101111000" == stringified, run);
 
     /* decode and verify */
@@ -31,7 +54,7 @@ void scenario0(struct cut_run_t *run)
     assert_true("abbccc" == decoded, run);
 }
 
-void scenario1(struct cut_run_t *run)
+void scenario2(struct cut_run_t *run)
 {
     /* create the input string */
     std::string input = "this is a sample input string. its text is being used to test the huffman coding tree.";
