@@ -44,7 +44,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Java Build
-      run: ./mavnw -B package
+      run: ./mvnw -B package
       working-directory: ./java
     - name: Java Capture Output
       run: ./run.sh > ../.testall/java.txt
