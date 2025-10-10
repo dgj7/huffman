@@ -22,7 +22,7 @@ struct cut_run_t {
  */
 struct cut_test_t {
     const char * name;
-    const void (*test)(struct cut_run_t *);
+    void (*test)(struct cut_run_t *);
 };
 
 /**
@@ -35,7 +35,7 @@ struct cut_config_t {
 /**
  * Register a unit test function to be run by cut.
  */
-const void register_test(const void (*f)(struct cut_run_t *), const char * const name);
+const void register_test(void (*f)(struct cut_run_t *), const char * const name);
 
 /**
  * Run all unit tests registered with cut.
@@ -46,6 +46,11 @@ const int run_tests(const struct cut_config_t * const config);
  * Assert a state within a unit test registered with cut.
  */
 const void assert_true(const bool assertion, struct cut_run_t * const run);
+
+/**
+ * Assert equality for integers.
+ */
+const void assert_equals(const int expected, const int actual, struct cut_run_t * const run);
 
 /* end: interpret as c */
 #ifdef __cplusplus

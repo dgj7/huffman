@@ -4,7 +4,7 @@
 
 #include "cut.h"
 
-#define CUT_VERSION "0.0.14"
+#define CUT_VERSION "0.0.16"
 #define MAX_TESTS 1000
 
 struct cut_test_t tests[MAX_TESTS];
@@ -18,7 +18,7 @@ const static int ERROR_MALLOC_RUN_NAME = 102;
  */
 const void
 register_test(
-    const void (*f)(struct cut_run_t *)
+    void (*f)(struct cut_run_t *)
     ,const char * const name
 ){
     /* create a test instance; this will be stored internally */
@@ -114,6 +114,25 @@ assert_true(
     {
         run->total_successful += 1;
     } else {
+        run->total_failed += 1;
+    }
+}
+
+/**
+ * Assert equality for integers.
+ */
+const void
+assert_equals(
+    const int expected
+    ,const int actual
+    ,struct cut_run_t * const run
+){
+    if (expected == actual)
+    {
+        run->total_successful += 1;
+    }
+    else
+    {
         run->total_failed += 1;
     }
 }
