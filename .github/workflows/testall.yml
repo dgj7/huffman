@@ -13,7 +13,8 @@ jobs:
       run: make
       working-directory: ./c
     - name: Run C
-      run: ./c/run.sh > .testall/c.txt
+      run: ./run.sh > ../.testall/c.txt
+      working-directory: ./c
     - name: Experiment C (Remove This!)
       run: cat .testall/c.txt
     - name: Set up Python
