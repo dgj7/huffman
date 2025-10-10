@@ -19,7 +19,7 @@ jobs:
       run: make
       working-directory: ./cpp
     - name: C++ Capture Output
-      run: ./run.sh > ../.testall/cpp.txt
+      run: ./target/ex1.exe -i "this is a sample input string. its text is being used to test the huffman coding tree." > ../.testall/cpp.txt
       working-directory: ./cpp
     - name: Rust Build
       run: cargo build --examples --verbose
