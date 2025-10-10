@@ -1,8 +1,5 @@
 #include "huffman.hpp"
 
-#include <iostream>
-#include <sstream>
-
 /**
  * Huffman coding tree.
  */
@@ -69,6 +66,11 @@ namespace huffman {
         build(
             std::list<Tree*> & trees
         ) {
+            if (trees.size() == 0)
+            {
+                return new Tree();
+            }
+
             trees.sort(compare);
 
             while(trees.size() > 1)

@@ -142,7 +142,14 @@ namespace huffman {
 	 */
 	uint64_t
 	Tree::size() const {
-		return this->_root->size();
+		if (this->_root == nullptr)
+		{
+			return 0;
+		}
+		else
+		{
+			return this->_root->size();
+		}
 	}
 
 	/**
