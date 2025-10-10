@@ -13,6 +13,7 @@ main(
     const struct cut_config_t config = {true};
 
     /* register the tests */
+    register_test(scenario0, "scenario0");
     register_test(scenario1, "scenario1");
     register_test(empty_string, "empty_string");
 

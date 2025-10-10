@@ -8,6 +8,29 @@
 // todo: remove this
 #include <iostream>
 
+void scenario0(struct cut_run_t *run)
+{
+    /* create the input string */
+    std::string input = "abbccc";
+
+    /* create and verify the tree */
+    const huffman::Tree * tree = huffman::builder::build(input);
+    assert_equals(5, tree->size(), run);
+
+    /* encode and verify */
+    std::vector<bool> encoded = huffman::encoder::encode(input, *tree);
+    assert_equals(9, encoded.size(), run);
+    std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
+    assert_equals(9, stringified.length(), run);
+    std::cout << stringified << std::endl;
+    assert_true("101111000" == stringified, run);
+
+    /* decode and verify */
+    std::string decoded = huffman::decoder::decode(encoded, *tree);
+    assert_equals(6, decoded.length(), run);
+    assert_true("abbccc" == decoded, run);
+}
+
 void scenario1(struct cut_run_t *run)
 {
     /* create the input string */

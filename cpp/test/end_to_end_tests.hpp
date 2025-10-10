@@ -4,6 +4,7 @@
 #include "cut.h"
 #include "huffman.hpp"
 
+void scenario0(struct cut_run_t *);
 void scenario1(struct cut_run_t *);
 
 void empty_string(struct cut_run_t * run);
