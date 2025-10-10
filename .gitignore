@@ -1,1 +1,7 @@
 .vscode/*
+
+.testall/c.txt
+.testall/c++.txt
+.testall/java.txt
+.testall/rust.txt
+.testall/go.txt

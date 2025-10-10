@@ -9,10 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Build C
+      run: make
+      working-directory: ./c
+    - name: Run C
+      run: ./c/run.sh > .testall/c.txt
+    - name: Experiment C (Remove This!)
+      run: cat .testall/c.txt
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.x'
-
     - name: Run Python script
       run: python .testall/verify.py
