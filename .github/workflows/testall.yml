@@ -9,14 +9,46 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Build C
+    - name: C Build
       run: make
       working-directory: ./c
-    - name: Run C
+    - name: C Capture Output
       run: ./run.sh > ../.testall/c.txt
       working-directory: ./c
-    - name: Experiment C (Remove This!)
-      run: cat .testall/c.txt
+    - name: C++ Build
+      run: make
+      working-directory: ./cpp
+    - name: C++ Capture Output
+      run: ./run.sh > ../.testall/cpp.txt
+      working-directory: ./cpp
+    - name: Rust Build
+      run: cargo build --examples --verbose
+      working-directory: ./rust
+    - name: Rust Capture Output
+      run: ./run.sh > ../.testall/rust.txt
+      working-directory: ./rust
+    - name: Go setup
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.20'
+    - name: Go Build
+      run: go build -v ./...
+      working-directory: ./go
+    - name: Go Capture Output
+      run: ./run.sh > ../.testall/go.txt
+      working-directory: ./go
+    - name: Java setup
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Java Build
+      run: ./mavnw -B package
+      working-directory: ./java
+    - name: Java Capture Output
+      run: ./run.sh > ../.testall/java.txt
+      working-directory: ./java
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
