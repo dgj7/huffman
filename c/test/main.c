@@ -9,6 +9,7 @@ int main() {
 
     /* register tests */
     register_test(short_string, "short_string");
+    register_test(main_case, "main_case");
 
     /* return the number of failed tests */
     return run_tests(&config);

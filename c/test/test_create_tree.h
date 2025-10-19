@@ -4,5 +4,6 @@
 #include "cut.h"
 
 void short_string(struct cut_run_t * run);
+void main_case(struct cut_run_t * run);
 
 #endif
