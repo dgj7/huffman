@@ -2,7 +2,8 @@
 
 function do_build() {
     printf "building for $1..."
-    (cd $1; ./build.sh > /dev/null 2>&1)
+#    (cd $1; ./build.sh > /dev/null 2>&1)
+    (cd $1; ./build.sh)
     if [ $? -eq 0 ]; then
     printf " done.\n"
     else
