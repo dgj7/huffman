@@ -13,8 +13,8 @@
 		<junitversion>4.12</junitversion>
 
 		<!-- build -->
-		<compilersourceversion>1.7</compilersourceversion>
-		<compilertargetversion>1.7</compilertargetversion>
+		<compilersourceversion>1.8</compilersourceversion>
+		<compilertargetversion>1.8</compilertargetversion>
 		<maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
 		<surefireversion>2.16</surefireversion>
 	</properties>
