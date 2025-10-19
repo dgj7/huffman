@@ -45,7 +45,9 @@ main(
 
 				/* create huffman-related data structures */
 				const struct node_t * const tree = create_tree(message, length);
+				//debug_print_tree(tree);
 				const struct encoding_list_t * const encodings = extract_encodings(tree);
+				//debug_print_encodings(encodings);
 
 				/* do transformations with the huffman data */
 				const struct encoded_message_t * const encoded = encode(message, encodings);

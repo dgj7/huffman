@@ -6,6 +6,7 @@
 #include "frequency.h"
 #include "tree.h"
 #include "encoding.h"
+#include "debug.h"
 
 static const void free_encoding(const struct encoding_t * const encoding);
 
@@ -66,4 +67,18 @@ free_encoding(
 	free(encoding->bitvec->bits);
 	free(encoding->bitvec);
 	free((void*)encoding);
+}
+
+const void
+debug_print_tree(
+	const struct node_t * const tree
+){
+	debug_print_tree_helper(tree);
+}
+
+const void
+debug_print_encodings(
+	const struct encoding_list_t * const encodings
+){
+	debug_print_encodings_helper(encodings);
 }
