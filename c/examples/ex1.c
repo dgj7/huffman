@@ -1,7 +1,6 @@
 #include <stdio.h> 			// printf()
 #include <string.h> 		// strcpy(), strlen(), strncat()
 #include <stdlib.h> 		// malloc(), free()
-#include <time.h> 			// clock_t, CLOCKS_PER_SEC
 #include <stdlib.h> 		// exit()
 
 #include "huffman.h"		// huffman library
@@ -36,8 +35,6 @@ main(
 	const int argc
 	,const char ** const argv
 ){
-	const clock_t start = clock();
-
 	if (argc == 3) {
 		if (strcmp(argv[IDX_ARG], "-i") == 0) {
 			const size_t length = strlen(argv[IDX_MESSAGE]);
@@ -75,11 +72,6 @@ main(
 		printf("Error: unknown arg count: %d\n", argc);
 		return ERROR_UNKNOWN_ARG_COUNT;
 	}
-
-	/* declare success, print profiling info */
-	const clock_t elapsed = clock() - start;
-	const double ms = (((double)elapsed)/CLOCKS_PER_SEC)/1000;
-	printf("done. (%.0lf ms)\n", ms);
 
 	/* done */
 	return 0;
