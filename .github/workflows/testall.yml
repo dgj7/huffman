@@ -27,6 +27,6 @@ jobs:
       run: ./build-all.sh
     - name: capture
       run: ./capture-all.sh
-    - name: Run Python script
-      run: python verify.py
+    - name: verify
+      run: ./verify-all.sh
       working-directory: ./.testall
