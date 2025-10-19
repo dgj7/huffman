@@ -2,6 +2,7 @@
 
 .testall/c.txt
 .testall/c++.txt
+.testall/cpp.txt
 .testall/java.txt
 .testall/rust.txt
 .testall/go.txt
