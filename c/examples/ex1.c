@@ -45,9 +45,7 @@ main(
 
 				/* create huffman-related data structures */
 				const struct node_t * const tree = create_tree(message, length);
-				//debug_print_tree(tree);
 				const struct encoding_list_t * const encodings = extract_encodings(tree);
-				//debug_print_encodings(encodings);
 
 				/* do transformations with the huffman data */
 				const struct encoded_message_t * const encoded = encode(message, encodings);
@@ -165,16 +163,18 @@ decode(
 
 	/* loop over bits */
 	struct node_t * node = (struct node_t *) tree;
-	for (int bit_idx = 0; bit_idx < encoded->length; bit_idx++) {
+	for (int bit_idx = 0; bit_idx <= encoded->length; bit_idx++) {
 		/* if it's a leaf node, we can grab the symbol and put it on the output string */
 		if (node->nt == LEAF) {
 			output[out_str_idx] = node->symbol;
 			out_str_idx++;
+			//printf(": %c\n", node->symbol);
 			node = (struct node_t *) tree;
 		}
 
 		/* get the current bit */
 		const bool bit = encoded->bits[bit_idx];
+		//printf("[%c]->%c[%c(%lu)]", bit ? '1' : '0', node->nt == 98 ? 'I' : 'L', node->symbol, node->frequency);
 
 		/* use the current bit to reassign the node pointer */
 		if (bit) {
@@ -193,6 +193,7 @@ decode(
 	}
 
 	/* done */
+	printf("\n");
 	return output;
 }
 
