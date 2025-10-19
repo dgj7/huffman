@@ -29,4 +29,3 @@ jobs:
       run: ./capture-all.sh
     - name: verify
       run: ./verify-all.sh
-      working-directory: ./.testall
