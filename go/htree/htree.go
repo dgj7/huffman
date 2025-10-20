@@ -139,6 +139,7 @@ func (tree HuffTree) ToEncodingTable() map[rune]BitSet {
 	return output
 }
 
+// todo: this should not be using the stringified version of the bitset
 func (tree HuffTree) ToDecodingTable() map[string]rune {
 	var encoding = tree.ToEncodingTable()
 	var decoding = make(map[string]rune)
