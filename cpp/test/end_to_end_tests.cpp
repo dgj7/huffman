@@ -5,20 +5,16 @@
 #include <string>
 #include <numeric>              // std::accumulate
 
-// todo: remove this
-#include <iostream>
-
-void scenario0(struct cut_run_t *run)
+void empty_string(struct cut_run_t * run)
 {
     /* create the input string */
-    std::string input = "a";
+    std::string input = "";
 
     /* create and verify the tree */
     const huffman::Tree * tree = huffman::builder::build(input);
-    assert_equals(1, tree->size(), run);
+    assert_equals(0, tree->size(), run);
 
     /* encode and verify */
-    // todo: this is wrong
     std::vector<bool> encoded = huffman::encoder::encode(input, *tree);
     assert_equals(0, encoded.size(), run);
     std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
@@ -26,7 +22,6 @@ void scenario0(struct cut_run_t *run)
     assert_true("" == stringified, run);
 
     /* decode and verify */
-    // todo: this is wrong
     std::string decoded = huffman::decoder::decode(encoded, *tree);
     assert_equals(0, decoded.length(), run);
     assert_true("" == decoded, run);
@@ -74,26 +69,4 @@ void scenario2(struct cut_run_t *run)
     std::string decoded = huffman::decoder::decode(encoded, *tree);
     assert_equals(86, decoded.length(), run);
     assert_true("this is a sample input string. its text is being used to test the huffman coding tree." == decoded, run);
-}
-
-void empty_string(struct cut_run_t * run)
-{
-    /* create the input string */
-    std::string input = "";
-
-    /* create and verify the tree */
-    const huffman::Tree * tree = huffman::builder::build(input);
-    assert_equals(0, tree->size(), run);
-
-    /* encode and verify */
-    std::vector<bool> encoded = huffman::encoder::encode(input, *tree);
-    assert_equals(0, encoded.size(), run);
-    std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
-    assert_equals(0, stringified.length(), run);
-    assert_true("" == stringified, run);
-
-    /* decode and verify */
-    std::string decoded = huffman::decoder::decode(encoded, *tree);
-    assert_equals(0, decoded.length(), run);
-    assert_true("" == decoded, run);
 }
