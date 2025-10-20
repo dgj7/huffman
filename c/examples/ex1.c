@@ -52,6 +52,10 @@ main(
 				const char * const printable = printable_encoded_message(encoded);
 				const char * const decoded = decode(encoded, tree, length);
 
+				/* do debug things */
+				//debug_print_tree(tree);
+				//debug_print_encodings(encodings);
+
 				/* print results */
 				printf("input:   [%s]\n", message);
 				printf("encoded: [%s]\n", printable);
