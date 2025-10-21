@@ -49,8 +49,8 @@
 * [x] ~~setup workflow~~
 * [ ] add unit tests
   * [ ] empty string: ""
-  * [ ] short string: "abcaba"
-  * [ ] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
+  * [x] short string: "abcaba"
+  * [x] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
 * [ ] ease of use: combine tree with encodings
 * [x] memory efficiency: implement bit vector for returning data
 
