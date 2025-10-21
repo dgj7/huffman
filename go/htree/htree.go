@@ -2,6 +2,8 @@ package htree
 
 import "sort"
 
+import "fmt"
+
 type HuffNode struct {
 	Left *HuffNode
 	Right *HuffNode
@@ -71,19 +73,22 @@ func toSlice(input map[rune]count) []HuffNode {
 func toTree(input []HuffNode) HuffTree {
 	for len(input) > 1 {
 		/* sort the list */
-		sort.Slice(input, func(lex, rix int) bool {
-			var le = input[lex]
-			var ri = input[rix]
-			if le.Frequency == ri.Frequency {
-				if isLeaf(&le) && isLeaf(&ri) {
-					return le.Symbol < ri.Symbol
-				} else {
-					return nodeSize(&le) < nodeSize(&ri)
-				}
+		sortNodes(input)
+
+		/* print some debug info */
+		// todo: print in the same format as is in algorithm.md
+		fmt.Printf("%d: ", len(input))
+		for _idx, _node := range input {
+			if isLeaf(&_node) {
+				fmt.Printf("[%c|%d]", _node.Symbol, _node.Frequency)
 			} else {
-				return le.Frequency < ri.Frequency
+				fmt.Printf("{f=%d,sz=%d}", _node.Frequency, nodeSize(&_node))
 			}
-		})
+			if _idx < len(input)-1 {
+				fmt.Printf(",")
+			}
+		}
+		fmt.Println()
 
 		/* pull the first two elements */
 		var left = input[0]
@@ -100,6 +105,23 @@ func toTree(input []HuffNode) HuffTree {
 		input = append(input, root)
 	}
 	return HuffTree { Root: &input[0] }
+}
+
+func sortNodes(input []HuffNode) {
+	sort.Slice(input, func(leftIndex, rightIndex int) bool {	
+		var leftNode = input[leftIndex]
+		var rightNode = input[rightIndex]
+		
+		if leftNode.Frequency == rightNode.Frequency {
+			if isLeaf(&leftNode) && isLeaf(&rightNode) {
+				return leftNode.Symbol < rightNode.Symbol
+			} else {
+				return nodeSize(&leftNode) < nodeSize(&rightNode)
+			}
+		} else {
+			return leftNode.Frequency < rightNode.Frequency
+		}
+	})
 }
 
 func removeFromSlice(s []HuffNode, index int) []HuffNode {
@@ -173,6 +195,7 @@ func descendNode(node *HuffNode, capacity uint64, index uint64, next bool, bs []
 			bitset.SetBit(i, b)
 			i = i + 1
 		}
+		//fmt.Printf("%c ===> %s\n", node.Symbol, bitset.ToString())
 		table[node.Symbol] = bitset
 	}
 }
