@@ -69,7 +69,14 @@ func (bs BitSet) ToString() string {
 	return sb.String()
 }
 
-func (bs BitSet) Equals() bool {
-	// todo
+func (bs BitSet) Equals(other BitSet) bool {
+	if bs.Len() == other.Len() {
+		for i := uint64(0); i < bs.Len(); i++ {
+			if bs.GetBit(i) != other.GetBit(i) {
+				return false
+			}
+		}
+		return true
+	}
 	return false 
 }
