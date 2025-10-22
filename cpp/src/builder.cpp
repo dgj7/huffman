@@ -1,4 +1,5 @@
 #include "huffman.hpp"
+#include "debug.hpp"
 
 /**
  * Huffman coding tree.
@@ -71,10 +72,12 @@ namespace huffman {
                 return new Tree();
             }
 
-            trees.sort(compare);
-
             while(trees.size() > 1)
             {
+                trees.sort(compare);
+
+                //debug::tree_list(trees);
+
                 std::list<Tree*>::iterator firstIter = trees.begin();
                 std::list<Tree*>::iterator secondIter = trees.begin();
                 secondIter++;
@@ -88,7 +91,6 @@ namespace huffman {
                 trees.erase(secondIter);
 
                 trees.push_back(newTree);
-                trees.sort(compare);
             }
 
             std::list<Tree*>::iterator thirdIter = trees.begin();
