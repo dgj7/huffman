@@ -2,8 +2,6 @@ package htree
 
 import "sort"
 
-import "fmt"
-
 type HuffNode struct {
 	Left *HuffNode
 	Right *HuffNode
@@ -76,19 +74,7 @@ func toTree(input []HuffNode) HuffTree {
 		sortNodes(input)
 
 		/* print some debug info */
-		// todo: print in the same format as is in algorithm.md
-		fmt.Printf("%d: ", len(input))
-		for _idx, _node := range input {
-			if isLeaf(&_node) {
-				fmt.Printf("[%c|%d]", _node.Symbol, _node.Frequency)
-			} else {
-				fmt.Printf("{f=%d,sz=%d}", _node.Frequency, nodeSize(&_node))
-			}
-			if _idx < len(input)-1 {
-				fmt.Printf(",")
-			}
-		}
-		fmt.Println()
+		DebugNodeSlice(input)
 
 		/* pull the first two elements */
 		var left = input[0]

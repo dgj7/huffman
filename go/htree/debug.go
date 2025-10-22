@@ -19,3 +19,24 @@ func DebugPrintDecodingTable(tree HuffTree) {
 	}
 	fmt.Printf("==========\n")
 }
+
+func DebugNodeSlice(nodes []HuffNode) {
+	fmt.Printf("list has [%d] elements\n", len(nodes))
+	for _, node := range nodes {
+		if isLeaf(&node) {
+			fmt.Printf("\t[%d] <= [%c]\n", node.Frequency, node.Symbol)
+		} else {
+			fmt.Printf("\t[%d] <= INTERNAL[%s]\n", node.Frequency, LeavesToOneLine(&node))
+		}
+	}
+}
+
+func LeavesToOneLine(node *HuffNode)string {
+	if isLeaf(node) {
+		return fmt.Sprintf("%d|%c", node.Frequency, node.Symbol)
+	} else {
+		var left = LeavesToOneLine(node.Left)
+		var right = LeavesToOneLine(node.Right)
+		return left + ", " + right
+	}
+}
