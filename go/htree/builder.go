@@ -47,15 +47,13 @@ func toTree(input []HuffNode) HuffTree {
 		sort.Sort(NodeArray(input))
 
 		/* print some debug info */
-		DebugNodeSlice(input)
+		//DebugNodeSlice(input)
 
 		/* pull the first two elements */
 		var left = input[0]
-		var right = input[1]
-
-		/* shorten the slice */
-		input = removeFromSlice(input, 0)
-		input = removeFromSlice(input, 0)
+		input = append(input[:0], input[1:]...)
+		var right = input[0]
+		input = append(input[:0], input[1:]...)
 
 		/* merge the first two elements into a tree */
 		var root = HuffNode { Left: &left, Right: &right, Frequency: left.Frequency + right.Frequency }
@@ -64,8 +62,4 @@ func toTree(input []HuffNode) HuffTree {
 		input = append(input, root)
 	}
 	return HuffTree { Root: &input[0] }
-}
-
-func removeFromSlice(s []HuffNode, index int) []HuffNode {
-    return append(s[:index], s[index+1:]...)
 }
