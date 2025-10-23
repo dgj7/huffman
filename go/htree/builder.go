@@ -44,7 +44,7 @@ func toSlice(input map[rune]count) []HuffNode {
 func toTree(input []HuffNode) HuffTree {
 	for len(input) > 1 {
 		/* sort the list */
-		sortNodes(input)
+		sort.Sort(NodeArray(input))
 
 		/* print some debug info */
 		DebugNodeSlice(input)
@@ -64,23 +64,6 @@ func toTree(input []HuffNode) HuffTree {
 		input = append(input, root)
 	}
 	return HuffTree { Root: &input[0] }
-}
-
-func sortNodes(input []HuffNode) {
-	sort.Slice(input, func(leftIndex, rightIndex int) bool {	
-		var leftNode = input[leftIndex]
-		var rightNode = input[rightIndex]
-		
-		if leftNode.Frequency == rightNode.Frequency {
-			if leftNode.isLeaf() && rightNode.isLeaf() {
-				return leftNode.Symbol < rightNode.Symbol
-			} else {
-				return (&leftNode).size() < (&rightNode).size()
-			}
-		} else {
-			return leftNode.Frequency < rightNode.Frequency
-		}
-	})
 }
 
 func removeFromSlice(s []HuffNode, index int) []HuffNode {
