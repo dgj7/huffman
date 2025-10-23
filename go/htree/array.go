@@ -18,12 +18,22 @@ func (array NodeArray) Len() int {
 func (array NodeArray) Less(i int, j int) bool {
 	var leftNode = array[i]
 	var rightNode = array[j]
-	
+	return NodeLess(leftNode, rightNode)
+}
+
+func NodeLess(leftNode HuffNode, rightNode HuffNode) bool {
 	if leftNode.Frequency == rightNode.Frequency {
 		if leftNode.isLeaf() && rightNode.isLeaf() {
 			return leftNode.Symbol < rightNode.Symbol
 		} else {
-			return (&leftNode).size() < (&rightNode).size()
+			var leftSize = (&leftNode).size()
+			var rightSize = (&rightNode).size()
+			if (leftSize == rightSize) {
+				// todo: is there a different way to achieve this?  does this need to happen in other libraries as well?
+				return NodeLess(*leftNode.Left, *rightNode.Left)
+			} else {
+				return leftSize < rightSize
+			}
 		}
 	} else {
 		return leftNode.Frequency < rightNode.Frequency
