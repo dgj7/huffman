@@ -10,8 +10,7 @@ func (tree HuffTree) size() uint64 {
 
 func (tree HuffTree) ToEncodingTable() map[rune]BitSet {
 	var output = make(map[rune]BitSet)
-	var capacity = uint64(MaxDepth(tree.Root))
-	descendTree(tree, output, capacity)
+	descendTree(tree, output, tree.size())
 	return output
 }
 

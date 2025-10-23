@@ -26,21 +26,6 @@ func (node HuffNode) isLeaf() bool {
 	return node.Left == nil && node.Right == nil
 }
 
-func MaxDepth(input *HuffNode) int {
-	if input == nil {
-		return 0
-	}
-
-	var leftDepth int = MaxDepth(input.Left)
-	var rightDepth int = MaxDepth(input.Right)
-
-	if leftDepth > rightDepth {
-		return leftDepth +1
-	} else {
-		return rightDepth +1
-	}
-}
-
 func descendNode(node *HuffNode, capacity uint64, index uint64, next bool, bs []bool, table map[rune]BitSet) {
 	bs[index] = next
 	if (node.Left != nil && node.Right != nil) {

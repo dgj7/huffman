@@ -16,7 +16,6 @@ func TestToTreeSmall(t *testing.T) {
 	var input = "abbccc"
 
 	var tree = Create(input)
-	assert.Equal(t, 3, MaxDepth(tree.Root), "max depth wrong")
 	assert.Equal(t, uint64(5), tree.size(), "tree size wrong")
 	assert.Equal(t, uint64(5), tree.Root.size(), "node size wrong")
 
@@ -37,7 +36,6 @@ func TestToTreeScenario1(t *testing.T) {
 	var input = "this is a sample input string. its text is being used to test the huffman coding tree.";
 
 	var tree = Create(input)
-	assert.Equal(t, 7, MaxDepth(tree.Root), "tree max depth wrong")
 	assert.Equal(t, uint64(41), tree.size(), "tree size wrong")
 	assert.Equal(t, uint64(41), tree.Root.size(), "tree node size wrong")
 
