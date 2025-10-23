@@ -19,7 +19,7 @@ func (tree HuffTree) ToEncodingTable() map[rune]BitSet {
 		return output
 	}
 
-	descendTree(tree, output, tree.size())
+	descendTree(tree, output)
 	return output
 }
 
@@ -35,11 +35,11 @@ func (tree HuffTree) ToDecodingTable() map[string]rune {
 	return decoding
 }
 
-func descendTree(tree HuffTree, table map[rune]BitSet, capacity int) {
+func descendTree(tree HuffTree, table map[rune]BitSet) {
 	if tree.Root.Left != nil {
-		descendNode(tree.Root.Left, capacity, 0, false, make([]bool, capacity), table)
+		descendNode(tree.Root.Left, 0, false, make([]bool, tree.size()), table)
 	}
 	if tree.Root.Right != nil {
-		descendNode(tree.Root.Right, capacity, 0, true, make([]bool, capacity), table)
+		descendNode(tree.Root.Right, 0, true, make([]bool, tree.size()), table)
 	}
 }
