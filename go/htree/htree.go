@@ -4,7 +4,7 @@ type HuffTree struct {
 	Root *HuffNode
 }
 
-func (tree HuffTree) size() uint64 {
+func (tree HuffTree) size() int {
 	if tree.Root == nil {
 		return 0
 	}
@@ -35,7 +35,7 @@ func (tree HuffTree) ToDecodingTable() map[string]rune {
 	return decoding
 }
 
-func descendTree(tree HuffTree, table map[rune]BitSet, capacity uint64) {
+func descendTree(tree HuffTree, table map[rune]BitSet, capacity int) {
 	if tree.Root.Left != nil {
 		descendNode(tree.Root.Left, capacity, 0, false, make([]bool, capacity), table)
 	}

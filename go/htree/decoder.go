@@ -5,7 +5,7 @@ func Decode(tree HuffTree, encoded BitSet) string {
 	var key = ""
 	var table = tree.ToDecodingTable()
 
-	var i uint64 = 0
+	var i int = 0
 
 	for i < encoded.Len() {
 		var bit = encoded.GetBit(i)

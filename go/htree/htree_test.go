@@ -8,7 +8,7 @@ func TestToTreeEmpty(t *testing.T) {
 
 	var tree = Create(input)
 
-	assert.Equal(t, uint64(0), tree.size(), "tree size wrong")
+	assert.Equal(t, 0, tree.size(), "tree size wrong")
 	assert.Nil(t, tree.Root, "tree root not nil")
 
 	var encodings = tree.ToEncodingTable()
@@ -25,8 +25,8 @@ func TestToTreeSmall(t *testing.T) {
 	var input = "abbccc"
 
 	var tree = Create(input)
-	assert.Equal(t, uint64(5), tree.size(), "tree size wrong")
-	assert.Equal(t, uint64(5), tree.Root.size(), "node size wrong")
+	assert.Equal(t, 5, tree.size(), "tree size wrong")
+	assert.Equal(t, 5, tree.Root.size(), "node size wrong")
 
 	var encodings = tree.ToEncodingTable()
 	assert.Equal(t, 3, len(encodings), "encodings len wrong")
@@ -45,8 +45,8 @@ func TestToTreeScenario1(t *testing.T) {
 	var input = "this is a sample input string. its text is being used to test the huffman coding tree.";
 
 	var tree = Create(input)
-	assert.Equal(t, uint64(41), tree.size(), "tree size wrong")
-	assert.Equal(t, uint64(41), tree.Root.size(), "tree node size wrong")
+	assert.Equal(t, 41, tree.size(), "tree size wrong")
+	assert.Equal(t, 41, tree.Root.size(), "tree node size wrong")
 
 	var encodings = tree.ToEncodingTable()
 	assert.Equal(t, 21, len(encodings), "encodings len wrong")

@@ -4,18 +4,17 @@ import "strings"
 
 type BitSet struct {
 	data []uint8
-	length uint64
 }
 
-func NewBitSet(len uint64) BitSet {
-	return BitSet { data: make([]uint8, len), length: len }
+func NewBitSet(len int) BitSet {
+	return BitSet { data: make([]uint8, len) }
 }
 
 func MergeBitSets(left BitSet, right BitSet) BitSet {
-	var lenSum uint64 = left.Len() + right.Len()
+	var lenSum int = left.Len() + right.Len()
 	var bs = NewBitSet(lenSum)
 
-	var i uint64 = 0
+	var i int = 0
 	for i < left.Len() {
 			var value bool = left.GetBit(i)
 			bs.SetBit(i, value)
@@ -32,17 +31,17 @@ func MergeBitSets(left BitSet, right BitSet) BitSet {
 	return bs
 }
 
-func (bs BitSet) Len() uint64 {
-	return bs.length
+func (bs BitSet) Len() int {
+	return len(bs.data)
 }
 
-func (bs BitSet) GetBit(index uint64) bool {
+func (bs BitSet) GetBit(index int) bool {
 	var position = index / 8
 	var shift = uint(index % 8)
 	return (bs.data[position] & (uint8(1) << shift)) != 0
 }
 
-func (bs BitSet) SetBit(index uint64, value bool) {
+func (bs BitSet) SetBit(index int, value bool) {
 	var position = index / 8
 	var shift = uint(index % 8)
 	if value {
@@ -55,8 +54,8 @@ func (bs BitSet) SetBit(index uint64, value bool) {
 func (bs BitSet) ToString() string {
 	var sb strings.Builder
 
-	var i uint64 = 0
-	for i < bs.length {
+	var i int = 0
+	for i < len(bs.data) {
 		var value = bs.GetBit(i)
 		if value {
 			sb.WriteString("1")
@@ -71,7 +70,7 @@ func (bs BitSet) ToString() string {
 
 func (bs BitSet) Equals(other BitSet) bool {
 	if bs.Len() == other.Len() {
-		for i := uint64(0); i < bs.Len(); i++ {
+		for i := 0; i < bs.Len(); i++ {
 			if bs.GetBit(i) != other.GetBit(i) {
 				return false
 			}
