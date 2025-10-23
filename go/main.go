@@ -11,6 +11,9 @@ func main() {
 	var encoded = htree.Encode(tree, input)
 	var decoded = htree.Decode(tree, encoded)
 
+	//htree.DebugPrintEncodingTable(tree)
+	//htree.DebugPrintDecodingTable(tree)
+
 	fmt.Printf("input:   [%s]\n", input)
 	fmt.Printf("encoded: [%s]\n", encoded.ToString())
 	fmt.Printf("decoded: [%s]\n", decoded)

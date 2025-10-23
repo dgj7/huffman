@@ -38,7 +38,15 @@ impl HuffmanTree {
     pub(crate) fn new(mut frequencies: Vec<TreeNode>) -> HuffmanTree {
         /* presently failing for an empty frequency list */
         if frequencies.is_empty() {
-            panic!("empty frequencies vector!");
+            return HuffmanTree {
+                root: TreeNode {
+                    symbol: None,
+                    frequency: 0,
+                    left: None,
+                    right: None
+                },
+                encodings: HashMap::new()
+            }
         }
 
         /* merge elements in the frequency list until there is only a single element; that element is the tree's root */

@@ -1,7 +1,6 @@
 #include <stdio.h> 			// printf()
 #include <string.h> 		// strcpy(), strlen(), strncat()
 #include <stdlib.h> 		// malloc(), free()
-#include <time.h> 			// clock_t, CLOCKS_PER_SEC
 #include <stdlib.h> 		// exit()
 
 #include "huffman.h"		// huffman library
@@ -36,8 +35,6 @@ main(
 	const int argc
 	,const char ** const argv
 ){
-	const clock_t start = clock();
-
 	if (argc == 3) {
 		if (strcmp(argv[IDX_ARG], "-i") == 0) {
 			const size_t length = strlen(argv[IDX_MESSAGE]);
@@ -54,6 +51,10 @@ main(
 				const struct encoded_message_t * const encoded = encode(message, encodings);
 				const char * const printable = printable_encoded_message(encoded);
 				const char * const decoded = decode(encoded, tree, length);
+
+				/* do debug things */
+				//debug_print_tree(tree);
+				//debug_print_encodings(encodings);
 
 				/* print results */
 				printf("input:   [%s]\n", message);
@@ -75,11 +76,6 @@ main(
 		printf("Error: unknown arg count: %d\n", argc);
 		return ERROR_UNKNOWN_ARG_COUNT;
 	}
-
-	/* declare success, print profiling info */
-	const clock_t elapsed = clock() - start;
-	const double ms = (((double)elapsed)/CLOCKS_PER_SEC)/1000;
-	printf("done. (%.0lf ms)\n", ms);
 
 	/* done */
 	return 0;
@@ -171,16 +167,18 @@ decode(
 
 	/* loop over bits */
 	struct node_t * node = (struct node_t *) tree;
-	for (int bit_idx = 0; bit_idx < encoded->length; bit_idx++) {
+	for (int bit_idx = 0; bit_idx <= encoded->length; bit_idx++) {
 		/* if it's a leaf node, we can grab the symbol and put it on the output string */
 		if (node->nt == LEAF) {
 			output[out_str_idx] = node->symbol;
 			out_str_idx++;
+			//printf(": %c\n", node->symbol);
 			node = (struct node_t *) tree;
 		}
 
 		/* get the current bit */
 		const bool bit = encoded->bits[bit_idx];
+		//printf("[%c]->%c[%c(%lu)]", bit ? '1' : '0', node->nt == 98 ? 'I' : 'L', node->symbol, node->frequency);
 
 		/* use the current bit to reassign the node pointer */
 		if (bit) {
@@ -199,6 +197,7 @@ decode(
 	}
 
 	/* done */
+	printf("\n");
 	return output;
 }
 

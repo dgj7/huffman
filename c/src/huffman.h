@@ -37,8 +37,12 @@ struct encoding_list_t {
 
 const struct node_t * const create_tree(const char * const message, const int length);
 const struct encoding_list_t * const extract_encodings(const struct node_t * const tree);
+
 const void free_tree(const struct node_t * const tree);
 const void free_encodings(const struct encoding_list_t * const list);
+
+const void debug_print_tree(const struct node_t * const tree);
+const void debug_print_encodings(const struct encoding_list_t * const encodings);
 
 
 #ifdef __cplusplus

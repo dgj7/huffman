@@ -3,6 +3,21 @@ mod test {
     use huffman_coding_lib::{decode, encode, treeify};
 
     #[test]
+    fn test_empty() {
+        let input = String::from("");
+        let bytes = input.as_bytes().to_vec();
+
+        let tree = treeify(&bytes);
+        let encoded = encode(&bytes, &tree);
+        let decoded = decode(&encoded, &tree);
+
+        let translated = String::from_utf8_lossy(&decoded);
+
+        assert_eq!("", translated);
+        assert_eq!(0, translated.len());
+    }
+
+    #[test]
     fn test_end_to_end_1() {
         let input = String::from("this is a sample input string. its text is being used to test the huffman coding tree.");
         let bytes = input.as_bytes().to_vec();

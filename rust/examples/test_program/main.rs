@@ -6,9 +6,6 @@ use huffman_coding_lib::{treeify,encode,decode};
 /// Convert an input string into a huffman encoded bit stream, and then back into a string.
 ///
 fn main() {
-    /* enable some profiling */
-    let start = std::time::Instant::now();
-
     /* deal with the input; this program converts string input into a poorly translated byte array */
     let input = parse(std::env::args());
     let bytes = input.as_bytes().to_vec();
@@ -25,7 +22,6 @@ fn main() {
     println!("input:   [{}]", input);
     println!("encoded: [{}]", encoded.to_string());
     println!("decoded: [{}]", translated);
-    println!("done. ({}ms)", start.elapsed().as_millis());
 }
 
 ///
