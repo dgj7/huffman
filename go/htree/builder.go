@@ -14,6 +14,11 @@ func Create(input string) HuffTree {
 
 func toFrequencyMap(input string) map[rune]count {
 	frequencies := make(map[rune]count)
+
+	if (len(input) == 0) {
+		return frequencies
+	}
+
 	runes := []rune(input)
 	for i := 0; i < len(runes); i++ {
 		var letter = runes[i]
@@ -42,6 +47,10 @@ func toSlice(input map[rune]count) []HuffNode {
 }
 
 func toTree(input []HuffNode) HuffTree {
+	if (len(input) == 0) {
+		return HuffTree { Root: nil }
+	}
+
 	for len(input) > 1 {
 		/* sort the list */
 		sort.Sort(NodeArray(input))

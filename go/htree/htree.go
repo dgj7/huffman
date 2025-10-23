@@ -5,11 +5,20 @@ type HuffTree struct {
 }
 
 func (tree HuffTree) size() uint64 {
+	if tree.Root == nil {
+		return 0
+	}
+	
 	return tree.Root.size()
 }
 
 func (tree HuffTree) ToEncodingTable() map[rune]BitSet {
 	var output = make(map[rune]BitSet)
+
+	if (tree.Root == nil) {
+		return output
+	}
+
 	descendTree(tree, output, tree.size())
 	return output
 }

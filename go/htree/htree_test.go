@@ -3,14 +3,12 @@ package htree
 import "testing"
 import "github.com/stretchr/testify/assert" // https://pkg.go.dev/github.com/stretchr/testify/assert
 
-// todo: fix, this doesn't work (panic)
-//func TestToTreeEmpty(t *testing.T) {
-//	var tree = Create("")
-//
-//	assert.Equal(t, 7, MaxDepth(tree.Root), "max depth wrong")
-//	assert.Equal(t, uint64(41), treeSize(tree), "tree size wrong")
-//	assert.Equal(t, uint64(41), nodeSize(tree.Root), "node size wrong")
-//}
+func TestToTreeEmpty(t *testing.T) {
+	var tree = Create("")
+
+	assert.Equal(t, uint64(0), tree.size(), "tree size wrong")
+	assert.Nil(t, tree.Root, "tree root not nil")
+}
 
 func TestToTreeSmall(t *testing.T) {
 	var input = "abbccc"
