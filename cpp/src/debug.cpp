@@ -1,7 +1,6 @@
 #include "debug.hpp"
 
 #include <iostream>         // cout
-#include <string>           // string
 #include <sstream>          // stringstream
 
 /**
@@ -32,15 +31,45 @@ namespace huffman {
                     std::cout << "ERROR: tree pointer is null!" << std::endl;
                 }
                 Node *node = tree->_root;
-                if (node->_left == NULL && node->_right == NULL)
-                {
-                    std::cout << "\t[" << node->_freq << "] <= [" << node->_data << "]" << std::endl;
-                }
-                else
-                {
-                    std::cout << "\t[" << node->_freq << " <= INTERNAL[" << leaves_to_one_line(node) << "]" << std::endl;
-                }
+                std::cout << node_details(node, 1) << std::endl;
             }
+        }
+
+        void
+        sort_iteration(
+            std::string step
+            ,bool result
+            ,const Tree &left
+            ,const Tree  &right
+        ) {
+            std::cout << "\t" << step << ": " << (result ? "true" : "false") << std::endl
+                << node_details(left._root, 2) << std::endl
+                << node_details(right._root, 2) << std::endl
+                ;
+        }
+
+        std::string
+        node_details(
+            Node *node
+            ,int tab_count
+        ){
+            std::stringstream ss;
+
+            for (int c = 0; c < tab_count; c++)
+            {
+                ss << "\t";
+            }
+
+            if (node->_nodeType == leaf)
+            {
+                ss << "[" << node->_freq << "]->[" << node->_data << "]";
+            }
+            else
+            {
+                ss << "[" << node->_freq << "]->[" << leaves_to_one_line(node) << "]";
+            }
+
+            return ss.str();
         }
     }
 
@@ -52,7 +81,7 @@ namespace huffman {
         leaves_to_one_line(
             Node *node
         ) {
-            if (node->_left == NULL && node->_right == NULL)
+            if (node->_nodeType == leaf)
             {
                 std::stringstream ss;
                 ss << node->_freq << "|" << node->_data;

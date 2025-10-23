@@ -1,4 +1,5 @@
 #include "huffman.hpp"
+#include "debug.hpp"
 
 /**
  * Huffman coding tree.
@@ -125,13 +126,16 @@ namespace huffman {
 
 		if(l != r)
 		{
+			//debug::sort_iteration("frequency", l < r, left, right);
 			return l < r;
 		}
 		else// if the frequencies are equal
 		{
 			if (left._root->_nodeType == leaf && right._root->_nodeType == leaf) {
+				//debug::sort_iteration("symbol", left._root->_data < right._root->_data, left, right);
 				return left._root->_data < right._root->_data;
 			} else {
+				//debug::sort_iteration("node-size", left.size() < right.size(), left, right);
 				return left.size() < right.size();
 			}
 		}
