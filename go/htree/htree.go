@@ -4,8 +4,8 @@ type HuffTree struct {
 	Root *HuffNode
 }
 
-func treeSize(tree HuffTree) uint64 {
-	return nodeSize(tree.Root)
+func (tree HuffTree) size() uint64 {
+	return tree.Root.size()
 }
 
 func (tree HuffTree) ToEncodingTable() map[rune]BitSet {

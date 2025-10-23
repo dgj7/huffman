@@ -8,6 +8,24 @@ type HuffNode struct {
 	Frequency uint64
 }
 
+func (node HuffNode) size() uint64 {
+	var leftSize uint64 = 0
+	if node.Left != nil {
+		leftSize = node.Left.size()
+	}
+
+	var rightSize uint64 = 0
+	if node.Right != nil {
+		rightSize = node.Right.size()
+	}
+
+	return 1 + leftSize + rightSize
+}
+
+func (node HuffNode) isLeaf() bool {
+	return node.Left == nil && node.Right == nil
+}
+
 func MaxDepth(input *HuffNode) int {
 	if input == nil {
 		return 0
@@ -21,28 +39,6 @@ func MaxDepth(input *HuffNode) int {
 	} else {
 		return rightDepth +1
 	}
-}
-
-func nodeSize(root *HuffNode) uint64 {
-	if root == nil {
-		return 0
-	}
-
-	var leftSize uint64 = 0
-	if root.Left != nil {
-		leftSize = nodeSize(root.Left)
-	}
-
-	var rightSize uint64 = 0
-	if root.Right != nil {
-		rightSize = nodeSize(root.Right)
-	}
-
-	return 1 + leftSize + rightSize
-}
-
-func isLeaf(node *HuffNode) bool {
-	return node.Left == nil && node.Right == nil
 }
 
 func descendNode(node *HuffNode, capacity uint64, index uint64, next bool, bs []bool, table map[rune]BitSet) {

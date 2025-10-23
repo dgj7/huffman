@@ -17,8 +17,8 @@ func TestToTreeSmall(t *testing.T) {
 
 	var tree = Create(input)
 	assert.Equal(t, 3, MaxDepth(tree.Root), "max depth wrong")
-	assert.Equal(t, uint64(5), treeSize(tree), "tree size wrong")
-	assert.Equal(t, uint64(5), nodeSize(tree.Root), "node size wrong")
+	assert.Equal(t, uint64(5), tree.size(), "tree size wrong")
+	assert.Equal(t, uint64(5), tree.Root.size(), "node size wrong")
 
 	var encodings = tree.ToEncodingTable()
 	assert.Equal(t, 3, len(encodings), "encodings len wrong")
@@ -38,8 +38,8 @@ func TestToTreeScenario1(t *testing.T) {
 
 	var tree = Create(input)
 	assert.Equal(t, 7, MaxDepth(tree.Root), "tree max depth wrong")
-	assert.Equal(t, uint64(41), treeSize(tree), "tree size wrong")
-	assert.Equal(t, uint64(41), nodeSize(tree.Root), "tree node size wrong")
+	assert.Equal(t, uint64(41), tree.size(), "tree size wrong")
+	assert.Equal(t, uint64(41), tree.Root.size(), "tree node size wrong")
 
 	var encodings = tree.ToEncodingTable()
 	assert.Equal(t, 21, len(encodings), "encodings len wrong")

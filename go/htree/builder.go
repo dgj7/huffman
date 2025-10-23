@@ -72,10 +72,10 @@ func sortNodes(input []HuffNode) {
 		var rightNode = input[rightIndex]
 		
 		if leftNode.Frequency == rightNode.Frequency {
-			if isLeaf(&leftNode) && isLeaf(&rightNode) {
+			if leftNode.isLeaf() && rightNode.isLeaf() {
 				return leftNode.Symbol < rightNode.Symbol
 			} else {
-				return nodeSize(&leftNode) < nodeSize(&rightNode)
+				return (&leftNode).size() < (&rightNode).size()
 			}
 		} else {
 			return leftNode.Frequency < rightNode.Frequency
