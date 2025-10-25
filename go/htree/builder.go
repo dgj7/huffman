@@ -2,18 +2,14 @@ package htree
 
 import "sort"
 
-type count struct {
-	freq uint64
-}
-
 func Create(input string) HuffTree {
 	var frequencies = toFrequencyMap(input)
 	var nodes = toSlice(frequencies)
 	return toTree(nodes)
 }
 
-func toFrequencyMap(input string) map[rune]count {
-	frequencies := make(map[rune]count)
+func toFrequencyMap(input string) map[rune]int {
+	frequencies := make(map[rune]int)
 
 	if (len(input) == 0) {
 		return frequencies
@@ -24,10 +20,10 @@ func toFrequencyMap(input string) map[rune]count {
 		var letter = runes[i]
 
 		if oldCount, ok := frequencies[letter]; ok {
-			newCount := count{ freq: oldCount.freq + 1 }
+			newCount := oldCount + 1
 			frequencies[letter] = newCount
 		} else {
-			newCount := count { freq: 1 }
+			newCount := 1
 			frequencies[letter] = newCount
 		}
 	}
@@ -35,11 +31,11 @@ func toFrequencyMap(input string) map[rune]count {
 	return frequencies
 }
 
-func toSlice(input map[rune]count) []HuffNode {
+func toSlice(input map[rune]int) []HuffNode {
 	output := make([]HuffNode, 0)
 	
 	for k, v := range input {
-		node := HuffNode { Symbol: k, Frequency: v.freq }
+		node := HuffNode { Symbol: k, Frequency: v }
 		output = append(output, node)
 	}
 

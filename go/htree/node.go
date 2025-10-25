@@ -5,7 +5,7 @@ type HuffNode struct {
 	Right *HuffNode
 
 	Symbol rune
-	Frequency uint64
+	Frequency int
 }
 
 func (node HuffNode) size() int {
