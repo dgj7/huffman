@@ -3,11 +3,11 @@ package htree
 import "strings"
 
 type BitSet struct {
-	data []uint8
+	data []byte
 }
 
 func NewBitSet(len int) BitSet {
-	return BitSet { data: make([]uint8, len) }
+	return BitSet { data: make([]byte, len) }
 }
 
 func MergeBitSets(left BitSet, right BitSet) BitSet {
@@ -38,16 +38,16 @@ func (bs BitSet) Len() int {
 func (bs BitSet) GetBit(index int) bool {
 	var position = index / 8
 	var shift = uint(index % 8)
-	return (bs.data[position] & (uint8(1) << shift)) != 0
+	return (bs.data[position] & (byte(1) << shift)) != 0
 }
 
 func (bs BitSet) SetBit(index int, value bool) {
 	var position = index / 8
 	var shift = uint(index % 8)
 	if value {
-		bs.data[position] |= (uint8(1) << shift)
+		bs.data[position] |= (byte(1) << shift)
 	} else {
-		bs.data[position] &= ^(uint8(1) << shift)
+		bs.data[position] &= ^(byte(1) << shift)
 	}
 }
 
