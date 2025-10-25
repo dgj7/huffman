@@ -60,9 +60,10 @@ func toTree(input []HuffNode) HuffTree {
 
 		/* pull the first two elements */
 		var left = input[0]
-		input = append(input[:0], input[1:]...)
-		var right = input[0]
-		input = append(input[:0], input[1:]...)
+		var right = input[1]
+
+		/* resize the array */
+		input = append(input[:0], input[2:]...)
 
 		/* merge the first two elements into a tree */
 		var root = HuffNode { Left: &left, Right: &right, Frequency: left.Frequency + right.Frequency }
