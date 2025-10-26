@@ -1,6 +1,7 @@
 package htree
 
 import "strings"
+import "fmt"
 
 type BitSet struct {
 	data []byte
@@ -61,14 +62,23 @@ func (bs *BitSet) Append(value bool) {
 	bs.SetBit(bitIndex, value)
 }
 
-func (bs *BitSet) SetBit(index int, value bool) {
-	var position = index / 8
-	var shift = uint(index % 8)
+func (bs *BitSet) SetBit(bitIndex int, value bool) {
+	/* determine where the new data needs to live */
+	var byteLength = len(bs.data)
+	var byteIndex = bitIndex / 8
+	var shift = uint(bitIndex % 8)
 
+	/* handle bad byte index */
+	if byteIndex >= byteLength {
+		var message = fmt.Sprintf("SetBit(%d,%t): byteLength=[%d]\n", byteIndex, value, byteLength)
+		panic(message)
+	}
+
+	/* write to the correct bit/byte index */
 	if value {
-		bs.data[position] |= (byte(1) << shift)
+		bs.data[byteIndex] |= (byte(1) << shift)
 	} else {
-		bs.data[position] &= ^(byte(1) << shift)
+		bs.data[byteIndex] &= ^(byte(1) << shift)
 	}
 }
 
