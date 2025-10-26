@@ -9,16 +9,15 @@ type BitSet struct {
 	bitLength int
 }
 
-// todo: byte count as input here doesnt make sense; how would client know this?  use bit count
-func NewBitSet(byteCount int) BitSet {
-	return BitSet { data: make([]byte, byteCount), bitLength: 0 }
+func NewBitSet(bitLength int) BitSet {
+	var byteLength = (bitLength / 8) + 1
+	return BitSet { data: make([]byte, byteLength), bitLength: 0 }
 }
 
 func MergeBitSets(left BitSet, right BitSet) BitSet {
 	/* determine the correct size for the merged bitset */
 	var bitLength int = left.Len() + right.Len()
-	var byteLength = (bitLength / 8) + 1
-	var bs = NewBitSet(byteLength)
+	var bs = NewBitSet(bitLength)
 
 	/* copy left bitset's values */
 	var lx = 0;
@@ -112,8 +111,8 @@ func (bs BitSet) Equals(other BitSet) bool {
 
 func (bs BitSet) Reverse() BitSet {
 	/* variables */
-	var byteLength = len(bs.data)
-	var other = NewBitSet(byteLength)
+	var bitLength = bs.Len()
+	var other = NewBitSet(bitLength)
 
 	/* iterate over both, copying */
 	for i := bs.Len()-1; i >= 0; i-- {
