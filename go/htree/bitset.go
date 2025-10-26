@@ -13,10 +13,12 @@ func NewBitSet(byteCount int) BitSet {
 }
 
 func MergeBitSets(left BitSet, right BitSet) BitSet {
-	// todo: this isn't hte right length; needs to be BYTES and not BITS
-	var lenSum int = left.Len() + right.Len()
-	var bs = NewBitSet(lenSum)
+	/* determine the correct size for the merged bitset */
+	var bitLength int = left.Len() + right.Len()
+	var byteLength = (bitLength / 8) + 1
+	var bs = NewBitSet(byteLength)
 
+	/* copy left bitset's values */
 	var lx = 0;
 	for lx < left.Len() {
 		var value = left.GetBit(lx)
@@ -24,6 +26,7 @@ func MergeBitSets(left BitSet, right BitSet) BitSet {
 		lx = lx + 1
 	}
 
+	/* copy right bitset's values */
 	var rx = 0
 	for rx < right.Len() {
 		var value = right.GetBit(rx)
@@ -31,6 +34,7 @@ func MergeBitSets(left BitSet, right BitSet) BitSet {
 		rx = rx + 1
 	}
 
+	/* done */
 	return bs
 }
 
