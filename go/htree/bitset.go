@@ -9,8 +9,7 @@ type BitSet struct {
 	bitLength int
 }
 
-// todo: reverse method
-
+// todo: byte count as input here doesnt make sense; how would client know this?  use bit count
 func NewBitSet(byteCount int) BitSet {
 	return BitSet { data: make([]byte, byteCount), bitLength: 0 }
 }
@@ -109,6 +108,21 @@ func (bs BitSet) Equals(other BitSet) bool {
 		return true
 	}
 	return false 
+}
+
+func (bs BitSet) Reverse() BitSet {
+	/* variables */
+	var byteLength = len(bs.data)
+	var other = NewBitSet(byteLength)
+
+	/* iterate over both, copying */
+	for i := bs.Len()-1; i >= 0; i-- {
+		var value = bs.GetBit(i)
+		other.Append(value)
+	}
+
+	/* done */
+	return other
 }
 
 func (bs BitSet) ToString() string {

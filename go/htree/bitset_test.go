@@ -10,8 +10,12 @@ func TestBitSet_ZeroBits_Empty(t *testing.T) {
 
 	assert.Equal(t, 0, bs.Len())
 	assert.Equal(t, "", bs.ToString())
-
 	assert.Equal(t, "0", strconv.FormatUint(bs.ToUint64(), 10))
+
+	var rev = bs.Reverse()
+	assert.Equal(t, 0, rev.Len())
+	assert.Equal(t, "", rev.ToString())
+	assert.Equal(t, "0", strconv.FormatUint(rev.ToUint64(), 10))
 }
 
 func TestBitSet_OneBit_Empty(t *testing.T) {
@@ -19,8 +23,12 @@ func TestBitSet_OneBit_Empty(t *testing.T) {
 
 	assert.Equal(t, 0, bs.Len())
 	assert.Equal(t, "", bs.ToString())
-
 	assert.Equal(t, "0", strconv.FormatUint(bs.ToUint64(), 10))
+
+	var rev = bs.Reverse()
+	assert.Equal(t, 0, rev.Len())
+	assert.Equal(t, "", rev.ToString())
+	assert.Equal(t, "0", strconv.FormatUint(rev.ToUint64(), 10))
 }
 
 func TestBitSet_OneBit_true(t *testing.T) {
@@ -30,8 +38,12 @@ func TestBitSet_OneBit_true(t *testing.T) {
 
 	assert.Equal(t, 1, bs.Len())
 	assert.Equal(t, "1", bs.ToString())
-
 	assert.Equal(t, "1", strconv.FormatUint(bs.ToUint64(), 10))
+
+	var rev = bs.Reverse()
+	assert.Equal(t, 1, rev.Len())
+	assert.Equal(t, "1", rev.ToString())
+	assert.Equal(t, "1", strconv.FormatUint(rev.ToUint64(), 10))
 }
 
 func TestBitSet_OneBit_false(t *testing.T) {
@@ -41,8 +53,12 @@ func TestBitSet_OneBit_false(t *testing.T) {
 
 	assert.Equal(t, 1, bs.Len())
 	assert.Equal(t, "0", bs.ToString())
-
 	assert.Equal(t, "0", strconv.FormatUint(bs.ToUint64(), 10))
+
+	var rev = bs.Reverse()
+	assert.Equal(t, 1, rev.Len())
+	assert.Equal(t, "0", rev.ToString())
+	assert.Equal(t, "0", strconv.FormatUint(rev.ToUint64(), 10))
 }
 
 func TestBitSet_FiveBits_TwentyOne(t *testing.T) {
@@ -56,8 +72,12 @@ func TestBitSet_FiveBits_TwentyOne(t *testing.T) {
 
 	assert.Equal(t, 5, bs.Len())
 	assert.Equal(t, "10101", bs.ToString())
-
 	assert.Equal(t, "21", strconv.FormatUint(bs.ToUint64(), 10))
+
+	var rev = bs.Reverse()
+	assert.Equal(t, 5, rev.Len())
+	assert.Equal(t, "10101", rev.ToString())
+	assert.Equal(t, "21", strconv.FormatUint(rev.ToUint64(), 10))
 }
 
 func TestBitSet_FiveBits_Ten(t *testing.T) {
@@ -71,6 +91,30 @@ func TestBitSet_FiveBits_Ten(t *testing.T) {
 
 	assert.Equal(t, 5, bs.Len())
 	assert.Equal(t, "01010", bs.ToString())
-
 	assert.Equal(t, "10", strconv.FormatUint(bs.ToUint64(), 10))
+
+	var rev = bs.Reverse()
+	assert.Equal(t, 5, rev.Len())
+	assert.Equal(t, "01010", rev.ToString())
+	assert.Equal(t, "10", strconv.FormatUint(rev.ToUint64(), 10))
+}
+
+func TestBitSet_Sixbits_Seven(t *testing.T) {
+	var bs = NewBitSet(0)
+
+	bs.Append(true)
+	bs.Append(true)
+	bs.Append(true)
+	bs.Append(false)
+	bs.Append(false)
+	bs.Append(false)
+
+	assert.Equal(t, 6, bs.Len())
+	assert.Equal(t, "111000", bs.ToString())
+	assert.Equal(t, "7", strconv.FormatUint(bs.ToUint64(), 10))
+
+	var rev = bs.Reverse()
+	assert.Equal(t, 6, rev.Len())
+	assert.Equal(t, "000111", rev.ToString())
+	assert.Equal(t, "56", strconv.FormatUint(rev.ToUint64(), 10))
 }
