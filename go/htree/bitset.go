@@ -1,12 +1,15 @@
 package htree
 
 import "strings"
+import "math/big"
 import "fmt"
 
 type BitSet struct {
 	data []byte
 	bitLength int
 }
+
+// todo: reverse method
 
 func NewBitSet(byteCount int) BitSet {
 	return BitSet { data: make([]byte, byteCount), bitLength: 0 }
@@ -96,6 +99,18 @@ func (bs *BitSet) SetBit(bitIndex int, value bool) {
 	}
 }
 
+func (bs BitSet) Equals(other BitSet) bool {
+	if bs.Len() == other.Len() {
+		for i := 0; i < bs.Len(); i++ {
+			if bs.GetBit(i) != other.GetBit(i) {
+				return false
+			}
+		}
+		return true
+	}
+	return false 
+}
+
 func (bs BitSet) ToString() string {
 	var sb strings.Builder
 
@@ -113,14 +128,10 @@ func (bs BitSet) ToString() string {
 	return sb.String()
 }
 
-func (bs BitSet) Equals(other BitSet) bool {
-	if bs.Len() == other.Len() {
-		for i := 0; i < bs.Len(); i++ {
-			if bs.GetBit(i) != other.GetBit(i) {
-				return false
-			}
-		}
-		return true
+func (bs BitSet) ToUint64() uint64 {
+	if len(bs.data) == 0 {
+		return 0
 	}
-	return false 
+
+	return big.NewInt(0).SetBytes(bs.data).Uint64()
 }
