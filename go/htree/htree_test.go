@@ -3,7 +3,7 @@ package htree
 import "testing"
 import "github.com/stretchr/testify/assert" // https://pkg.go.dev/github.com/stretchr/testify/assert
 
-func TestToTreeEmpty(t *testing.T) {
+func TestTree_Empty(t *testing.T) {
 	var input = ""
 
 	var tree = Create(input)
@@ -21,7 +21,7 @@ func TestToTreeEmpty(t *testing.T) {
 	assert.Equal(t, "", decoded, "decoded wrong")
 }
 
-func TestToTreeSmall(t *testing.T) {
+func TestTree_Small(t *testing.T) {
 	var input = "abbccc"
 
 	var tree = Create(input)
@@ -41,7 +41,7 @@ func TestToTreeSmall(t *testing.T) {
 	assert.Equal(t, "abbccc", decoded, "decoded wrong")
 }
 
-func TestToTreeScenario1(t *testing.T) {
+func TestTree_Scenario1(t *testing.T) {
 	var input = "this is a sample input string. its text is being used to test the huffman coding tree.";
 
 	var tree = Create(input)

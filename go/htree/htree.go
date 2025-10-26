@@ -54,7 +54,7 @@ func descendNode(node *HuffNode, index int, next bool, bs []bool, table map[rune
 		var i int = 0
 		for i < index+1 {
 			var b = bs[i]
-			bitset.SetBit(i, b)
+			bitset.Append(b)
 			i = i + 1
 		}
 		//fmt.Printf("%c ===> %s\n", node.Symbol, bitset.ToString())
