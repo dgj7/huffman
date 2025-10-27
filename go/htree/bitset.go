@@ -97,6 +97,10 @@ func (bs *BitSet) SetBit(bitIndex int, value bool) {
 	}
 }
 
+func (bs BitSet) LessThan(other BitSet) bool {
+	return bs.ToUint64() < other.ToUint64()
+}
+
 func (bs BitSet) Equals(other BitSet) bool {
 	if bs.Len() == other.Len() {
 		for i := 0; i < bs.Len(); i++ {
