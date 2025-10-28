@@ -37,6 +37,14 @@ func (t Table) Find(theKey BitSet) (byte, error) {
 	return findHelper(t.root, theKey)
 }
 
+func (t Table) Size() int {
+	return sizeHelper(t.root)
+}
+
+func (t Table) Height() int {
+	return heightHelper(t.root)
+}
+
 func newLeaf(theKey BitSet, theValue byte) *Entry {
 	return &Entry { key: theKey, value: theValue, left: nil, right: nil }
 }
@@ -92,4 +100,26 @@ func findHelper(e *Entry, theKey BitSet) (byte, error) {
 			return findHelper(e.right, theKey)
 		}
 	}
+}
+
+func sizeHelper(e *Entry) int {
+	if e == nil {
+		return 0
+	}
+
+	var left = sizeHelper(e.left)
+	var right = sizeHelper(e.right)
+
+	return 1 + left + right
+}
+
+func heightHelper(e *Entry) int {
+	if e == nil {
+		return 0
+	}
+
+	var left = heightHelper(e.left)
+	var right = heightHelper(e.right)
+
+	return 1 + max(left, right)
 }

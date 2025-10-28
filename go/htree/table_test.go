@@ -7,6 +7,8 @@ import "fmt"
 
 func TestTable_Empty(t *testing.T) {
 	var table = NewTable()
+	assert.Equal(t, 0, table.Size(), "size wrong")
+	assert.Equal(t, 0, table.Height(), "height wrong")
 
 	var one = createBitSet("1")
 	oneRs, oneFound := table.Find(one)
@@ -17,6 +19,8 @@ func TestTable_Empty(t *testing.T) {
 
 func TestTable_Full(t *testing.T) {
 	var table = createTable()
+	assert.Equal(t, 7, table.Size(), "size wrong")
+	assert.Equal(t, 3, table.Height(), "height wrong")
 
 	var six = createBitSet("011")
 	sixRs, sixFound := table.Find(six)
