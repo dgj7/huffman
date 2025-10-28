@@ -1,6 +1,7 @@
 package htree
 
 import "errors"
+import "math"
 
 type Entry struct {
 	key BitSet
@@ -86,5 +87,5 @@ func EntryHeight(e *Entry) int {
 	var left = EntryHeight(e.left)
 	var right = EntryHeight(e.right)
 
-	return 1 + max(left, right)
+	return 1 + int(math.Max(float64(left), float64(right)))
 }
