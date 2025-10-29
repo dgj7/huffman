@@ -12,8 +12,8 @@ func (tree HuffTree) size() int {
 	return tree.Root.size()
 }
 
-func (tree HuffTree) ToEncodingTable() map[rune]BitSet {
-	var output = make(map[rune]BitSet)
+func (tree HuffTree) ToEncodingTable() map[byte]BitSet {
+	var output = make(map[byte]BitSet)
 
 	if (tree.Root == nil) {
 		return output
@@ -24,9 +24,9 @@ func (tree HuffTree) ToEncodingTable() map[rune]BitSet {
 }
 
 // todo: this should not be using the stringified version of the bitset
-func (tree HuffTree) ToDecodingTable() map[string]rune {
+func (tree HuffTree) ToDecodingTable() map[string]byte {
 	var encoding = tree.ToEncodingTable()
-	var decoding = make(map[string]rune)
+	var decoding = make(map[string]byte)
 
 	for k, v := range encoding {
 		decoding[v.ToString()] = k
@@ -35,7 +35,7 @@ func (tree HuffTree) ToDecodingTable() map[string]rune {
 	return decoding
 }
 
-func descendTree(tree HuffTree, table map[rune]BitSet) {
+func descendTree(tree HuffTree, table map[byte]BitSet) {
 	if tree.Root.Left != nil {
 		descendNode(tree.Root.Left, 0, false, make([]bool, tree.size()), table)
 	}
@@ -44,7 +44,7 @@ func descendTree(tree HuffTree, table map[rune]BitSet) {
 	}
 }
 
-func descendNode(node *HuffNode, index int, next bool, bs []bool, table map[rune]BitSet) {
+func descendNode(node *HuffNode, index int, next bool, bs []bool, table map[byte]BitSet) {
 	bs[index] = next
 	if (node.Left != nil && node.Right != nil) {
 		descendNode(node.Left, index + 1, false, bs, table)

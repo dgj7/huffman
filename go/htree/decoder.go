@@ -1,7 +1,7 @@
 package htree
 
-func Decode(tree HuffTree, encoded BitSet) string {
-	var result = ""
+func Decode(tree HuffTree, encoded BitSet) []byte {
+	var result = make([]byte, 0)
 	var key = ""
 	var table = tree.ToDecodingTable()
 
@@ -19,7 +19,7 @@ func Decode(tree HuffTree, encoded BitSet) string {
 
 		char, ok := table[key]
 		if ok {
-			result = result + string(char)
+			result = append(result, char)
 			key = ""
 		}
 

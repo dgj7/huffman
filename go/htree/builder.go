@@ -2,22 +2,22 @@ package htree
 
 import "sort"
 
-func Create(input string) HuffTree {
+func Create(input []byte) HuffTree {
 	var frequencies = toFrequencyMap(input)
 	var nodes = toSlice(frequencies)
 	return toTree(nodes)
 }
 
-func toFrequencyMap(input string) map[rune]int {
-	frequencies := make(map[rune]int)
+func toFrequencyMap(input []byte) map[byte]int {
+	frequencies := make(map[byte]int)
 
 	if (len(input) == 0) {
 		return frequencies
 	}
 
-	runes := []rune(input)
-	for i := 0; i < len(runes); i++ {
-		var letter = runes[i]
+	bytes := []byte(input)
+	for i := 0; i < len(bytes); i++ {
+		var letter = bytes[i]
 
 		if oldCount, ok := frequencies[letter]; ok {
 			newCount := oldCount + 1
@@ -31,7 +31,7 @@ func toFrequencyMap(input string) map[rune]int {
 	return frequencies
 }
 
-func toSlice(input map[rune]int) []HuffNode {
+func toSlice(input map[byte]int) []HuffNode {
 	output := make([]HuffNode, 0)
 	
 	for k, v := range input {

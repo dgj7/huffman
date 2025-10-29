@@ -4,7 +4,7 @@ type HuffNode struct {
 	Left *HuffNode
 	Right *HuffNode
 
-	Symbol rune
+	Symbol byte
 	Frequency int
 }
 
