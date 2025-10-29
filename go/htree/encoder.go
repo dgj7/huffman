@@ -1,6 +1,6 @@
 package htree
 
-func Encode(tree HuffTree, input string) BitSet {
+func Encode(tree HuffTree, input []byte) BitSet {
 	var output = NewBitSet(0)
 	var table = tree.ToEncodingTable()
 

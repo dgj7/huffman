@@ -3,13 +3,16 @@ package main
 import "fmt"
 import "flag"
 import "os"
+
 import "gohuff/htree"
 
 func main() {
 	var input = loadInput()
-	var tree = htree.Create(input)
-	var encoded = htree.Encode(tree, input)
-	var decoded = htree.Decode(tree, encoded)
+	var bytes = htree.StringToBytes(input)
+	var tree = htree.Create(bytes)
+	var encoded = htree.Encode(tree, bytes)
+	var decodedBytes = htree.Decode(tree, encoded)
+	var decoded = htree.BytesToString(decodedBytes)
 
 	//htree.DebugPrintEncodingTable(tree)
 	//htree.DebugPrintDecodingTable(tree)

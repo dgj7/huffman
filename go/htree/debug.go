@@ -14,10 +14,16 @@ func DebugPrintEncodingTable(tree HuffTree) {
 func DebugPrintDecodingTable(tree HuffTree) {
 	fmt.Printf("==========\n")
 	var table = tree.ToDecodingTable()
-	for bitstring, symbol := range table {
-		fmt.Printf("[%s]  ->  [%c]\n", bitstring, symbol);
-	}
+	debugPrintDecodingTableHelper(table.root)
 	fmt.Printf("==========\n")
+}
+
+func debugPrintDecodingTableHelper(entry *Entry) {
+	if entry != nil {
+		fmt.Printf("[%s]  ->  [%c]\n", entry.key.ToString(), entry.value)
+	}
+	debugPrintDecodingTableHelper(entry.left)
+	debugPrintDecodingTableHelper(entry.right)
 }
 
 func DebugNodeSlice(nodes []HuffNode) {

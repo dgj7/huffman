@@ -14,7 +14,7 @@ go clean
 
 # run tests
 printf "testing...\n"
-go test gohuff/htree
+go test gohuff/htree -v
 
 # build
 printf "building...\n"

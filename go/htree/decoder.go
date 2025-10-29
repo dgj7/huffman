@@ -1,26 +1,20 @@
 package htree
 
-func Decode(tree HuffTree, encoded BitSet) string {
-	var result = ""
-	var key = ""
+func Decode(tree HuffTree, encoded BitSet) []byte {
+	var result = make([]byte, 0)
+	var key = NewBitSet(0)
 	var table = tree.ToDecodingTable()
 
-	var i uint64 = 0
+	var i int = 0
 
 	for i < encoded.Len() {
 		var bit = encoded.GetBit(i)
-		bitStr := ""
-		if bit {
-			bitStr = "1"
-		} else {
-			bitStr = "0"
-		}
-		key = key + bitStr
+		key.Append(bit)
 
-		char, ok := table[key]
+		char, ok := table.Find(key)
 		if ok {
-			result = result + string(char)
-			key = ""
+			result = append(result, char)
+			key = NewBitSet(0)
 		}
 
 		i = i + 1
