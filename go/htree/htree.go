@@ -23,13 +23,12 @@ func (tree HuffTree) ToEncodingTable() map[byte]BitSet {
 	return output
 }
 
-// todo: this should not be using the stringified version of the bitset
-func (tree HuffTree) ToDecodingTable() map[string]byte {
+func (tree HuffTree) ToDecodingTable() Table {
 	var encoding = tree.ToEncodingTable()
-	var decoding = make(map[string]byte)
+	var decoding = NewTable()
 
 	for k, v := range encoding {
-		decoding[v.ToString()] = k
+		decoding.Insert(v, k)
 	}
 
 	return decoding
