@@ -1,7 +1,5 @@
 package htree
 
-//import "fmt"
-
 type Table struct {
 	root *Entry
 }
@@ -11,9 +9,7 @@ func NewTable() Table {
 }
 
 func (t *Table) Insert(theKey BitSet, theValue byte) bool {
-	//fmt.Printf("inserting %s(%d)\n", theKey.ToString(), theKey.ToUint64())
 	if t.root == nil {
-		//fmt.Printf("\tnew root: %s\n", theKey.ToString())
 		t.root = NewLeaf(theKey, theValue)
 		return true
 	} else {
@@ -23,7 +19,7 @@ func (t *Table) Insert(theKey BitSet, theValue byte) bool {
 	return false
 }
 
-func (t Table) Find(theKey BitSet) (byte, error) {
+func (t Table) Find(theKey BitSet) (byte, bool) {
 	return FindEntry(t.root, theKey)
 }
 

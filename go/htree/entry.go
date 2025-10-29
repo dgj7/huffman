@@ -1,6 +1,5 @@
 package htree
 
-import "errors"
 import "math"
 
 type Entry struct {
@@ -17,51 +16,42 @@ func NewLeaf(theKey BitSet, theValue byte) *Entry {
 
 func InsertEntry(e *Entry, theKey BitSet, theValue byte) bool {
 	if theKey.LessThan(e.key) {
-		//fmt.Printf("\t%s(%d) < %s(%d),", theKey.ToString(), theKey.ToUint64(), e.key.ToString(), e.key.ToUint64())
 		if e.left == nil {
-			//fmt.Printf("new leaf, left\n")
 			e.left = NewLeaf(theKey, theValue)
 			return true
 		} else {
-			//fmt.Printf("calling on e.left\n")
 			return InsertEntry(e.left, theKey, theValue)
 		}
 	} else if theKey.Equals(e.key) {
-		//fmt.Printf("\treturn false, %s already exists\n", theKey.ToString())
 		return false
 	} else {
-		//fmt.Printf("\t%s(%d) > %s(%d),", theKey.ToString(), theKey.ToUint64(), e.key.ToString(), e.key.ToUint64())
 		if e.right == nil {
-			//fmt.Printf("new leaf, right\n")
 			e.right = NewLeaf(theKey, theValue)
 			return true
 		} else {
-			//fmt.Printf("calling on e.right\n")
 			return InsertEntry(e.right, theKey, theValue)
 		}
 	}
 }
 
-func FindEntry(e *Entry, theKey BitSet) (byte, error) {
+func FindEntry(e *Entry, theKey BitSet) (byte, bool) {
 	if e == nil {
-		return 0, errors.New("table is empty")
+		return 0, false
 	}
 
 	if e.key.Equals(theKey) {
-		return e.value, nil
+		return e.value, true
 	}
 
 	if theKey.LessThan(e.key) {
 		if e.left == nil {
-			return 0, errors.New("no byte found for " + theKey.ToString())
+			return 0, false
 		} else {
 			return FindEntry(e.left, theKey)
 		}
-	} else if theKey.Equals(e.key) {
-		return e.value, nil
 	} else {
 		if e.right == nil {
-			return 0, errors.New("no byte found for " + theKey.ToString())
+			return 0, false
 		} else {
 			return FindEntry(e.right, theKey)
 		}

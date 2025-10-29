@@ -11,10 +11,9 @@ func TestTable_Empty(t *testing.T) {
 	assert.Equal(t, 0, table.Height(), "height wrong")
 
 	var one = createBitSet("1")
-	oneRs, oneFound := table.Find(one)
+	oneRs, oneOk := table.Find(one)
 	assert.Equal(t, uint8(0), oneRs, "one result wrong")
-	assert.NotNil(t, oneFound, "one non-nil wrong")
-	assert.Equal(t, "table is empty", oneFound.Error(), "one found wrong")
+	assert.False(t, oneOk, "one ok wrong")
 }
 
 func TestTable_Full(t *testing.T) {
@@ -23,9 +22,9 @@ func TestTable_Full(t *testing.T) {
 	assert.Equal(t, 3, table.Height(), "height wrong")
 
 	var six = createBitSet("011")
-	sixRs, sixFound := table.Find(six)
+	sixRs, sixOk := table.Find(six)
 	assert.Equal(t, uint8(69), sixRs, "six result wrong")
-	assert.Nil(t, sixFound, "six nil wrong")
+	assert.True(t, sixOk, "six ok wrong")
 }
 
 func createBitSet(bits string) BitSet {
