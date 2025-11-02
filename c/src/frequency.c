@@ -15,6 +15,12 @@ count_frequencies(
 	const char * const message
 	,const size_t length
 ){
+	/* exit early if length 0 */
+	if (length == 0)
+	{
+		return NULL;
+	}
+
 	/* initialize frequency; panic if we can't get memory */
 	struct frequency_t * const wrapper = malloc(sizeof(struct frequency_t));
 	if (wrapper == NULL)

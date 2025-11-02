@@ -22,8 +22,11 @@ create_tree(
 	const struct node_t * const root = to_tree(frequencies);
 
 	/* free temporary memory */
-	free(frequencies->pairs);
-	free((void*)frequencies);
+	if (frequencies != NULL)
+	{
+		free(frequencies->pairs);
+		free((void*)frequencies);
+	}
 
 	/* done */
 	return root;

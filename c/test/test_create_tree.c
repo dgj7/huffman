@@ -7,6 +7,14 @@
 #include "huffman.h"
 #include "tree.h"
 
+void empty_string(struct cut_run_t * run)
+{
+    const struct node_t * tree = create_tree("", 0);
+
+    assert_true(0 == tree_size(tree), run);
+    assert_true(0 == leaf_count(tree), run);
+}
+
 void short_string(struct cut_run_t * run)
 {
     const struct node_t * tree = create_tree("f", 1);

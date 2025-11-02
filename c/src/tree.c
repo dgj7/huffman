@@ -28,6 +28,12 @@ const struct node_t * const
 to_tree(
 	const struct frequency_t * const frequency
 ){
+	/* if null, presume there is no work to do */
+	if (frequency == NULL)
+	{
+		return NULL;
+	}
+
 	/* create an initial list of nodes, and sort it */
 	struct node_t * list = (struct node_t *) to_list(frequency->pairs, frequency->count);
 	long list_size = frequency->count;
@@ -236,6 +242,11 @@ const int
 tree_size(
 	const struct node_t * const root
 ){
+	if (root == NULL)
+	{
+		return 0;
+	}
+
 	const int left_size = root->left == NULL ? 0 : tree_size(root->left);
 	const int right_size = root->right == NULL ? 0 : tree_size(root->right);
 	return left_size + right_size + 1;
