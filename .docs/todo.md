@@ -7,6 +7,7 @@
 * [ ] update `cmake` version; see build warning
 * [ ] add unit tests
   * [ ] empty string: ""
+  * [ ] single character "f"
   * [ ] short string: "abcaba"
   * [x] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
 * [ ] investigate `free()` for each `malloc()`
@@ -23,6 +24,7 @@
 * [ ] update `cmake` version; see build warning
 * [ ] add unit tests
   * [x] empty string: ""
+  * [ ] single character "f"
   * [x] short string: "abcaba"
   * [x] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
 * [ ] investigate `delete` for each `new` and `delete[]` for each `new[]`
@@ -37,6 +39,7 @@
 * [x] ~~setup workflow~~
 * [ ] add more unit tests
   * [x] empty string: ""
+  * [ ] single character "f"
   * [ ] short string: "abcaba"
   * [x] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
 * [ ] ease of use: combine tree with encodings
@@ -49,6 +52,7 @@
 * [x] ~~setup workflow~~
 * [ ] add unit tests
   * [ ] empty string: ""
+  * [ ] single character "f"
   * [x] short string: "abcaba"
   * [x] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
 * [ ] ease of use: combine tree with encodings
@@ -61,6 +65,7 @@
 * [x] ~~setup workflow~~
 * [ ] add unit tests
   * [ ] empty string: ""
+  * [ ] single character "f"
   * [ ] short string: "abcaba"
   * [ ] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
 * [ ] ease of use: combine tree with encodings
@@ -73,6 +78,7 @@
 * [ ] setup workflow
 * [ ] add unit tests
   * [ ] empty string: ""
+  * [ ] single character "f"
   * [ ] short string: "abcaba"
   * [ ] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
 
