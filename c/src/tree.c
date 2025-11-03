@@ -5,7 +5,6 @@
 #include <string.h>		// strcat()
 
 #include "huffman.h"
-#include "frequency.h"
 #include "tree.h"
 
 static const int ERROR_MALLOC_LIST_CREATE = 300;

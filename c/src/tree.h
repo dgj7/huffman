@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include "frequency.h"
 
 const struct node_t * const to_tree(const struct frequency_t * const frequency);
 
