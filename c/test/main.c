@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "cut.h"
-#include "test_create_tree.h"
+#include "end_to_end_tests.h"
 
 int main() {
     /* configure cut */

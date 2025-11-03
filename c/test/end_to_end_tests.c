@@ -1,5 +1,5 @@
 #include "cut.h"
-#include "test_create_tree.h"
+#include "end_to_end_tests.h"
 
 #include <stddef.h>
 #include <string.h>             // strcmp()
@@ -24,8 +24,7 @@ void empty_string(struct cut_run_t * run)
     const struct encoded_message_t * const encoded = encode(input, encodings);
     assert_true(0 == strcmp("", printable_encoded_message(encoded)), run);
 
-    // todo: need to do test rest of the calls in these tests
-    // todo: rename this file to end_to_end
+    // todo: test decode step
 }
 
 void single_byte(struct cut_run_t * run)
