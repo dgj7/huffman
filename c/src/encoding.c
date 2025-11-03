@@ -4,6 +4,7 @@
 
 #include "huffman.h"
 #include "encoding.h"
+#include "tree.h"		// tree_size()
 
 static const int ERROR_MALLOC_BITVEC = 400;
 static const int ERROR_MALLOC_BIT_ARRAY = 401;
@@ -26,6 +27,12 @@ make_encodings_helper(
 		return NULL;
 	}
 
+	/* handle empty input */
+	if (tree_size(tree) == 0)
+	{
+		return NULL;
+	}
+
 	/* allocate memory */
 	struct encoding_list_t * const list = malloc(sizeof(struct encoding_list_t));
 	if (list == NULL)
@@ -40,12 +47,52 @@ make_encodings_helper(
 	/* create temporary, copyable array of bits to pass */
 	bool bits[256];
 
-	/* call for both child nodes */
-	make_encodings_helper_recursive(tree->left, list, bits, LEFT, 0);
-	make_encodings_helper_recursive(tree->right, list, bits, RIGHT, 0);
+	/* populate list */
+	if (tree_size(tree) == 1)
+	{
+		list->head = malloc(sizeof(struct encoding_t));
+		if (list->head == NULL)
+		{
+			printf("ERROR: %d: can't allocate memory for encoding_t root\n", ERROR_MALLOC_ENCODING_ROOT);
+			exit(ERROR_MALLOC_ENCODING_ROOT);
+		}
+		bits[0] = 0;
+		populate_encoding(list->head, tree, bits, 1);
+	}
+	else
+	{
+		make_encodings_helper_recursive(tree->left, list, bits, LEFT, 0);
+		make_encodings_helper_recursive(tree->right, list, bits, RIGHT, 0);
+	}
 
 	/* done */
 	return list;
+}
+
+const int
+count_encodings(
+	const struct encoding_list_t * list
+){
+	if (list == NULL)
+	{
+		return 0;
+	}
+	
+	if (list->head == NULL)
+	{
+		return 0;
+	}
+
+	struct encoding_t * iterator = list->head;
+
+	int count = 0;
+	while (iterator != NULL)
+	{
+		count++;
+		iterator = iterator->next;
+	}
+
+	return count;
 }
 
 static

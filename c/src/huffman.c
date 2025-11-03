@@ -36,7 +36,7 @@ const struct encoding_list_t * const
 extract_encodings(
 	const struct node_t * const tree
 ){
-	return make_encodings_helper(tree, tree->tree_size);
+	return make_encodings_helper(tree, tree_size(tree));
 }
 
 const void
