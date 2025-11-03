@@ -68,7 +68,7 @@ printable_encoded_message(
 	const struct encoded_message_t * const em
 ){
 	/* allocate memory for output string */
-	char * const output = malloc(em->length * sizeof(char));
+	char * const output = malloc((em->length + 1) * sizeof(char));
 	if (output == NULL) {
 		printf("ERROR: %d: can't allocate memory for printable encoded message", ERROR_MALLOC_PRINTABLE_MESSAGE);
 		exit(ERROR_MALLOC_PRINTABLE_MESSAGE);
@@ -78,6 +78,9 @@ printable_encoded_message(
 	for (int idx = 0; idx < em->length; idx++) {
 		output[idx] = em->bits[idx] ? '1' : '0';
 	}
+
+    /* null terminate */
+    output[em->length] = '\0';
 
 	/* done */
 	return output;
