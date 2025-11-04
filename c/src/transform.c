@@ -62,6 +62,7 @@ encode(
 	return em;
 }
 
+// todo: we should be able to do this without the 'length' attribute; this is kind of like cheating
 const char * const
 decode(
 	const struct encoded_message_t * const encoded
@@ -72,17 +73,22 @@ decode(
 	int out_str_idx = 0;
 
 	/* allocate memory for the output string */
-	char * const output = malloc(msg_len * sizeof(char));
+	char * const output = malloc((msg_len + 1) * sizeof(char));
 	if (output == NULL) {
 		printf("ERROR: %d: can't allocate memory for decoded string\n", ERROR_MALLOC_DECODED_STRING);
 		exit(ERROR_MALLOC_DECODED_STRING);
 	}
 
+	/* null terminate */
+	output[msg_len] = '\0';
+
 	/* loop over bits */
 	struct node_t * node = (struct node_t *) tree;
-	for (int bit_idx = 0; bit_idx <= encoded->length; bit_idx++) {
+	for (int bit_idx = 0; bit_idx < encoded->length; bit_idx++)
+	{
 		/* if it's a leaf node, we can grab the symbol and put it on the output string */
-		if (node->nt == LEAF) {
+		if (node->nt == LEAF)
+		{
 			output[out_str_idx] = node->symbol;
 			out_str_idx++;
 			//printf(": %c\n", node->symbol);
@@ -91,18 +97,18 @@ decode(
 
 		/* get the current bit */
 		const bool bit = encoded->bits[bit_idx];
-		//printf("[%c]->%c[%c(%lu)]", bit ? '1' : '0', node->nt == 98 ? 'I' : 'L', node->symbol, node->frequency);
+		//printf("[%c]->%c[%c(%lu)]\n", bit ? '1' : '0', node->nt == 98 ? 'I' : 'L', node->symbol, node->frequency);
 
 		/* use the current bit to reassign the node pointer */
 		if (bit) {
 			if (node->right == NULL) {
-				printf("ERROR: %d: node->right of INTERNAL node is null!", ERROR_INTERNAL_RIGHT_NODE_NULL);
+				printf("ERROR: %d: node->right of INTERNAL node is null!\n", ERROR_INTERNAL_RIGHT_NODE_NULL);
 				exit(ERROR_INTERNAL_RIGHT_NODE_NULL);
 			}
 			node = node->right;
 		} else {
 			if (node->left == NULL) {
-				printf("ERROR: %d: node->left of INTERNAL node is null!", ERROR_INTERNAL_LEFT_NODE_NULL);
+				printf("ERROR: %d: node->left of INTERNAL node is null!\n", ERROR_INTERNAL_LEFT_NODE_NULL);
 				exit(ERROR_INTERNAL_LEFT_NODE_NULL);
 			}
 			node = node->left;
@@ -110,7 +116,6 @@ decode(
 	}
 
 	/* done */
-	printf("\n");
 	return output;
 }
 
