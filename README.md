@@ -2,6 +2,8 @@
 ## Purpose
 huffman coding trees, in various languages.  intended to be a personal programming challenge for new languages learned.
 
+![test-all](https://github.com/dgj7/huffman/actions/workflows/testall.yml/badge.svg) _this build compares the output of all implementations, succeeding if equal_
+
 ## Implementations
 * ![c](https://github.com/dgj7/huffman/actions/workflows/c-build.yml/badge.svg) (_[code](c/)_) _build requires **cmake**, **gcc**, and **build-essential**_
 * ![c++](https://github.com/dgj7/huffman/actions/workflows/cpp-build.yml/badge.svg) (_[code](c++/)_) _build requires **cmake**, **g++**, and **build-essential**_
@@ -11,8 +13,6 @@ huffman coding trees, in various languages.  intended to be a personal programmi
 
 ## Usage
 ### Build
-There is a `build-and-run-all.sh` script in the root directory that can be used to run all projects together, to compare outputs.
-
 Each directory has its own `build.sh` and `run.sh` scripts to build and run the individual applications.
 
 ### Run
