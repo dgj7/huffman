@@ -4,8 +4,6 @@
 #include <stddef.h>
 #include <string.h>             // strcmp(), strlen()
 
-#include <stdio.h>
-
 #include "frequency.h"
 #include "huffman.h"
 #include "tree.h"
@@ -50,6 +48,46 @@ void single_byte(struct cut_run_t * run)
 
     const char * const decoded = decode(encoded, tree, length);
     assert_true(0 == strcmp("f", decoded), run);
+}
+
+void two_bytes_same(struct cut_run_t * run)
+{
+    const char * input = "aa";
+    const int length = strlen(input);
+    const struct node_t * tree = create_tree(input, length);
+
+    assert_true(1 == tree_size(tree), run);
+    assert_true(1 == leaf_count(tree), run);
+
+    const struct encoding_list_t * const encodings = extract_encodings(tree);
+    assert_true(1 == count_encodings(encodings), run);
+    //debug_print_encodings(encodings);
+
+    const struct encoded_message_t * const encoded = encode(input, encodings);
+    assert_true(0 == strcmp("00", printable_encoded_message(encoded)), run);
+
+    const char * const decoded = decode(encoded, tree, length);
+    assert_true(0 == strcmp("aa", decoded), run);
+}
+
+void two_bytes_diff(struct cut_run_t * run)
+{
+    const char * input = "ab";
+    const int length = strlen(input);
+    const struct node_t * tree = create_tree(input, length);
+
+    assert_true(3 == tree_size(tree), run);
+    assert_true(2 == leaf_count(tree), run);
+
+    const struct encoding_list_t * const encodings = extract_encodings(tree);
+    assert_true(2 == count_encodings(encodings), run);
+    //debug_print_encodings(encodings);
+
+    const struct encoded_message_t * const encoded = encode(input, encodings);
+    assert_true(0 == strcmp("01", printable_encoded_message(encoded)), run);
+
+    const char * const decoded = decode(encoded, tree, length);
+    assert_true(0 == strcmp("ab", decoded), run);
 }
 
 void short_string(struct cut_run_t * run)
