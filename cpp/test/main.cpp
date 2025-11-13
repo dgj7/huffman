@@ -14,8 +14,8 @@ main(
 
     /* register the tests */
     register_test(empty_string, "empty_string");
-    register_test(scenario1, "scenario1");
-    register_test(scenario2, "scenario2");
+    register_test(short_string, "short_string");
+    register_test(main_case, "main_case");
 
     /* return the number of failed tests */
     return run_tests(&config);

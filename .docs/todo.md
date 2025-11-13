@@ -11,7 +11,7 @@
   * [x] ~~2 bytes, same~~
   * [x] ~~2 bytes, diff~~
   * [x] ~~short string: "abcaba"~~
-  * [x] ~~medium string: "this is a sample input string. its text is being used to test the huffman coding tree."~~
+  * [x] ~~main case: "this is a sample input string. its text is being used to test the huffman coding tree."~~
 * [ ] investigate `free()` for each `malloc()`
 * [ ] update build to use valgrind
 * [ ] ease of use: combine tree with encodings
@@ -29,8 +29,8 @@
   * [ ] single character "f"
   * [ ] 2 bytes, same
   * [ ] 2 bytes, diff
-  * [x] short string: "abcaba"
-  * [x] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
+  * [x] ~~short string: "abcaba"~~
+  * [x] ~~main case: "this is a sample input string. its text is being used to test the huffman coding tree."~~
 * [ ] investigate `delete` for each `new` and `delete[]` for each `new[]`
 * [ ] update build to use valgrind
 * [ ] ease of use: combine tree with encodings
@@ -42,12 +42,12 @@
 * [x] ~~externalize huffman functionality as a library~~
 * [x] ~~setup workflow~~
 * [ ] add more unit tests
-  * [x] empty string: ""
+  * [x] ~~empty string: ""~~
   * [ ] single character "f"
   * [ ] 2 bytes, same
   * [ ] 2 bytes, diff
   * [ ] short string: "abcaba"
-  * [x] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
+  * [x] ~~main case: "this is a sample input string. its text is being used to test the huffman coding tree."~~
 * [ ] ease of use: combine tree with encodings
 * [x] ~~memory efficiency: implement bit vector for returning data~~
 
@@ -61,8 +61,8 @@
   * [ ] single character "f"
   * [ ] 2 bytes, same
   * [ ] 2 bytes, diff
-  * [x] short string: "abcaba"
-  * [x] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
+  * [x] ~~short string: "abcaba"~~
+  * [x] ~~main case: "this is a sample input string. its text is being used to test the huffman coding tree."~~
 * [ ] ease of use: combine tree with encodings
 * [x] memory efficiency: implement bit vector for returning data
 
@@ -77,7 +77,7 @@
   * [ ] 2 bytes, same
   * [ ] 2 bytes, diff
   * [ ] short string: "abcaba"
-  * [ ] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
+  * [ ] main case: "this is a sample input string. its text is being used to test the huffman coding tree."
 * [ ] ease of use: combine tree with encodings
 * [ ] memory efficiency: implement bit vector for returning data
 
@@ -92,7 +92,7 @@
   * [ ] 2 bytes, same
   * [ ] 2 bytes, diff
   * [ ] short string: "abcaba"
-  * [ ] medium string: "this is a sample input string. its text is being used to test the huffman coding tree."
+  * [ ] main case: "this is a sample input string. its text is being used to test the huffman coding tree."
 
 ---
 [Go Back](..)

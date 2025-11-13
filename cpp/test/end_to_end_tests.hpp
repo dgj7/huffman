@@ -6,7 +6,7 @@
 
 void empty_string(struct cut_run_t * run);
 
-void scenario1(struct cut_run_t *);
-void scenario2(struct cut_run_t *);
+void short_string(struct cut_run_t *);
+void main_case(struct cut_run_t *);
 
 #endif

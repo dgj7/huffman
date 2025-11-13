@@ -29,7 +29,7 @@ void empty_string(struct cut_run_t * run)
     assert_true("" == decoded, run);
 }
 
-void scenario1(struct cut_run_t *run)
+void short_string(struct cut_run_t *run)
 {
     /* create the input string */
     std::string input = "abcaba";
@@ -52,7 +52,7 @@ void scenario1(struct cut_run_t *run)
     assert_true("abcaba" == decoded, run);
 }
 
-void scenario2(struct cut_run_t *run)
+void main_case(struct cut_run_t *run)
 {
     /* create the input string */
     std::string input = "this is a sample input string. its text is being used to test the huffman coding tree.";
