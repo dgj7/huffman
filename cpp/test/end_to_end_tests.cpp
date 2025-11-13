@@ -29,6 +29,78 @@ void empty_string(struct cut_run_t * run)
     assert_true("" == decoded, run);
 }
 
+void single_byte(struct cut_run_t * run)
+{
+    /* create the input string */
+    std::string input = "f";
+
+    /* create and verify the tree */
+    const huffman::Tree * tree = huffman::builder::build(input);
+    assert_equals(1, tree->size(), run);
+
+    // todo: these are wrong
+    /* encode and verify */
+    std::vector<bool> encoded = huffman::encoder::encode(input, *tree);
+    assert_equals(0, encoded.size(), run);
+    std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
+    assert_equals(0, stringified.length(), run);
+    assert_true("" == stringified, run);
+
+    // todo: these are wrong
+    /* decode and verify */
+    std::string decoded = huffman::decoder::decode(encoded, *tree);
+    assert_equals(0, decoded.length(), run);
+    assert_true("f" == decoded, run);
+}
+
+void two_bytes_same(struct cut_run_t * run)
+{
+    /* create the input string */
+    std::string input = "aa";
+
+    /* create and verify the tree */
+    const huffman::Tree * tree = huffman::builder::build(input);
+    assert_equals(1, tree->size(), run);
+
+    // todo: these are wrong
+    /* encode and verify */
+    std::vector<bool> encoded = huffman::encoder::encode(input, *tree);
+    assert_equals(0, encoded.size(), run);
+    std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
+    assert_equals(0, stringified.length(), run);
+    assert_true("" == stringified, run);
+
+    // todo: these are wrong
+    /* decode and verify */
+    std::string decoded = huffman::decoder::decode(encoded, *tree);
+    assert_equals(0, decoded.length(), run);
+    assert_true("aa" == decoded, run);
+}
+
+void two_bytes_diff(struct cut_run_t * run)
+{
+    /* create the input string */
+    std::string input = "ab";
+
+    /* create and verify the tree */
+    const huffman::Tree * tree = huffman::builder::build(input);
+    assert_equals(1, tree->size(), run);
+
+    // todo: these are wrong
+    /* encode and verify */
+    std::vector<bool> encoded = huffman::encoder::encode(input, *tree);
+    assert_equals(0, encoded.size(), run);
+    std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
+    assert_equals(0, stringified.length(), run);
+    assert_true("" == stringified, run);
+
+    // todo: these are wrong
+    /* decode and verify */
+    std::string decoded = huffman::decoder::decode(encoded, *tree);
+    assert_equals(0, decoded.length(), run);
+    assert_true("ab" == decoded, run);
+}
+
 void short_string(struct cut_run_t *run)
 {
     /* create the input string */
@@ -43,7 +115,6 @@ void short_string(struct cut_run_t *run)
     assert_equals(9, encoded.size(), run);
     std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
     assert_equals(9, stringified.length(), run);
-    std::cout << stringified << std::endl;
     assert_true("011100110" == stringified, run);
 
     /* decode and verify */
