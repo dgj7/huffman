@@ -5,6 +5,8 @@
 #include <string>
 #include <numeric>              // std::accumulate
 
+#include <iostream>
+
 void empty_string(struct cut_run_t * run)
 {
     /* create the input string */
@@ -30,7 +32,7 @@ void empty_string(struct cut_run_t * run)
 void scenario1(struct cut_run_t *run)
 {
     /* create the input string */
-    std::string input = "abbccc";
+    std::string input = "abcaba";
 
     /* create and verify the tree */
     const huffman::Tree * tree = huffman::builder::build(input);
@@ -41,12 +43,13 @@ void scenario1(struct cut_run_t *run)
     assert_equals(9, encoded.size(), run);
     std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
     assert_equals(9, stringified.length(), run);
-    assert_true("101111000" == stringified, run);
+    std::cout << stringified << std::endl;
+    assert_true("011100110" == stringified, run);
 
     /* decode and verify */
     std::string decoded = huffman::decoder::decode(encoded, *tree);
     assert_equals(6, decoded.length(), run);
-    assert_true("abbccc" == decoded, run);
+    assert_true("abcaba" == decoded, run);
 }
 
 void scenario2(struct cut_run_t *run)
