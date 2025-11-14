@@ -15,7 +15,6 @@ import java.util.List;
  * End-to-end test for huffman tree build, encode, and decode.
  */
 public class EndToEndTest {
-    @Ignore// todo: fix this test
     @Test
     public final void testEmptyString() throws HuffmanEncodingException, HuffmanDecodingException {
         final String input = "";

@@ -4,13 +4,11 @@ import com.dg.jht.pojo.HuffmanTree;
 import com.dg.jht.pojo.AbstractNode;
 import com.dg.jht.pojo.SymbolNode;
 import com.dg.jht.pojo.WeightNode;
-import java.util.Map;
+
+import java.util.*;
 
 import org.apache.log4j.Logger;
 
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Collections;
 import com.dg.jht.util.HuffNodeComparator;
 import com.dg.jht.util.MessageRepository;
 
@@ -24,33 +22,32 @@ public class HuffmanTreeBuilder
 	
 	/**
 	 * Create a new {@link HuffmanTreeBuilder}.
-	 * 
-	 * @param input
-	 * @return
 	 */
-	public HuffmanTree build(String input)
+	public HuffmanTree build(final String input)
     {
-        Map<String,Long> frequencyMap = (new FrequencyAnalyzer(input)).generateFrequencyMap();
-        return build(frequencyMap);      
+        if (input.isEmpty()) {
+            return build(new HashMap<>());
+        } else {
+            Map<String, Long> frequencyMap = (new FrequencyAnalyzer(input)).generateFrequencyMap();
+            return build(frequencyMap);
+        }
     }
     
 	/**
 	 * Build a {@link HuffmanTree} from the given frequency map.
-	 * 
-	 * @param frequencyMap
-	 * @return
 	 */
-    public HuffmanTree build(Map<String,Long> frequencyMap)
+    public HuffmanTree build(final Map<String,Long> frequencyMap)
     {
-    	AbstractNode root = buildNodes(frequencyMap);
-        return new HuffmanTree(root);
+        if (frequencyMap.isEmpty()) {
+            return new HuffmanTree(new WeightNode(null, null));
+        } else {
+            AbstractNode root = buildNodes(frequencyMap);
+            return new HuffmanTree(root);
+        }
     }
     
     /**
      * Build a {@link HuffmanTree} from the given frequency map.
-     * 
-     * @param frequencyMap
-     * @return
      */
     private AbstractNode buildNodes(Map<String,Long> frequencyMap)
     {
@@ -73,5 +70,24 @@ public class HuffmanTreeBuilder
         }
         logger.trace(messageRepository.buildNodesMessage(nodes));
         return nodes.get(0);
+    }
+
+    /**
+     * Generate the 'next' char for instances where we need a dummy value.
+     */
+    private char nextChar(final char input) {
+        final byte b = (byte)input;
+        return (char) nextByte(b);
+    }
+
+    /**
+     * Generate the 'next' byte for instances where we need a dummy value.
+     */
+    private byte nextByte(final byte input) {
+        if (input == Byte.MAX_VALUE) {
+            return Byte.MIN_VALUE;
+        } else {
+            return (byte) (input + 1);
+        }
     }
 }
