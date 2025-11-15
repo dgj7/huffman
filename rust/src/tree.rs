@@ -49,6 +49,19 @@ impl HuffmanTree {
             }
         }
 
+        /* if there is only one element, add another element to balance the tree */
+        if frequencies.len() == 1 {
+            let first = &frequencies[0];
+            let symbol: u8 = first.symbol.unwrap();
+            let dummy = TreeNode {
+                symbol: Some(symbol + 1),
+                frequency: first.frequency + 1,
+                left: None,
+                right: None
+            };
+            frequencies.push(dummy);
+        }
+
         /* merge elements in the frequency list until there is only a single element; that element is the tree's root */
         while frequencies.len() > 1 {
             sort(&mut frequencies);

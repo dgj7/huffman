@@ -41,12 +41,12 @@
 * [x] ~~don't forget to update `analysis.md`~~
 * [x] ~~externalize huffman functionality as a library~~
 * [x] ~~setup workflow~~
-* [ ] add more unit tests
+* [x] ~~add more unit tests~~
   * [x] ~~empty string: ""~~
-  * [ ] single character "f"
-  * [ ] 2 bytes, same
-  * [ ] 2 bytes, diff
-  * [ ] short string: "abcaba"
+  * [x] ~~single character "f"~~
+  * [x] ~~2 bytes, same~~
+  * [x] ~~2 bytes, diff~~
+  * [x] ~~short string: "abcaba"~~
   * [x] ~~main case: "this is a sample input string. its text is being used to test the huffman coding tree."~~
 * [ ] ease of use: combine tree with encodings
 * [x] ~~memory efficiency: implement bit vector for returning data~~
