@@ -24,11 +24,11 @@
 * [x] ~~externalize huffman functionality as a library~~ _libhuffman.a is linked to main.cpp in build.sh_
 * [x] ~~setup workflow~~
 * [x] ~~update `cmake` version; see build warning~~
-* [ ] add unit tests
-  * [x] empty string: ""
-  * [ ] single character "f"
-  * [ ] 2 bytes, same
-  * [ ] 2 bytes, diff
+* [x] ~~add unit tests~~
+  * [x] ~~empty string: ""~~
+  * [x] ~~single character "f"~~
+  * [x] ~~2 bytes, same~~
+  * [x] ~~2 bytes, diff~~
   * [x] ~~short string: "abcaba"~~
   * [x] ~~main case: "this is a sample input string. its text is being used to test the huffman coding tree."~~
 * [ ] investigate `delete` for each `new` and `delete[]` for each `new[]`

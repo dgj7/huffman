@@ -36,20 +36,18 @@ void single_byte(struct cut_run_t * run)
 
     /* create and verify the tree */
     const huffman::Tree * tree = huffman::builder::build(input);
-    assert_equals(1, tree->size(), run);
+    assert_equals(3, tree->size(), run);
 
-    // todo: these are wrong
     /* encode and verify */
     std::vector<bool> encoded = huffman::encoder::encode(input, *tree);
-    assert_equals(0, encoded.size(), run);
+    assert_equals(1, encoded.size(), run);
     std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
-    assert_equals(0, stringified.length(), run);
-    assert_true("" == stringified, run);
+    assert_equals(1, stringified.length(), run);
+    assert_true("0" == stringified, run);
 
-    // todo: these are wrong
     /* decode and verify */
     std::string decoded = huffman::decoder::decode(encoded, *tree);
-    assert_equals(0, decoded.length(), run);
+    assert_equals(1, decoded.length(), run);
     assert_true("f" == decoded, run);
 }
 
@@ -60,20 +58,18 @@ void two_bytes_same(struct cut_run_t * run)
 
     /* create and verify the tree */
     const huffman::Tree * tree = huffman::builder::build(input);
-    assert_equals(1, tree->size(), run);
+    assert_equals(3, tree->size(), run);
 
-    // todo: these are wrong
     /* encode and verify */
     std::vector<bool> encoded = huffman::encoder::encode(input, *tree);
-    assert_equals(0, encoded.size(), run);
+    assert_equals(2, encoded.size(), run);
     std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
-    assert_equals(0, stringified.length(), run);
-    assert_true("" == stringified, run);
+    assert_equals(2, stringified.length(), run);
+    assert_true("00" == stringified, run);
 
-    // todo: these are wrong
     /* decode and verify */
     std::string decoded = huffman::decoder::decode(encoded, *tree);
-    assert_equals(0, decoded.length(), run);
+    assert_equals(2, decoded.length(), run);
     assert_true("aa" == decoded, run);
 }
 
@@ -84,20 +80,18 @@ void two_bytes_diff(struct cut_run_t * run)
 
     /* create and verify the tree */
     const huffman::Tree * tree = huffman::builder::build(input);
-    assert_equals(1, tree->size(), run);
+    assert_equals(3, tree->size(), run);
 
-    // todo: these are wrong
     /* encode and verify */
     std::vector<bool> encoded = huffman::encoder::encode(input, *tree);
-    assert_equals(0, encoded.size(), run);
+    assert_equals(2, encoded.size(), run);
     std::string stringified = std::accumulate(encoded.begin(), encoded.end(), std::string(), [](const std::string & accumulator, bool value){return accumulator + (value ? "1" : "0");});
-    assert_equals(0, stringified.length(), run);
-    assert_true("" == stringified, run);
+    assert_equals(2, stringified.length(), run);
+    assert_true("01" == stringified, run);
 
-    // todo: these are wrong
     /* decode and verify */
     std::string decoded = huffman::decoder::decode(encoded, *tree);
-    assert_equals(0, decoded.length(), run);
+    assert_equals(2, decoded.length(), run);
     assert_true("ab" == decoded, run);
 }
 
