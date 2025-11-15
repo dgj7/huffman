@@ -47,6 +47,11 @@ func toTree(input []HuffNode) HuffTree {
 		return HuffTree { Root: nil }
 	}
 
+	if len(input) == 1 {
+		dummy := HuffNode { Symbol: input[0].Symbol+1, Frequency: input[0].Frequency+1 }
+		input = append(input, dummy)
+	}
+
 	for len(input) > 1 {
 		/* sort the list */
 		sort.Sort(NodeArray(input))
