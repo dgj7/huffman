@@ -72,6 +72,13 @@ namespace huffman {
                 return new Tree();
             }
 
+            if (trees.size() == 1)
+            {
+                const Tree * const first = trees.front();
+                Tree * dummy = new Tree(char(0), first->getFrequency() + 1);
+                trees.push_back(dummy);
+            }
+
             while(trees.size() > 1)
             {
                 trees.sort(compare);

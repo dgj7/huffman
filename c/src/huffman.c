@@ -22,8 +22,11 @@ create_tree(
 	const struct node_t * const root = to_tree(frequencies);
 
 	/* free temporary memory */
-	free(frequencies->pairs);
-	free((void*)frequencies);
+	if (frequencies != NULL)
+	{
+		free(frequencies->pairs);
+		free((void*)frequencies);
+	}
 
 	/* done */
 	return root;
@@ -33,7 +36,7 @@ const struct encoding_list_t * const
 extract_encodings(
 	const struct node_t * const tree
 ){
-	return make_encodings_helper(tree, tree->tree_size);
+	return make_encodings_helper(tree, tree_size(tree));
 }
 
 const void

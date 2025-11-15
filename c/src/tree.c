@@ -5,7 +5,6 @@
 #include <string.h>		// strcat()
 
 #include "huffman.h"
-#include "frequency.h"
 #include "tree.h"
 
 static const int ERROR_MALLOC_LIST_CREATE = 300;
@@ -28,6 +27,12 @@ const struct node_t * const
 to_tree(
 	const struct frequency_t * const frequency
 ){
+	/* if null, presume there is no work to do */
+	if (frequency == NULL)
+	{
+		return NULL;
+	}
+
 	/* create an initial list of nodes, and sort it */
 	struct node_t * list = (struct node_t *) to_list(frequency->pairs, frequency->count);
 	long list_size = frequency->count;
@@ -86,7 +91,7 @@ to_list(
 	for (int c = 0; c < length; c++)
 	{
 		const struct frequency_pair_t * pair = &pairs[c];
-		struct node_t node = (struct node_t) { .frequency = pair->frequency, .symbol = pair->symbol, .nt = LEAF, .tree_size = 1 };
+		struct node_t node = (struct node_t) { .frequency = pair->frequency, .symbol = pair->symbol, .nt = LEAF };
 		list[c] = node;
 	}
 
@@ -120,7 +125,6 @@ merge_nodes(
 	parent->left = copy_node(left);
 	parent->right = copy_node(right);
 	parent->nt = INTERNAL;
-	parent->tree_size = 1 + left->tree_size + right->tree_size;
 
 	/* done */
 	return parent;
@@ -149,7 +153,6 @@ copy_node(
 	result->frequency = source->frequency;
 	result->symbol = source->symbol;
 	result->nt = source->nt;
-	result->tree_size = source->tree_size;
 
 	/* copy left and right child nodes */
 	result->left = copy_node(source->left);
@@ -236,6 +239,11 @@ const int
 tree_size(
 	const struct node_t * const root
 ){
+	if (root == NULL)
+	{
+		return 0;
+	}
+
 	const int left_size = root->left == NULL ? 0 : tree_size(root->left);
 	const int right_size = root->right == NULL ? 0 : tree_size(root->right);
 	return left_size + right_size + 1;

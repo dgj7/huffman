@@ -1,8 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h> 		// malloc(), free()
 
 #include "debug.h"
 #include "frequency.h"
 #include "tree.h"
+#include "transform.h"
+
+static const int ERROR_MALLOC_PRINTABLE_MESSAGE = 500;
 
 static int node_index = 0;
 
@@ -57,6 +61,29 @@ debug_print_encodings_helper(
         node = node->next;
     }
     printf("==========\n");
+}
+
+const char * const
+printable_encoded_message(
+	const struct encoded_message_t * const em
+){
+	/* allocate memory for output string */
+	char * const output = malloc((em->length + 1) * sizeof(char));
+	if (output == NULL) {
+		printf("ERROR: %d: can't allocate memory for printable encoded message", ERROR_MALLOC_PRINTABLE_MESSAGE);
+		exit(ERROR_MALLOC_PRINTABLE_MESSAGE);
+	}
+
+	/* copy bits */
+	for (int idx = 0; idx < em->length; idx++) {
+		output[idx] = em->bits[idx] ? '1' : '0';
+	}
+
+    /* null terminate */
+    output[em->length] = '\0';
+
+	/* done */
+	return output;
 }
 
 static

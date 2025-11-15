@@ -5,28 +5,26 @@ package com.dg.jht.pojo;
  * nodes are always internal nodes, that store
  * the weight/frequency sum of both sub nodes.
  */
-public class WeightNode extends AbstractNode
-{
+public class WeightNode extends AbstractNode {
     protected AbstractNode left = null;
     protected AbstractNode right = null;
 
     /**
      * Create a new {@link WeightNode}.
-     * 
+     *
      * @param leftInput
      * @param rightInput
      */
-    public WeightNode(AbstractNode leftInput, AbstractNode rightInput)
-    {
+    public WeightNode(AbstractNode leftInput, AbstractNode rightInput) {
         left = leftInput;
         right = rightInput;
 
         long leftWeight = 0;
         long rightWeight = 0;
 
-        if(left != null)
+        if (left != null)
             leftWeight = left.getWeight();
-        if(right != null)
+        if (right != null)
             rightWeight = right.getWeight();
 
         this.setWeight(leftWeight + rightWeight);
@@ -34,21 +32,19 @@ public class WeightNode extends AbstractNode
 
     /**
      * Get the left {@link AbstractNode}.
-     * 
+     *
      * @return
      */
-    public AbstractNode getLeft()
-    {
+    public AbstractNode getLeft() {
         return left;
     }
 
     /**
      * Get the right {@link AbstractNode}.
-     * 
+     *
      * @return
      */
-    public AbstractNode getRight()
-    {
+    public AbstractNode getRight() {
         return right;
     }
 }

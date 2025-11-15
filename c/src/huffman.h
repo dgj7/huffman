@@ -17,7 +17,6 @@ struct node_t {
 	enum nodetype_t nt;
 	struct node_t *left;
 	struct node_t *right;
-	short tree_size;
 };
 
 struct bitvec_t {

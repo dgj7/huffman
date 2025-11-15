@@ -23,7 +23,70 @@ func TestTree_Empty(t *testing.T) {
 	assert.Equal(t, "", decoded, "decoded wrong")
 }
 
-func TestTree_Small(t *testing.T) {
+func TestTree_SingleByte(t *testing.T) {
+	var input = "f"
+	var bytes = StringToBytes(input)
+
+	var tree = Create(bytes)
+	assert.Equal(t, 3, tree.size(), "tree size wrong")
+	assert.Equal(t, 3, tree.Root.size(), "node size wrong")
+
+	var encodings = tree.ToEncodingTable()
+	assert.Equal(t, 2, len(encodings), "encodings len wrong")
+	assert.Equal(t, "0", encodings['f'].ToString(), "encoding wrong")
+	assert.Equal(t, "1", encodings['g'].ToString(), "encoding wrong")
+
+	var encoded = Encode(tree, bytes)
+	assert.Equal(t, "0", encoded.ToString(), "encoded wrong")
+
+	var decodedBytes = Decode(tree, encoded)
+	var decoded = BytesToString(decodedBytes)
+	assert.Equal(t, "f", decoded, "decoded wrong")
+}
+
+func TestTree_TwoBytesSame(t *testing.T) {
+	var input = "aa"
+	var bytes = StringToBytes(input)
+
+	var tree = Create(bytes)
+	assert.Equal(t, 3, tree.size(), "tree size wrong")
+	assert.Equal(t, 3, tree.Root.size(), "node size wrong")
+
+	var encodings = tree.ToEncodingTable()
+	assert.Equal(t, 2, len(encodings), "encodings len wrong")
+	assert.Equal(t, "0", encodings['a'].ToString(), "encoding wrong")
+	assert.Equal(t, "1", encodings['b'].ToString(), "encoding wrong")
+
+	var encoded = Encode(tree, bytes)
+	assert.Equal(t, "00", encoded.ToString(), "encoded wrong")
+
+	var decodedBytes = Decode(tree, encoded)
+	var decoded = BytesToString(decodedBytes)
+	assert.Equal(t, "aa", decoded, "decoded wrong")
+}
+
+func TestTree_TwoBytesDiff(t *testing.T) {
+	var input = "ab"
+	var bytes = StringToBytes(input)
+
+	var tree = Create(bytes)
+	assert.Equal(t, 3, tree.size(), "tree size wrong")
+	assert.Equal(t, 3, tree.Root.size(), "node size wrong")
+
+	var encodings = tree.ToEncodingTable()
+	assert.Equal(t, 2, len(encodings), "encodings len wrong")
+	assert.Equal(t, "0", encodings['a'].ToString(), "encoding wrong")
+	assert.Equal(t, "1", encodings['b'].ToString(), "encoding wrong")
+
+	var encoded = Encode(tree, bytes)
+	assert.Equal(t, "01", encoded.ToString(), "encoded wrong")
+
+	var decodedBytes = Decode(tree, encoded)
+	var decoded = BytesToString(decodedBytes)
+	assert.Equal(t, "ab", decoded, "decoded wrong")
+}
+
+func TestTree_Short(t *testing.T) {
 	var input = "abbccc"
 	var bytes = StringToBytes(input)
 
@@ -45,7 +108,7 @@ func TestTree_Small(t *testing.T) {
 	assert.Equal(t, "abbccc", decoded, "decoded wrong")
 }
 
-func TestTree_Scenario1(t *testing.T) {
+func TestTree_MainCase(t *testing.T) {
 	var input = "this is a sample input string. its text is being used to test the huffman coding tree.";
 	var bytes = StringToBytes(input)
 
