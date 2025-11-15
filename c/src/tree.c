@@ -91,7 +91,7 @@ to_list(
 	for (int c = 0; c < length; c++)
 	{
 		const struct frequency_pair_t * pair = &pairs[c];
-		struct node_t node = (struct node_t) { .frequency = pair->frequency, .symbol = pair->symbol, .nt = LEAF, .tree_size = 1 };
+		struct node_t node = (struct node_t) { .frequency = pair->frequency, .symbol = pair->symbol, .nt = LEAF };
 		list[c] = node;
 	}
 
@@ -125,7 +125,6 @@ merge_nodes(
 	parent->left = copy_node(left);
 	parent->right = copy_node(right);
 	parent->nt = INTERNAL;
-	parent->tree_size = 1 + left->tree_size + right->tree_size;
 
 	/* done */
 	return parent;
@@ -154,7 +153,6 @@ copy_node(
 	result->frequency = source->frequency;
 	result->symbol = source->symbol;
 	result->nt = source->nt;
-	result->tree_size = source->tree_size;
 
 	/* copy left and right child nodes */
 	result->left = copy_node(source->left);

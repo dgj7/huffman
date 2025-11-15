@@ -17,8 +17,6 @@ struct node_t {
 	enum nodetype_t nt;
 	struct node_t *left;
 	struct node_t *right;
-	// todo: remove this? tree_size seems strange here
-	short tree_size;
 };
 
 struct bitvec_t {
