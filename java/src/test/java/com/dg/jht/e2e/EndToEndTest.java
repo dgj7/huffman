@@ -6,7 +6,6 @@ import com.dg.jht.exc.HuffmanEncodingException;
 import com.dg.jht.pojo.HuffmanTree;
 import com.dg.jht.util.MessageRepository;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -28,7 +27,6 @@ public class EndToEndTest {
         Assert.assertEquals("", decoded);
     }
 
-    @Ignore// todo: fix this test
     @Test
     public final void testSingleCharacter() throws HuffmanEncodingException, HuffmanDecodingException {
         final String input = "f";
@@ -42,7 +40,6 @@ public class EndToEndTest {
         Assert.assertEquals("f", decoded);
     }
 
-    @Ignore// todo: fix this test
     @Test
     public final void testTwoBytesSame() throws HuffmanEncodingException, HuffmanDecodingException {
         final String input = "aa";
