@@ -12,7 +12,6 @@ main(
     /* configure cut */
     const struct cut_config_t config = {true};
 
-    // todo: re-enable these test cases after fixes implemented
     /* register the tests */
     register_test(empty_string, "empty_string");
     register_test(single_byte, "single_byte");
