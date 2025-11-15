@@ -9,27 +9,24 @@ package com.dg.jht.pojo;
  * All nodes have weight (frequency).
  * </p>
  */
-public abstract class AbstractNode
-{
+public abstract class AbstractNode {
     protected Long weight;
 
     /**
      * Get the weight {@link Long}.
-     * 
+     *
      * @return
      */
-    public Long getWeight()
-    {
+    public Long getWeight() {
         return weight;
     }
 
     /**
      * Set the weight {@link Long}.
-     * 
+     *
      * @param input
      */
-    public void setWeight(Long input)
-    {
+    public void setWeight(Long input) {
         weight = input;
     }
 }
