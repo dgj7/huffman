@@ -64,7 +64,7 @@ encode(
 		}
 	}
 
-	/* todo */
+	/* done */
 	return em;
 }
 
