@@ -48,22 +48,8 @@ make_encodings_helper(
 	bool bits[256];
 
 	/* populate list */
-	if (tree_size(tree) == 1)
-	{
-		list->head = malloc(sizeof(struct encoding_t));
-		if (list->head == NULL)
-		{
-			printf("ERROR: %d: can't allocate memory for encoding_t root\n", ERROR_MALLOC_ENCODING_ROOT);
-			exit(ERROR_MALLOC_ENCODING_ROOT);
-		}
-		bits[0] = 0;
-		populate_encoding(list->head, tree, bits, 1);
-	}
-	else
-	{
-		make_encodings_helper_recursive(tree->left, list, bits, LEFT, 0);
-		make_encodings_helper_recursive(tree->right, list, bits, RIGHT, 0);
-	}
+	make_encodings_helper_recursive(tree->left, list, bits, LEFT, 0);
+	make_encodings_helper_recursive(tree->right, list, bits, RIGHT, 0);
 
 	/* done */
 	return list;

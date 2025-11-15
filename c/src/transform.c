@@ -87,31 +87,16 @@ decode(
 	output[msg_len] = '\0';
 
 	/* loop over bits to find decoded bytes */
-	if (tree_size(tree) == 1)
+	int consumed = 0;
+	int out_str_idx = 0;
+	while (consumed < (encoded->length))
 	{
-		int consumed = 0;
-		int out_str_idx = 0;
-		while (consumed < encoded->length)
-		{
-			output[out_str_idx] = tree->symbol;
-			consumed += 1;
-			out_str_idx += 1;
-		}
-		return output;
+		struct decoded_byte_t next = next_decoded(encoded, tree, consumed);
+		consumed = consumed + next.bits;
+		output[out_str_idx] = next.byte;
+		out_str_idx += 1;
 	}
-	else
-	{
-		int consumed = 0;
-		int out_str_idx = 0;
-		while (consumed < (encoded->length))
-		{
-			struct decoded_byte_t next = next_decoded(encoded, tree, consumed);
-			consumed = consumed + next.bits;
-			output[out_str_idx] = next.byte;
-			out_str_idx += 1;
-		}
-		return output;
-	}
+	return output;
 }
 
 static

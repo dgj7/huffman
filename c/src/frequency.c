@@ -31,7 +31,16 @@ count_frequencies(
 
 	/* initialize the frequency array; panic if we can't get memory */
 	const size_t uniques = unique_characters(message, length);
-	wrapper->pairs = malloc(uniques * sizeof(struct frequency_pair_t));
+	size_t pair_size = 0;
+	if (uniques == 1)
+	{
+		pair_size = uniques + 1;
+	}
+	else
+	{
+		pair_size = uniques;
+	}
+	wrapper->pairs = malloc(pair_size * sizeof(struct frequency_pair_t));
 	int used = 0;
 	if (wrapper->pairs == NULL)
 	{
@@ -57,6 +66,14 @@ count_frequencies(
 
 	/* update structure */
 	wrapper->count = used;
+
+	/* if there is only one element, add another one to balance the tree */
+	if (uniques == 1)
+	{
+		wrapper->pairs[1].frequency = wrapper->pairs[0].frequency + 1;
+		wrapper->pairs[1].symbol = wrapper->pairs[0].symbol + 1;
+		wrapper->count++;
+	}
 
 	/* done */
 	return wrapper;

@@ -36,11 +36,11 @@ void single_byte(struct cut_run_t * run)
     const int length = strlen(input);
     const struct node_t * tree = create_tree(input, length);
 
-    assert_true(1 == tree_size(tree), run);
-    assert_true(1 == leaf_count(tree), run);
+    assert_true(3 == tree_size(tree), run);
+    assert_true(2 == leaf_count(tree), run);
 
     const struct encoding_list_t * const encodings = extract_encodings(tree);
-    assert_true(1 == count_encodings(encodings), run);
+    assert_true(2 == count_encodings(encodings), run);
     //debug_print_encodings(encodings);
 
     const struct encoded_message_t * const encoded = encode(input, encodings);
@@ -56,11 +56,11 @@ void two_bytes_same(struct cut_run_t * run)
     const int length = strlen(input);
     const struct node_t * tree = create_tree(input, length);
 
-    assert_true(1 == tree_size(tree), run);
-    assert_true(1 == leaf_count(tree), run);
+    assert_true(3 == tree_size(tree), run);
+    assert_true(2 == leaf_count(tree), run);
 
     const struct encoding_list_t * const encodings = extract_encodings(tree);
-    assert_true(1 == count_encodings(encodings), run);
+    assert_true(2 == count_encodings(encodings), run);
     //debug_print_encodings(encodings);
 
     const struct encoded_message_t * const encoded = encode(input, encodings);
